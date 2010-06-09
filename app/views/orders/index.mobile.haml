@@ -1,0 +1,8 @@
+- content_for :title, 'Orders'
+%ul
+  - for order in @orders
+    %li.arrow
+      = link_to "#{order.id} #{order.email} - #{l order.created_at, :format => :short}",  order
+      %small.counter= number_to_currency order.total 
+%ul
+  %li.arrow= link_to 'New order', new_order_path

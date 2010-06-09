@@ -1,0 +1,26 @@
+- form_for(@product) do |f|
+  = f.error_messages
+  
+  .field
+    = f.label :item_num
+    %br
+    = f.text_field :item_num
+  .field
+    = f.label :name
+    %br
+    = f.text_field :name
+  .field
+    = f.label :upc
+    %br
+    = f.text_field :upc
+  .field
+    = f.label :price
+    %br
+    = f.text_field :price
+  .field
+    = f.label :start_date
+    %br
+    = f.date_select :start_date, :order => [:month, :day, :year]
+
+  .actions
+    = f.submit

@@ -1,0 +1,16 @@
+- form_for(@order) do |f|
+  %ul.rounded
+    %li
+      = f.error_messages
+      %table#products{:width => "100%"}
+        %tr
+          %th Item
+          %th Name
+          %th QTY
+          %th Item
+          %th Total
+        = render :partial => 'order_item.mobile.haml', :collection => @order.order_items
+  %ul.rounded
+    %li= f.text_field :email, :placeholder => "Email"
+    %li= f.text_field :sub_total, :disabled => true, :placeholder => "Subtotal"
+    = link_to "Submit", nil, :class => "whiteButton submit"

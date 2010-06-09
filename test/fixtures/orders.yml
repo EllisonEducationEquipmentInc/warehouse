@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  email: MyString
+  sub_total: 9.99
+  sales_tax: 9.99
+  total: 9.99
+
+two:
+  email: MyString
+  sub_total: 9.99
+  sales_tax: 9.99
+  total: 9.99

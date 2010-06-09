@@ -1,0 +1,32 @@
+%h1 Listing products
+= link_to 'all', products_path unless params[:q].blank?
+- form_tag(products_path, :method => :get) do
+  = text_field_tag :q
+  = submit_tag "search"
+%table
+  %thead
+    %tr
+      %th Item num
+      %th Name
+      %th Upc
+      %th Price
+      %th Start Date
+  
+  %tbody
+    - for product in @products
+      %tr{ :class => cycle(:odd, :even) }
+        %td= product.item_num
+        %td= product.name
+        %td= product.upc
+        %td= product.price
+        %td= l product.start_date
+        %td= link_to 'Show', product
+        %td= link_to 'Edit', edit_product_path(product)
+        %td= link_to 'Destroy', product, :confirm => 'Are you sure?', :method => :delete
+
+%br
+= will_paginate @products
+%br
+= link_to 'New product', new_product_path
+%br
+= link_to 'Upload product csv file', :action => :import

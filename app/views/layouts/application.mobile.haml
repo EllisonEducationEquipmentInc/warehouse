@@ -1,0 +1,22 @@
+!!! Strict
+%html
+  %head
+    %title
+      = h(yield(:title) || "Warehouse")
+    = stylesheet_link_tag "/jqtouch/jqtouch.min.css", "/jqtouch/themes/apple/theme.min.css"
+    = javascript_include_tag "/jqtouch/jquery.1.3.2.min.js", "/jqtouch/jqtouch.min.js", "mobile"
+    = yield(:head)
+  %body
+    .current
+      - if show_title?
+        .toolbar
+          = link_to "Back", nil, :class => "back" unless current_page? root_path
+          = link_to "Full Site", root_url(:mobile => 0), :class => "button", :rel => "external" 
+          %h1
+            = h yield(:title)
+          = yield(:toolbar)
+      - unless flash.empty?
+        .info
+          - flash.each do |name, msg|
+            = content_tag :div, msg, :id => "flash_#{name}"
+      = yield

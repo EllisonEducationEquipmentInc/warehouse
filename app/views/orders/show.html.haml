@@ -1,0 +1,26 @@
+%h1== Order WHUS#{@order.id}
+%table#products{:width => "100%"}
+  = render :partial => 'order_item', :collection => @order.order_items    
+.right
+  %p
+    %strong Sub total:
+    = number_to_currency @order.sub_total
+  %p
+    %strong Sales tax:
+    = number_to_currency @order.sales_tax
+  %p
+    %strong Total:
+    = number_to_currency @order.total
+%p
+  %strong Email:
+  = @order.email
+%p
+  %strong Business:
+  = @order.business
+  %br
+  %strong Contact Person:
+  = @order.contact
+%p
+  %strong Address:
+  = @order.address
+== #{ link_to 'Edit', edit_order_path(@order) } | #{ link_to 'Back', orders_path }
