@@ -124,9 +124,9 @@ class OrdersController < ApplicationController
 	def export_to_csv
     @orders = OrderItem.all(:include => [:order, :product])
     csv_string = FasterCSV.generate do |csv|
-      csv << ["order_id", "order_sub_total", "order_sales_tax", "order_total", "email",  "business", "contact", "phone", "address", "notes", "product", "price", "quantity", "item_total", "created_at", "updated_at"]
+      csv << ["order_id", "order_sub_total", "order_sales_tax", "order_total", "email",  "business", "contact", "phone", "address", "notes", "product", "start_date", "price", "quantity", "item_total", "created_at", "updated_at"]
       @orders.each do |o|
-        csv << [o.order_id, o.order.sub_total, o.order.sales_tax, o.order.total, o.order.email, o.order.business, o.order.contact, o.order.phone, o.order.address, o.order.notes, o.product.item_num, o.price, o.quantity, o.item_total, o.created_at, o.updated_at]
+        csv << [o.order_id, o.order.sub_total, o.order.sales_tax, o.order.total, o.order.email, o.order.business, o.order.contact, o.order.phone, o.order.address, o.order.notes, o.product.item_num, o.product.start_date, o.price, o.quantity, o.item_total, o.created_at, o.updated_at]
       end
     end
     send_data csv_string, :type => 'text/csv; charset=iso-8859-1; header=present', :disposition => "attachment; filename=orders.csv"
