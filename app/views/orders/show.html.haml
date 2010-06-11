@@ -1,26 +1,70 @@
-%h1== Order WHUS#{@order.id}
-%table#products{:width => "100%"}
-  = render :partial => 'order_item', :collection => @order.order_items    
-.right
+#masthead
+  %h1 Ellison
   %p
-    %strong Sub total:
-    = number_to_currency @order.sub_total
+    Ellison Educational Equipment, Inc.
+    %br
+    25862 Commercecentre Drive
+    %br
+    Lake Forest, CA 92630
   %p
-    %strong Sales tax:
-    = number_to_currency @order.sales_tax
+    Telephone: (800) 253-223
+    %br
+    Fax: (800) 253-224
+    %br
+    Shop Online: http://www.ellison.com
+#order_info
+  %p#order_data
+    %strong Quote Order:
+    %strong== WHUS#{@order.id}
+    %br
+    Date:
+    = l @order.created_at, :format => :date_only
+    %br
+    Page: 1 of 1
+    %br
+    Your Reference Number:
+    %strong== WHUS#{@order.id}
   %p
-    %strong Total:
-    = number_to_currency @order.total
+    %strong Customer Information:
+    %br
+    Business Name:
+    = @order.business
+    %br
+    Contact Person:
+    = @order.contact
+    %br
+    Phone Number:
+    = @order.phone
+    %br
+    Email Address:
+    = @order.email
+    %br
+    Address:
+    = @order.address
+
+  %table#products{:width => "100%"}
+    %tr
+      %th{:align => 'left'} Item Number
+      %th{:align => 'left'} Description
+      %th{:align => 'center'} Launch Month
+      %th{:align => 'center'} Quantity
+      %th{:align => 'center'} Unit
+      %th{:align => 'right'} Unit Price
+      %th{:align => 'right'} Total
+    = render :partial => 'order_item', :collection => @order.order_items    
+  .right
+    %p
+      %strong Sub total:
+      = number_to_currency @order.sub_total
+    %p
+      %strong Sales tax:
+      = number_to_currency @order.sales_tax
+    %p
+      %strong Total:
+      = number_to_currency @order.total
+#footer
+  %h1 TERMS AND CONDITIONS OF SALE
+  %p The Ellison Reseller Terms and Conditions of Sale Agreement located at www.ellisonretaielers.com/signup constitutes part of this order.
+  
 %p
-  %strong Email:
-  = @order.email
-%p
-  %strong Business:
-  = @order.business
-  %br
-  %strong Contact Person:
-  = @order.contact
-%p
-  %strong Address:
-  = @order.address
-== #{ link_to 'Edit', edit_order_path(@order) } | #{ link_to 'Back', orders_path }
+  == #{ link_to 'Edit', edit_order_path(@order) } | #{ link_to 'Back', orders_path }
