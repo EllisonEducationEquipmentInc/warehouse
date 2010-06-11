@@ -1,12 +1,10 @@
 #masthead {
+  margin: 40px 0 0 0;
   overflow: auto;
 }
-#masthead h1 { 
-	background: url(/images/logo_ellison.png) no-repeat; 
-	width: 155px; 
-	height: 55px;
-	text-indent: -9999em;
-	margin: 0px; 
+
+#masthead img#branding {
+  float: right;
 }
 
 #masthead h1 {
