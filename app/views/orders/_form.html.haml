@@ -11,11 +11,13 @@
   = f.error_messages
   %table#products{:width => "100%"}
     %tr
-      %th Item
-      %th Name
-      %th QTY
-      %th Item
-      %th Total
+      %th{:align => 'left'} Item Number
+      %th{:align => 'left'} Description
+      %th{:align => 'center'} Launch Month
+      %th{:align => 'center'} Quantity
+      %th{:align => 'center'} Unit
+      %th{:align => 'right'} Unit Price
+      %th{:align => 'right'} Total
     = render :partial => 'order_item', :collection => @order.order_items
   .field
     = f.label :email
