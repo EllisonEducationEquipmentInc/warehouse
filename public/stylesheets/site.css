@@ -1,0 +1,51 @@
+#masthead {
+  overflow: auto;
+}
+#masthead h1 { 
+	background: url(/images/logo_ellison.png) no-repeat; 
+	width: 155px; 
+	height: 55px;
+	text-indent: -9999em;
+	margin: 0px; 
+}
+
+#masthead h1 {
+  float: right;
+}
+
+#masthead p {
+  float: left;
+  margin-right: 100px;
+}
+
+#order_info {
+  overflow: auto;
+}
+
+#order_info h1 {
+  font-size: 22px;
+  position: relative;
+  float: right;
+}
+
+#order_info p#order_data {
+  float: right;
+  position: relative;
+}
+
+#products th {
+  font-size: 10px;
+  border-bottom: solid gray 1px;  
+}
+
+#footer h1 {
+  font-size: 9px;
+  line-height: 10px;
+  margin: 0px;
+}
+
+#footer p {
+  font-size: 9px;
+  line-height: 10px;
+  margin: 0px;
+}
