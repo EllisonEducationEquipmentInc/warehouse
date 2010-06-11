@@ -15,22 +15,31 @@
 
 #masthead p {
   float: left;
-  margin-right: 100px;
-}
-
-#order_info {
-  overflow: auto;
+  margin: 0 100px 0 0;
 }
 
 #order_info h1 {
-  font-size: 22px;
   position: relative;
-  float: right;
+  font-size: 22px;
+  left: 650px;
+  width: 300px;
+  line-height: 30px;
+  margin: 30px 0 0 0;
 }
 
 #order_info p#order_data {
-  float: right;
   position: relative;
+  margin: 0px;
+  width: 300px;
+  left: 650px;
+}
+
+#order_info p#customer_data {
+  position: relative;
+  margin: 0px;
+  width: 500px;
+  top: -72px;
+  overflow: visible;
 }
 
 #products th {
