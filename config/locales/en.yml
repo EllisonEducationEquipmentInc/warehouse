@@ -6,7 +6,7 @@ en:
   date:
     formats:
       default: "%d/%m/%Y"
-      month_only: "%B"
+      month_only: "%B %Y"
   time:
     formats:
       default: "%m/%d/%Y %I:%M:%S%p"
