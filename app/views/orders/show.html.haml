@@ -11,7 +11,7 @@
     %br
     Fax: (800) 253-2240
     %br
-    Shop Online: http://www.ellison.com
+    Shop Online: http://www.ellisonretailers.com
 #order_info
   %h1 Quote
   %p#order_data
@@ -20,11 +20,6 @@
     %br
     Date:
     = l @order.created_at, :format => :date_only
-    %br
-    Page: 1 of 1
-    %br
-    Your Reference Number:
-    %strong== WHUS#{@order.id}
   %p#customer_data
     %strong Customer Information:
     %br
@@ -51,7 +46,7 @@
       %th{:align => 'center'} Quantity
       %th{:align => 'center'} Unit
       %th{:align => 'right'} Unit Price
-      %th{:align => 'right'} Total
+      %th{:align => 'right'} Extended Price
     = render :partial => 'order_item', :collection => @order.order_items    
   .right
     %p
