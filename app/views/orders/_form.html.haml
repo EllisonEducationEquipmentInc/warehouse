@@ -17,22 +17,22 @@
       %th{:align => 'center'} Quantity
       %th{:align => 'center'} Unit
       %th{:align => 'right'} Unit Price
-      %th{:align => 'right'} Total
+      %th{:align => 'right'} Extended Price
     = render :partial => 'order_item', :collection => @order.order_items
   .field
-    = f.label :email
+    = f.label :email, 'Email Address'
     %br
     = f.text_field :email, :tabindex => 2
   .field
-    = f.label :business
+    = f.label :business, 'Business Name'
     %br
     = f.text_field :business, :tabindex => 3
   .field
-    = f.label :contact
+    = f.label :contact, 'Contact Person'
     %br
     = f.text_field :contact, :tabindex => 4
   .field
-    = f.label :phone
+    = f.label :phone, 'Phone Number'
     %br
     = f.text_field :phone, :tabindex => 5
   .field
@@ -44,7 +44,7 @@
     %br
     = f.text_area :notes, :tabindex => 7
   .field
-    = f.label :sub_total
+    = f.label :sub_total, 'Sub Total'
     %br
     = f.text_field :sub_total, :disabled => true
   .actions
