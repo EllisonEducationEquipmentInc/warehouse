@@ -106,7 +106,7 @@ class OrdersController < ApplicationController
 				page << "Sound.play('/beep-ok.mp3',{replace:false});"
 				page << "$('order_sub_total').value = parseFloat($('order_sub_total').value) + #{@product.price}"
 				page << " if ($$('#order_item_#{@order_item.product.id}').length < 1) {"
-					page.insert_html :bottom, :products, :partial => 'order_item', :object => @order_item
+					page.insert_html :top, :products, :partial => 'order_item', :object => @order_item
 				page << "} else {"
 					page << "var qty = $('order_item_#{@order_item.product.id}').down('#order_order_item_attributes_#{@order_item.id}_quantity').value * 1"
 					page << "$('order_item_#{@order_item.product.id}').down('#order_order_item_attributes_#{@order_item.id}_quantity').value = qty + 1"
