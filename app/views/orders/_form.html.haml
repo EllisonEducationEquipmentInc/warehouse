@@ -9,8 +9,8 @@
   Form.Element.focus($('upc'));
 - form_for(@order) do |f|
   = f.error_messages
-  %table#products{:width => "100%"}
-    %tr
+  %table{:width => "100%"}
+    %tr#products
       %th{:align => 'left'} Item Number
       %th{:align => 'left'} Description
       %th{:align => 'center'} Launch Month
