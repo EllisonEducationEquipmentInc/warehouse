@@ -2,7 +2,9 @@ class OrdersController < ApplicationController
   # GET /orders
   # GET /orders.xml
   def index
-    @orders = Order.paginate :page => params[:page], :per_page => 100
+    @search = Search.new(:order, :q => "orders.id LIKE ? OR orders.email LIKE ? OR orders.business LIKE ?" )
+    @search.q = '%' + params[:q] + '%' unless params[:q].blank?
+    @orders = @search.search.paginate(:page => params[:page], :per_page => 500)
 
     respond_to do |format|
       format.html # index.html.erb
