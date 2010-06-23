@@ -3,7 +3,8 @@ class Product < ActiveRecord::Base
 	has_many :order_items
 	has_many :orders, :through => :order_items
 	
-	validates_uniqueness_of :item_num, :upc
+	validates_uniqueness_of :item_num
+	validates_uniqueness_of :upc, :allow_blank => true
 	
 	named_scope :active, :conditions => ['deleted = ?', false]
 	
