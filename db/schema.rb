@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100608225838) do
+ActiveRecord::Schema.define(:version => 20100623170001) do
 
   create_table "order_items", :force => true do |t|
     t.integer  "order_id"
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(:version => 20100608225838) do
     t.datetime "updated_at"
     t.date     "start_date"
     t.integer  "min_qty",                                  :default => 1
+    t.boolean  "deleted",                                  :default => false
   end
 
   add_index "products", ["item_num"], :name => "index_products_on_item_num"
