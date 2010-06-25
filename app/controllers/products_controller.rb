@@ -91,7 +91,7 @@ class ProductsController < ApplicationController
     if request.post?
       n=0
       FasterCSV.parse(params[:import][:file], :headers => :first_row) do |row|  #:col_sep => "\t"
-				n=n+1 unless Product.create(:name => row["name"], :upc => row["upc"], :item_num => row["item_num"], :price => row["price"], :min_qty => row["min_qty"], :start_date => row['start_date']).new_record?
+				n=n+1 unless Product.create(:name => row["name"], :upc => row["upc"], :item_num => row["item_num"], :price => row["price"], :min_qty => row["min_qty"], :start_date => row['start_date'].blank? ? Time.now : row['start_date']).new_record?
       end
       flash[:notice]="CSV Import Successful,  #{n} records have been updated in the database."
     end
