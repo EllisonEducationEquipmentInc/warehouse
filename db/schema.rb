@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100719154359) do
+ActiveRecord::Schema.define(:version => 20100719160252) do
 
   create_table "order_items", :force => true do |t|
     t.integer  "order_id"
@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(:version => 20100719154359) do
 
   create_table "orders", :force => true do |t|
     t.string   "email"
-    t.decimal  "sub_total",  :precision => 6,  :scale => 2
+    t.decimal  "sub_total",  :precision => 12, :scale => 2
     t.decimal  "sales_tax",  :precision => 6,  :scale => 2
     t.decimal  "total",      :precision => 12, :scale => 2
     t.datetime "created_at"
