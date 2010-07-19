@@ -4,7 +4,7 @@ class CreateOrders < ActiveRecord::Migration
       t.string :email
       t.decimal :sub_total, :precision => 6, :scale => 2
       t.decimal :sales_tax, :precision => 6, :scale => 2
-      t.decimal :total, :precision => 6, :scale => 2
+      t.decimal :total, :precision => 12, :scale => 2
       t.timestamps
     end
 
