@@ -1,6 +1,7 @@
 # Edit this Gemfile to bundle your application's dependencies.
 source 'http://gemcutter.org'
 
+require 'csv'
 
 gem "rails", "3.0.0"
 
@@ -8,7 +9,7 @@ gem "rails", "3.0.0"
 # gem "rails", :git => "git://github.com/rails/rails.git"
 
 gem "mysql"
-gem 'fastercsv'
+#gem 'fastercsv'
 gem 'haml', ">=3.0.18"
 gem 'will_paginate', ">=3.0.pre2"
 
