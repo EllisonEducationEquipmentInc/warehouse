@@ -2,15 +2,15 @@
 source 'http://gemcutter.org'
 
 
-gem "rails", "3.0.0.beta"
+gem "rails", "3.0.0"
 
 ## Bundle edge rails:
 # gem "rails", :git => "git://github.com/rails/rails.git"
 
 gem "mysql"
 gem 'fastercsv'
-gem 'haml', "2.2.20"
-gem 'will_paginate', "3.0.pre"
+gem 'haml', ">=3.0.18"
+gem 'will_paginate', ">=3.0.pre2"
 
 ## Bundle the gems you use:
 # gem "bj"
