@@ -11,7 +11,7 @@
       %th Upc
       %th Price
       %th Start Date
-  
+      %th Min QTY
   %tbody
     - for product in @products
       %tr{ :class => cycle(:odd, :even) }
@@ -20,6 +20,7 @@
         %td= product.upc
         %td= product.price
         %td= l product.start_date
+        %td= product.min_qty
         %td= link_to 'Show', product
         %td= link_to 'Edit', edit_product_path(product)
         %td= link_to 'Destroy', product, :confirm => 'Are you sure?', :method => :delete

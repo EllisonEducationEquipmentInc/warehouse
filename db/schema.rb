@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100719160252) do
+ActiveRecord::Schema.define(:version => 20101007181621) do
 
   create_table "order_items", :force => true do |t|
     t.integer  "order_id"
@@ -24,9 +24,9 @@ ActiveRecord::Schema.define(:version => 20100719160252) do
 
   create_table "orders", :force => true do |t|
     t.string   "email"
-    t.decimal  "sub_total",  :precision => 12, :scale => 2
-    t.decimal  "sales_tax",  :precision => 6,  :scale => 2
-    t.decimal  "total",      :precision => 12, :scale => 2
+    t.decimal  "sub_total",         :precision => 12, :scale => 2
+    t.decimal  "sales_tax",         :precision => 6,  :scale => 2
+    t.decimal  "total",             :precision => 12, :scale => 2
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "business"
@@ -34,6 +34,9 @@ ActiveRecord::Schema.define(:version => 20100719160252) do
     t.string   "phone"
     t.string   "address"
     t.text     "notes"
+    t.boolean  "tax_exempt",                                       :default => false
+    t.string   "tax_exempt_number"
+    t.string   "payment_method"
   end
 
   create_table "products", :force => true do |t|

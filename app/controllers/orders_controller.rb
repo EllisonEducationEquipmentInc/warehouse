@@ -28,7 +28,7 @@ class OrdersController < ApplicationController
   # GET /orders/new
   # GET /orders/new.xml
   def new
-    @order = Order.new(:sub_total => 0.0)
+    @order = Order.new(:sub_total => 0.0, :payment_method => warehouse? ? "Credit Card" : nil)
 		@editable = true
     respond_to do |format|
       format.html # new.html.erb
@@ -57,6 +57,7 @@ class OrdersController < ApplicationController
         format.html { redirect_to(@order, :notice => 'Order was successfully created.') }
         format.xml  { render :xml => @order, :status => :created, :location => @order }
       else
+        @editable = true
         format.html { render :action => "new" }
 				format.mobile {@order.save(false); redirect_to(@order)}
         format.xml  { render :xml => @order.errors, :status => :unprocessable_entity }
@@ -100,7 +101,7 @@ class OrdersController < ApplicationController
 		render :update do |page|
 			if @product
 				if params[:id].blank?
-					@order_item = @product.order_items.build(:price => @product.price)
+					@order_item = @product.order_items.build(:price => @product.price, :quantity => tradeshow? ? @product.min_qty : 1)
 				else
 					@order_item = @product.order_items.find_or_create_by_order_id(:order_id => params[:id], :price => @product.price)
 				end
@@ -138,7 +139,7 @@ private
 	
 	def calculate_total
 		@order.sub_total = @order.order_items.inject(0) {|sum, order_item| sum += order_item.item_total}
-		@order.sales_tax = @order.sub_total * Order::SALES_TAX
+		@order.sales_tax = @order.tax_exempt? ? 0.0 : @order.sub_total * Order::SALES_TAX
 		@order.total = @order.sales_tax + @order.sub_total
 	end
 end

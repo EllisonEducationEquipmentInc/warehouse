@@ -7,13 +7,14 @@
     = submit_tag :add
 :javascript
   Form.Element.focus($('upc'));
-- form_for(@order) do |f|
+= form_for(@order) do |f|
   = f.error_messages
   %table{:width => "100%"}
     %tr#products
       %th{:align => 'left'} Item Number
       %th{:align => 'left'} Description
-      %th{:align => 'center'} Launch Month
+      - if tradeshow?
+        %th{:align => 'center'} Launch Month
       %th{:align => 'center'} Quantity
       %th{:align => 'center'} Unit
       %th{:align => 'right'} Unit Price
@@ -22,33 +23,49 @@
   .field
     = f.label :email, 'Email Address'
     %br
-    = f.text_field :email, :tabindex => 2
+    = f.text_field :email, :tabindex => i=2
+  - if warehouse?
+    .field
+      = f.label :payment_method
+      %br
+      = f.radio_button :payment_method, "Credit Card", :tabindex => i+=1
+      Credit Card
+      = f.radio_button :payment_method, "Cash", :tabindex => i+=1
+      Cash
+    .field
+      = f.label :tax_exempt
+      %br
+      = f.check_box :tax_exempt, :tabindex => i+=1
+    .field
+      = f.label :tax_exempt_number
+      %br
+      = f.text_field :tax_exempt_number, :tabindex => i+=1
   .field
     = f.label :business, 'Business Name'
     %br
-    = f.text_field :business, :tabindex => 3
+    = f.text_field :business, :tabindex => i+=1
   .field
     = f.label :contact, 'Contact Person'
     %br
-    = f.text_field :contact, :tabindex => 4
+    = f.text_field :contact, :tabindex => i+=1
   .field
     = f.label :phone, 'Phone Number'
     %br
-    = f.text_field :phone, :tabindex => 5
+    = f.text_field :phone, :tabindex => i+=1
   .field
     = f.label :address
     %br
-    = f.text_field :address, :tabindex => 6
+    = f.text_field :address, :tabindex => i+=1
   .field
     = f.label :notes
     %br
-    = f.text_area :notes, :tabindex => 7
+    = f.text_area :notes, :tabindex => i+=1
   .field
     = f.label :sub_total, 'Sub Total'
     %br
     = f.text_field :sub_total, :disabled => true
   .actions
-    = f.submit :tabindex => 9
+    = f.submit :tabindex => i+=1
 :javascript
   function update_totals(){
     var total = 0

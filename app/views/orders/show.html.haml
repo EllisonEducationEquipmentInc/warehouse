@@ -13,36 +13,42 @@
     %br
     Shop Online: http://www.ellisonretailers.com
 #order_info
-  %h1 Quote
+  %h1= order_name
   %p#order_data
-    %strong Quote Number:
-    %strong== CHAS#{@order.id}
+    %strong== #{order_name} Number:
+    %strong== #{order_prefix}#{@order.id}
     %br
     Date:
     = l @order.created_at, :format => :date_only
-  %p#customer_data
-    %strong Customer Information:
-    %br
-    Business Name:
-    = @order.business
-    %br
-    Contact Person:
-    = @order.contact
-    %br
-    Phone Number:
-    = @order.phone
-    %br
-    Email Address:
-    = @order.email
-    %br
-    Address:
-    = @order.address
+    - if warehouse?
+      %br
+      %strong Payment Method:
+      = @order.payment_method
+  - if tradeshow?
+    %p#customer_data
+      %strong Customer Information:
+      %br
+      Business Name:
+      = @order.business
+      %br
+      Contact Person:
+      = @order.contact
+      %br
+      Phone Number:
+      = @order.phone
+      %br
+      Email Address:
+      = @order.email
+      %br
+      Address:
+      = @order.address
 
   %table#products{:width => "100%"}
     %tr
       %th{:align => 'left'} Item Number
       %th{:align => 'left'} Description
-      %th{:align => 'center'} Launch Month
+      - if tradeshow?
+        %th{:align => 'center'} Launch Month
       %th{:align => 'center'} Quantity
       %th{:align => 'center'} Unit
       %th{:align => 'right'} Unit Price
@@ -52,7 +58,7 @@
     %p
       %strong Sub total:
       = number_to_currency @order.sub_total
-    -# commenting out Sales Tax & Total for now; saving for future use.
+    - if warehouse?
       %p
         %strong Sales tax:
         = number_to_currency @order.sales_tax

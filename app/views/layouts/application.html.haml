@@ -17,6 +17,7 @@
         - else  
           = link_to "Mobile Site", :mobile => 1
       %p.dontprint.notice= notice
+      %h2== App mode: #{app_mode}
       = link_to "Products", products_path, :class => 'button dontprint'
       = link_to "Orders", orders_path, :class => 'button dontprint'
       = link_to "New Sale", new_order_path, :class => 'button dontprint'
