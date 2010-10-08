@@ -9,7 +9,7 @@
   Form.Element.focus($('upc'));
 = form_for(@order) do |f|
   = f.error_messages
-  %table{:width => "100%"}
+  %table{:width => "100%", :style => "margin-bottom: 25px"}
     %tr#products
       %th{:align => 'left'} Item Number
       %th{:align => 'left'} Description
@@ -20,6 +20,16 @@
       %th{:align => 'right'} Unit Price
       %th{:align => 'right'} Extended Price
     = render :partial => 'order_item', :collection => @order.order_items
+    
+  %hr
+  %div{:style => "float: right"}
+    .field
+      = f.label :sub_total, 'Sub Total', :style => "font-weight: bold"
+      = f.text_field :sub_total, :disabled => true, :size => "8"
+    - if warehouse?
+      .field#sales_tax
+        = f.label :sales_tax, 'Sales Tax', :style => "font-weight: bold"
+        = f.text_field :sales_tax, :disabled => true, :size => "8"
   - if warehouse?
     .field
       = f.label :payment_method
@@ -31,46 +41,39 @@
     .field
       = f.label :tax_exempt
       %br
-      = f.check_box :tax_exempt, :tabindex => i+=1, :onclick => "if (this.checked){Element.show('tax_exempt_number')} else {Element.hide('tax_exempt_number')}"
+      = f.check_box :tax_exempt, :tabindex => i+=1, :onclick => "show_sales_tax(this.checked)"
     .field#tax_exempt_number{:style => "display:none"}
       = f.label :tax_exempt_number
       %br
       = f.text_field :tax_exempt_number, :tabindex => i+=1
-  .field
-    = f.label :email, 'Email Address'
-    %br
-    = f.text_field :email, :tabindex => "#{tradeshow? ? i=2 : i+=1}"
-  .field
-    = f.label :business, 'Business Name'
-    %br
-    = f.text_field :business, :tabindex => i+=1
-  .field
-    = f.label :contact, 'Contact Person'
-    %br
-    = f.text_field :contact, :tabindex => i+=1
-  .field
-    = f.label :phone, 'Phone Number'
-    %br
-    = f.text_field :phone, :tabindex => i+=1
-  .field
-    = f.label :address
-    %br
-    = f.text_field :address, :tabindex => i+=1
-  .field
+  %div{:style => "float: left; margin-right: 50px"}
+    .field
+      = f.label :contact, 'Contact Person'
+      %br
+      = f.text_field :contact, :tabindex => i+=1
+    .field
+      = f.label :business, 'Business Name'
+      %br
+      = f.text_field :business, :tabindex => i+=1
+    .field
+      = f.label :email, 'Email Address'
+      %br
+      = f.text_field :email, :tabindex => "#{tradeshow? ? i=2 : i+=1}"
+    .field
+      = f.label :phone, 'Phone Number'
+      %br
+      = f.text_field :phone, :tabindex => i+=1
+    .field
+      = f.label :address
+      %br
+      = f.text_field :address, :tabindex => i+=1
+  .field{:style => "float: left"}
     = f.label :notes
     %br
     = f.text_area :notes, :tabindex => i+=1, :rows => "10"
-  .field
-    = f.label :sub_total, 'Sub Total'
-    %br
-    = f.text_field :sub_total, :disabled => true
-  - if warehouse?
-    .field
-      = f.label :sales_tax, 'Sales Tax'
-      %br
-      = f.text_field :sales_tax, :disabled => true
-    .actions
-      = f.submit :tabindex => i+=1
+  .clearfloat
+  .actions
+    = f.submit :tabindex => i+=1
 :javascript
   function update_totals(){
     var total = 0
@@ -82,5 +85,15 @@
       salestax = total * .0875
     });
     $('order_sub_total').value = total
-    $('order_sales_tax').value = salestax
+    #{warehouse? ? "$('order_sales_tax').value = salestax" : nil}
+  }
+  
+  function show_sales_tax(value){
+    if (value) {
+      $('tax_exempt_number').show()
+      #{warehouse? ? "$('sales_tax').hide()" : nil}
+    } else {
+      $('tax_exempt_number').hide()
+      #{warehouse? ? "$('sales_tax').show()" : nil}
+    }
   }

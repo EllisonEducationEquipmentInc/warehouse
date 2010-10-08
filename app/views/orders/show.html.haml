@@ -28,20 +28,20 @@
     %p#customer_data
       %strong Customer Information:
       %br
+      Contact Person:
+      = @order.contact
+      %br
       Business Name:
       = @order.business
       %br
-      Contact Person:
-      = @order.contact
+      Address:
+      = @order.address
       %br
       Phone Number:
       = @order.phone
       %br
       Email Address:
       = @order.email
-      %br
-      Address:
-      = @order.address
 
   %table#products{:width => "100%"}
     %tr
