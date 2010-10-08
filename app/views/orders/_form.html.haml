@@ -4,7 +4,7 @@
     %span
       %strong *
     %br
-    = text_field_tag :upc, nil, :tabindex => 1, :onFocus => "this.select()"
+    = text_field_tag :upc, nil, :tabindex => 1, :onFocus => "this.select()", :maxlength => 12
   .actions
     = submit_tag :add
 :javascript
