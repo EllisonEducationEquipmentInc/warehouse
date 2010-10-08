@@ -50,7 +50,7 @@
     .field
       = f.label :contact, 'Contact Person'
       %br
-      = f.text_field :contact, :tabindex => i+=1
+      = f.text_field :contact, :tabindex => "#{tradeshow? ? i=2 : i+=1}"
     .field
       = f.label :business, 'Business Name'
       %br
@@ -58,7 +58,7 @@
     .field
       = f.label :email, 'Email Address'
       %br
-      = f.text_field :email, :tabindex => "#{tradeshow? ? i=2 : i+=1}"
+      = f.text_field :email, :tabindex => i+=1
     .field
       = f.label :phone, 'Phone Number'
       %br
