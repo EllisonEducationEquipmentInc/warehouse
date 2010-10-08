@@ -21,7 +21,7 @@ private
   end
   
   def app_mode
-    TRADESHOW ? "Trade show" : "Wharehouse"
+    TRADESHOW ? "Trade show" : "Warehouse"
   end
   
   def tradeshow?
