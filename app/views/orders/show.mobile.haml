@@ -4,7 +4,7 @@
     %table#products{:width => "100%"}
       = render :partial => 'order_item.mobile.haml', :collection => @order.order_items  
   %li
-    Sub total:
+    Subtotal:
     %small= number_to_currency @order.sub_total
   %li
     Sales tax:

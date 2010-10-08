@@ -51,7 +51,7 @@
   = render :partial => 'order_item', :collection => @order.order_items    
 .right
   %p
-    %strong Sub total:
+    %strong Subtotal:
     = number_to_currency @order.sub_total
   - if warehouse?
     %p
