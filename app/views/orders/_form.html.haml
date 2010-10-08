@@ -1,6 +1,8 @@
 - form_tag({:action => 'add_item', :id => @order}, :remote => true, :id => 'add_item_form') do
   .field
     = label_tag :item
+    %span
+      %strong *
     %br
     = text_field_tag :upc, nil, :tabindex => 1, :onFocus => "this.select()"
   .actions
