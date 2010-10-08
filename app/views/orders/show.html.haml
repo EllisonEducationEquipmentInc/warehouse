@@ -1,5 +1,5 @@
 #masthead
-  %img#branding{:src => "/images/logo_ellison.png", :alt => "Ellison Educational Equipment, Inc."}
+  %img#branding{:src => "/images/logo_ellison_#{tradeshow? ? 'tradeshow' : 'warehouse'}.png", :alt => "Ellison Educational Equipment, Inc."}
   %p
     Ellison Educational Equipment, Inc.
     %br
@@ -67,7 +67,11 @@
         = number_to_currency @order.total
 #footer
   %h1 TERMS AND CONDITIONS OF SALE
-  %p The Ellison Reseller Terms and Conditions of Sale Agreement located at www.ellisonretailers.com/signup constitutes part of this order.
+  %p
+    - if tradeshow?
+      All tradeshow sales are final. You cannot cancel a purchase nor receive a refund for this purchase.
+    - else
+      All sales are final. Goods are sold "as is". No Returns.
   
 %p.dontprint
   == #{ link_to 'Edit', edit_order_path(@order) } | #{ link_to 'Back', orders_path }
