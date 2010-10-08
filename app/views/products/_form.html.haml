@@ -18,6 +18,10 @@
     %br
     = f.text_field :price
   .field
+    = f.label :min_qty
+    %br
+    = f.text_field :min_qty
+  .field
     = f.label :start_date
     %br
     = f.date_select :start_date, :order => [:month, :day, :year]

@@ -82,10 +82,10 @@
       line_total = row.down('.quantity').value * row.down('.price').value
       row.down('.item_total').innerHTML = '$' + line_total
       total = total + line_total
-      salestax = total * .0875
+      salestax = total * 8.75
     });
     $('order_sub_total').value = total
-    #{warehouse? ? "$('order_sales_tax').value = salestax" : nil}
+    #{warehouse? ? "$('order_sales_tax').value = Math.round(salestax) / 100" : nil}
   }
   
   function show_sales_tax(value){
