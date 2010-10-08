@@ -20,15 +20,11 @@
       %th{:align => 'right'} Unit Price
       %th{:align => 'right'} Extended Price
     = render :partial => 'order_item', :collection => @order.order_items
-  .field
-    = f.label :email, 'Email Address'
-    %br
-    = f.text_field :email, :tabindex => i=2
   - if warehouse?
     .field
       = f.label :payment_method
       %br
-      = f.radio_button :payment_method, "Credit Card", :tabindex => i+=1
+      = f.radio_button :payment_method, "Credit Card", :tabindex => i=2
       Credit Card
       = f.radio_button :payment_method, "Cash", :tabindex => i+=1
       Cash
@@ -40,6 +36,10 @@
       = f.label :tax_exempt_number
       %br
       = f.text_field :tax_exempt_number, :tabindex => i+=1
+  .field
+    = f.label :email, 'Email Address'
+    %br
+    = f.text_field :email, :tabindex => "#{tradeshow? ? i=2 : i+=1}"
   .field
     = f.label :business, 'Business Name'
     %br
