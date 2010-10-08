@@ -1,37 +1,33 @@
 .clearfloat {clear:both; height:0; font-size: 1px; line-height: 0px;margin:0;padding:0;}
 
 #masthead {
-  margin: 40px 0 0 0;
+  margin: 20px 0 20px 0;
   overflow: auto;
 }
 
 #masthead img#branding {
-  float: right;
-}
-
-#masthead h1 {
-  float: right;
+  margin-right:15px;
+  float: left;
 }
 
 #masthead p {
   float: left;
-  margin: 0 100px 0 0;
+  font-size: 11px;
+  margin: 0;
+}
+
+#order_info {
+  float: right;
 }
 
 #order_info h1 {
-  position: relative;
-  font-size: 22px;
-  left: 650px;
-  width: 300px;
+  font-size: 14px;
   line-height: 30px;
-  margin: 30px 0 0 0;
+  margin: 0;
 }
 
 #order_info p#order_data {
-  position: relative;
   margin: 0px;
-  width: 300px;
-  left: 650px;
 }
 
 #order_info p#customer_data {

@@ -1,7 +1,7 @@
 !!!
 %html
   %head
-    %title== Products: #{ controller.action_name }
+    %title== #{ @title? @title : app_mode}
     = stylesheet_link_tag 'scaffold', :media => "all"
     = stylesheet_link_tag 'site', :media => "all"
     = stylesheet_link_tag 'print', :media => "print"
@@ -17,7 +17,7 @@
         - else  
           = link_to "Mobile Site", :mobile => 1
       %p.dontprint.notice= notice
-      %h2== App mode: #{app_mode}
+      %h2.dontprint== App mode: #{app_mode}
       = link_to "Products", products_path, :class => 'button dontprint'
       = link_to order_name, orders_path, :class => 'button dontprint'
       = link_to "New Sale", new_order_path, :class => 'button dontprint'

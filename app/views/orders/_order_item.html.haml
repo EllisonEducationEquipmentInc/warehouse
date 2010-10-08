@@ -7,7 +7,6 @@
     - if tradeshow?
       %td{:width => 150, :align => 'center'}= l order_item.product.start_date, :format => :month_only
     %td{:width => 60, :align => 'center'}= @editable ? order_item_fields.text_field(:quantity, :size => 2, :class => 'quantity', :onchange => "update_totals()") : order_item.quantity
-    %td{:width => 20, :align => 'center'} EA
     %td{:width => 60, :align => 'right'}
       - if @editable && tradeshow?
         = order_item_fields.text_field(:price, :size => 6, :class => 'price', :onchange => "update_totals()")

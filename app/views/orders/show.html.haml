@@ -1,69 +1,65 @@
 #masthead
   %img#branding{:src => "/images/logo_ellison_#{tradeshow? ? 'tradeshow' : 'warehouse'}.png", :alt => "Ellison Educational Equipment, Inc."}
   %p
-    Ellison Educational Equipment, Inc.
+    25862 Commercentre Drive, Lake Forest, CA 92630
     %br
-    25862 Commercecentre Drive
-    %br
-    Lake Forest, CA 92630
-  %p
     Telephone: (800) 253-2238
     %br
-    Fax: (800) 253-2240
-    %br
-    Shop Online: http://www.ellisonretailers.com
-#order_info
-  %h1= order_name
-  %p#order_data
-    %strong== #{order_name} Number:
-    %strong== #{order_prefix}#{@order.id}
-    %br
-    Date:
-    = l @order.created_at, :format => :date_only
-    - if warehouse?
-      %br
-      %strong Payment Method:
-      = @order.payment_method
-  - if tradeshow?
-    %p#customer_data
-      %strong Customer Information:
-      %br
-      Contact Person:
-      = @order.contact
-      %br
-      Business Name:
-      = @order.business
-      %br
-      Address:
-      = @order.address
-      %br
-      Phone Number:
-      = @order.phone
-      %br
-      Email Address:
-      = @order.email
+    Shop Online:
+    == #{warehouse? ? "http://www.ellison.com" : "http://www.ellisonretailers.com"}
+  #order_info
+    %p#order_data
+      %h1
+        == #{order_name}
+        == ##{order_prefix}#{@order.id}
+      %p
+        %strong
+          Date:
+          = l @order.created_at, :format => :date_only
+          - if warehouse?
+            %br
+            Payment Method:
+            = @order.payment_method
+    - if tradeshow?
+      %p#customer_data
+        %strong Customer Information:
+        %br
+        Contact Person:
+        = @order.contact
+        %br
+        Business Name:
+        = @order.business
+        %br
+        Address:
+        = @order.address
+        %br
+        Phone Number:
+        = @order.phone
+        %br
+        Email Address:
+        = @order.email
 
-  %table#products{:width => "100%"}
-    %tr
-      %th{:align => 'left'} Item Number
-      %th{:align => 'left'} Description
-      - if tradeshow?
-        %th{:align => 'center'} Launch Month
-      %th{:align => 'center'} Quantity
-      %th{:align => 'center'} Unit
-      %th{:align => 'right'} Unit Price
-      %th{:align => 'right'} Extended Price
-    = render :partial => 'order_item', :collection => @order.order_items    
-  .right
+%table#products{:width => "100%"}
+  %tr
+    %th{:align => 'left'} Item Number
+    %th{:align => 'left'} Description
+    - if tradeshow?
+      %th{:align => 'center'} Launch Month
+    %th{:align => 'center'} Quantity
+    %th{:align => 'right'} Unit Price
+    %th{:align => 'right'} Extended Price
+  = render :partial => 'order_item', :collection => @order.order_items    
+.right
+  %p
+    %strong Sub total:
+    = number_to_currency @order.sub_total
+  - if warehouse?
     %p
-      %strong Sub total:
-      = number_to_currency @order.sub_total
-    - if warehouse?
-      %p
-        %strong Sales tax:
-        = number_to_currency @order.sales_tax
-      %p
-        %strong Total:
+      %strong Sales tax:
+      = number_to_currency @order.sales_tax
+    %p
+      %strong
+        Total:
         = number_to_currency @order.total
 #footer
   %h1 TERMS AND CONDITIONS OF SALE
