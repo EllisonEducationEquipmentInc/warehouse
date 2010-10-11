@@ -91,7 +91,7 @@ class ProductsController < ApplicationController
     if request.post?
       n=0
       CSV.parse(params[:import][:file], :headers => :first_row) do |row|  #:col_sep => "\t"
-				n=n+1 if Product.find_or_initialize_by_item_num(row["item_num"]).update_attributes(:name => row["name"], :upc => row["upc"], :price => row["price"], :min_qty => row["min_qty"], :start_date => row['start_date'].blank? ? Time.now : row['start_date'])
+				n=n+1 if Product.find_or_initialize_by_item_num(row["item_num"]).update_attributes(:name => row["name"], :upc => row["upc"], :price => row["price"], :min_qty => row["min_qty"] || 1, :start_date => row['start_date'].blank? ? Time.now : row['start_date'])
       end
       flash[:notice]="CSV Import Successful,  #{n} records have been updated in the database."
     end
