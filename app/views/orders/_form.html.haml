@@ -25,12 +25,15 @@
   %hr
   %div{:style => "float: right"}
     .field
-      = f.label :sub_total, 'Subtotal', :style => "font-weight: bold"
-      = f.text_field :sub_total, :disabled => true, :size => "8"
+      = f.label :sub_total, 'Subtotal', :class => "ordertotals"
+      = f.text_field :sub_total, :disabled => true, :size => "8", :class => "ordertotals"
     - if warehouse?
       .field#sales_tax{:style => "display:#{@order.tax_exempt ? 'none' : 'block'}"}
-        = f.label :sales_tax, 'Sales Tax', :style => "font-weight: bold"
-        = f.text_field :sales_tax, :disabled => true, :size => "8"
+        = f.label :sales_tax, 'Sales Tax', :class => "ordertotals"
+        = f.text_field :sales_tax, :disabled => true, :size => "8", :class => "ordertotals"
+      .field{:style => "display:#{@order.tax_exempt ? 'none' : 'block'}"}
+        = f.label :total, 'Order Total', :class => "ordertotals"
+        = f.text_field :total, :disabled => true, :size => "8", :class => "ordertotals"
   - if warehouse?
     .field
       = f.label :payment_method
@@ -77,16 +80,19 @@
     = f.submit :tabindex => i+=1
 :javascript
   function update_totals(){
-    var total = 0
+    var subtotal = 0
     var salestax = 0
+    var total = 0
     $$('.order_item_row').each(function(row){
       line_total = row.down('.quantity').value * row.down('.price').value
       row.down('.item_total').innerHTML = '$' + line_total
-      total = total + line_total
-      salestax = total * 8.75
+      subtotal = subtotal + line_total
+      salestax = Math.round(subtotal * 8.75) / 100
+      total = subtotal + salestax
     });
-    $('order_sub_total').value = total
-    #{warehouse? ? "$('order_sales_tax').value = Math.round(salestax) / 100" : nil}
+    $('order_sub_total').value = subtotal
+    #{warehouse? ? "$('order_sales_tax').value = salestax" : nil}
+    #{warehouse? ? "$('order_total').value = total" : nil}
   }
   
   function show_sales_tax(value){

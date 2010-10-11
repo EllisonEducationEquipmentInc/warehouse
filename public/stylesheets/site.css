@@ -1,6 +1,7 @@
 .clearfloat {clear:both; height:0; font-size: 1px; line-height: 0px;margin:0;padding:0;}
 .required { font-weight:bold; color:#c00;}
 .selected { background-color: #999; color: #fff;}
+.ordertotals { font-weight: bold; width: 90px;display: block; float:left; margin-bottom:5px; }
 
 #masthead {
   margin: 20px 0 20px 0;

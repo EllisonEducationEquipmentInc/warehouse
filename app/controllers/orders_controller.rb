@@ -29,7 +29,7 @@ class OrdersController < ApplicationController
   # GET /orders/new
   # GET /orders/new.xml
   def new
-    @order = Order.new(:sub_total => 0.0, :payment_method => warehouse? ? "Credit Card" : nil, :sales_tax => warehouse? ? 0.0 : nil)
+    @order = Order.new(:sub_total => 0.0, :payment_method => warehouse? ? "Credit Card" : nil, :sales_tax => warehouse? ? 0.0 : nil, :total => warehouse? ? 0.0 : nil)
 		@editable = true
     respond_to do |format|
       format.html # new.html.erb
