@@ -108,7 +108,6 @@ class OrdersController < ApplicationController
 					@order_item.update_attributes :price => @product.price
 				end
 				page << "$('add_item_form').reset()"
-				page << "Sound.play('/beep-ok.mp3',{replace:false});"
 				page << "$('order_sub_total').value = parseFloat($('order_sub_total').value) + #{@product.price}"
 				page << " if ($$('#order_item_#{@order_item.product.id}').length < 1) {"
 					page.insert_html :after, :products, :partial => 'order_item', :object => @order_item
@@ -119,7 +118,7 @@ class OrdersController < ApplicationController
 				page.visual_effect :highlight, "order_item_#{@order_item.product.id}"
 				page << "update_totals()"
 			else
-				page << "Sound.play('/beep.mp3',{replace:false});"
+				page << "Sound.play('/error.mp3',{replace:false});"
 				page.alert "product not found"
 			end
 			page << "Form.Element.focus($('upc'));"
