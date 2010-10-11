@@ -5,6 +5,8 @@ class Product < ActiveRecord::Base
 	
 	validates_uniqueness_of :item_num
 	validates_uniqueness_of :upc, :allow_blank => true
+	validates_presence_of :min_qty, :if => Proc.new {|obj| TRADESHOW}
+	validates_numericality_of :min_qty, :if => Proc.new {|obj| TRADESHOW}
 	
 	named_scope :active, :conditions => ['deleted = ?', false]
 	
