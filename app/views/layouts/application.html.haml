@@ -18,9 +18,9 @@
           = link_to "Mobile Site", :mobile => 1
       %p.dontprint.notice= notice
       %h2.dontprint== App mode: #{app_mode}
-      = link_to "Products", products_path, :class => 'button dontprint'
-      = link_to order_name, orders_path, :class => 'button dontprint'
-      = link_to "New Sale", new_order_path, :class => 'button dontprint'
-      = link_to "Print", "javascript:window.print()", :class => 'button dontprint' if (params[:controller] == 'orders' && params[:action] == 'show')
+      = link_to "Products", products_path, :class => "button dontprint #{'selected' if (params[:controller] == 'products')}"
+      = link_to order_name, orders_path, :class => "button dontprint #{'selected' if (params[:controller] == 'orders' && params[:action] == 'index')}"
+      = link_to "New Sale", new_order_path, :class => "button dontprint #{'selected' if (params[:controller] == 'orders' && params[:action] == 'new')}"
+      = link_to "Print", "javascript:window.print()", :class => 'button dontprint selected' if (params[:controller] == 'orders' && params[:action] == 'show')
       .clear
       = yield

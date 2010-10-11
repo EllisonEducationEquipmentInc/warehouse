@@ -6,6 +6,7 @@
           Select a CSV File :
       %td
         = f.file_field :file
+        = link_to "click here to see a sample CSV file", "/sampleposuploadcsvfile.csv"
     %tr
       %td{ :colspan => "2" }
         = submit_tag 'Submit'
