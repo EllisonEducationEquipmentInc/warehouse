@@ -28,7 +28,7 @@
       = f.label :sub_total, 'Subtotal', :style => "font-weight: bold"
       = f.text_field :sub_total, :disabled => true, :size => "8"
     - if warehouse?
-      .field#sales_tax
+      .field#sales_tax{:style => "display:#{@order.tax_exempt ? 'none' : 'block'}"}
         = f.label :sales_tax, 'Sales Tax', :style => "font-weight: bold"
         = f.text_field :sales_tax, :disabled => true, :size => "8"
   - if warehouse?
@@ -43,9 +43,8 @@
       = f.label :tax_exempt
       %br
       = f.check_box :tax_exempt, :tabindex => i+=1, :onclick => "show_sales_tax(this.checked)"
-    .field#tax_exempt_number{:style => "display:none"}
-      = f.label :tax_exempt_number
-      %span.required *
+    .field#tax_exempt_number{:style => "display:#{@order.tax_exempt ? 'block' : 'none'}"}
+      = f.label :tax_exempt_number, "Tax Exempt Number<span class='required'> *</span>".html_safe
       %br
       = f.text_field :tax_exempt_number, :tabindex => i+=1
   %div{:style => "float: left; margin-right: 50px"}
