@@ -21,5 +21,6 @@
       = link_to "Products", products_path, :class => 'button dontprint'
       = link_to order_name, orders_path, :class => 'button dontprint'
       = link_to "New Sale", new_order_path, :class => 'button dontprint'
+      = link_to "Print", "javascript:window.print()", :class => 'button dontprint' if (params[:controller] == 'orders' && params[:action] == 'show')
       .clear
       = yield
