@@ -1,8 +1,7 @@
 - form_tag({:action => 'add_item', :id => @order}, :remote => true, :id => 'add_item_form') do
   .field
     = label_tag :item
-    %span
-      %strong *
+    %span.required *
     %br
     = text_field_tag :upc, nil, :tabindex => 1, :onFocus => "this.select()", :maxlength => 12
   .actions
@@ -46,6 +45,7 @@
       = f.check_box :tax_exempt, :tabindex => i+=1, :onclick => "show_sales_tax(this.checked)"
     .field#tax_exempt_number{:style => "display:none"}
       = f.label :tax_exempt_number
+      %span.required *
       %br
       = f.text_field :tax_exempt_number, :tabindex => i+=1
   %div{:style => "float: left; margin-right: 50px"}

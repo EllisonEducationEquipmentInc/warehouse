@@ -3,8 +3,7 @@
   
   .field
     = f.label :item_num
-    %span
-      %strong *
+    %span.required *
     %br
     = f.text_field :item_num, :maxlength => 12, :size => 15
   .field
@@ -17,8 +16,7 @@
     = f.text_field :upc
   .field
     = f.label :price
-    %span
-      %strong *
+    %span.required *
     %br
     = f.text_field :price
   .field
