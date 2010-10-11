@@ -31,11 +31,8 @@
   margin: 0px;
 }
 
-#order_info p#customer_data {
-  position: relative;
-  margin: 0px;
-  width: 500px;
-  top: -72px;
+p#customer_data {
+  margin: 25px 0 0 0;
   overflow: visible;
 }
 
