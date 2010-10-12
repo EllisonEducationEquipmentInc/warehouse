@@ -31,7 +31,7 @@
       .field#sales_tax{:style => "display:#{@order.tax_exempt ? 'none' : 'block'}"}
         = f.label :sales_tax, 'Sales Tax', :class => "ordertotals"
         = f.text_field :sales_tax, :disabled => true, :size => "8", :class => "ordertotals"
-      .field{:style => "display:#{@order.tax_exempt ? 'none' : 'block'}"}
+      .field#total{:style => "display:#{@order.tax_exempt ? 'none' : 'block'}"}
         = f.label :total, 'Order Total', :class => "ordertotals"
         = f.text_field :total, :disabled => true, :size => "8", :class => "ordertotals"
   - if warehouse?
@@ -99,8 +99,10 @@
     if (value) {
       $('tax_exempt_number').show()
       #{warehouse? ? "$('sales_tax').hide()" : nil}
+      #{warehouse? ? "$('total').hide()" : nil}
     } else {
       $('tax_exempt_number').hide()
       #{warehouse? ? "$('sales_tax').show()" : nil}
+      #{warehouse? ? "$('total').show()" : nil}
     }
   }
