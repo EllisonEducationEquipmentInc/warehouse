@@ -17,7 +17,6 @@
       - if tradeshow?
         %th{:align => 'center'} Launch Month
       %th{:align => 'center'} Quantity
-      %th{:align => 'center'} Unit
       %th{:align => 'right'} Unit Price
       %th{:align => 'right'} Extended Price
     = render :partial => 'order_item', :collection => @order.order_items
@@ -105,4 +104,9 @@
       #{warehouse? ? "$('sales_tax').show()" : nil}
       #{warehouse? ? "$('total').show()" : nil}
     }
+  }
+  
+  function product_not_found(){
+    $('order_notes').value += 'product not found: ' + $('upc').value + '\n';
+    $('order_notes').focus();
   }

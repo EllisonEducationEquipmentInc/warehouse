@@ -119,7 +119,7 @@ class OrdersController < ApplicationController
 				page << "update_totals()"
 			else
 				page << "Sound.play('/error.mp3',{replace:false});"
-				page.alert "product not found"
+				page << "product_not_found()"
 			end
 			page << "Form.Element.focus($('upc'));"
 		end
