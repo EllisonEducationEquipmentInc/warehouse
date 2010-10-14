@@ -4,6 +4,8 @@
     %span.required *
     %br
     = text_field_tag :upc, nil, :tabindex => 1, :onFocus => "this.select()", :maxlength => 12
+    %span#warning{ :style => "display:none"}
+      PRODUCT NOT FOUND!
   .actions
     = submit_tag :add
 :javascript
@@ -120,6 +122,7 @@
   }
   
   function product_not_found(){
+    $('warning').show();
     $('order_notes').value += 'product not found: ' + $('upc').value + '\n';
     $('order_notes').focus();
   }

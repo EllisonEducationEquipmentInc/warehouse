@@ -3,6 +3,15 @@
 .selected { background-color: #999; color: #fff;}
 .ordertotals { font-weight: bold; width: 90px;display: block; float:left; margin-bottom:5px; }
 
+#warning{
+  padding:5px;
+  background-color:#c00;
+  color:#fff;
+  font-size:20px;
+  text-transform:uppercase;
+  font-weight:bold;
+}
+
 #masthead {
   margin: 20px 0 20px 0;
   overflow: auto;

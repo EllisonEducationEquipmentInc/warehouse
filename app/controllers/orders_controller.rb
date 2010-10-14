@@ -100,6 +100,7 @@ class OrdersController < ApplicationController
 		@editable = true
 		@product = Product.active.find_by_upc(params[:upc]) || Product.active.find_by_item_num(params[:upc])
 		render :update do |page|
+		  page << "$('warning').hide()"
 			if @product
 				if params[:id].blank?
 					@order_item = @product.order_items.build(:price => @product.price, :quantity => tradeshow? ? @product.min_qty : 1)
