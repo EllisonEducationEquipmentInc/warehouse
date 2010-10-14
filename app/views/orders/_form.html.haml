@@ -86,7 +86,8 @@
     = f.text_area :notes, :tabindex => i+=1, :rows => "10"
   .clearfloat
   .actions
-    = f.submit :tabindex => i+=1
+    = f.submit :tabindex => i+=1, :class => "button"
+  .clearfloat
 :javascript
   function update_totals(){
     var subtotal = 0

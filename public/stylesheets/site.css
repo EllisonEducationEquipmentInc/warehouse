@@ -63,3 +63,16 @@ p#customer_data {
   line-height: 12px;
   margin: 0px;
 }
+
+#order_submit {
+  float:right;
+  color: #fff;
+  background-color:green;
+  border:2px solid #66cc66;
+}
+#order_submit:hover {
+  color: #fff;
+  background-color:#00cc00;
+  border:2px solid #009900;
+  cursor: pointer; cursor: hand;
+}
