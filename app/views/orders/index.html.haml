@@ -31,7 +31,7 @@
         %td= l order.created_at, :format => :date_only
         %td= link_to 'Show', order
         %td= link_to 'Edit', edit_order_path(order)
-        %td= link_to 'Destroy', order, :confirm => 'Are you sure?', :method => :delete
+        %td= link_to 'Delete', order, :confirm => 'Are you sure?', :method => :delete
 %br
 = will_paginate @orders
 %br

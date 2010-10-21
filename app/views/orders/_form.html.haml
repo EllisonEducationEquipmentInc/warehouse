@@ -84,8 +84,7 @@
     = f.label :notes
     %br
     = f.text_area :notes, :tabindex => i+=1, :rows => "10"
-  .clearfloat
-  .actions
+  .actions{:style => "float: right"}
     = f.submit :tabindex => i+=1, :class => "button"
   .clearfloat
 :javascript

@@ -20,6 +20,11 @@
             %br
             Payment Method:
             = @order.payment_method
+            - if @order.tax_exempt
+              %br
+              Tax Exempt Number:
+              = @order.tax_exempt_number
+            
   - if tradeshow?
     .clearfloat
     %p#customer_data

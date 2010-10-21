@@ -65,6 +65,7 @@ p#customer_data {
 }
 
 #order_submit {
+  margin: 18px 0 0 0;
   float:right;
   color: #fff;
   background-color:green;
