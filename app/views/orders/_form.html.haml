@@ -1,3 +1,29 @@
+#order_totals
+  %table
+    %tr
+      %td
+        Item Quantity Total:
+        %br
+        Subtotal
+        - if warehouse?
+          %br
+          Sales Tax
+          %br
+          Order Total
+      %td
+        %span#qtytotal
+          0 items
+        %br
+        %span#subtotal
+          $0
+        - if warehouse?
+          %br
+          %span#salestax
+            $0.00
+          %br
+          %span#ordertotal
+            $0.00
+
 - form_tag({:action => 'add_item', :id => @order}, :remote => true, :id => 'add_item_form') do
   .field
     = label_tag :item
@@ -51,7 +77,7 @@
       Credit Card
       = f.radio_button :payment_method, "Cash", :tabindex => i+=1
       Cash
-    .field
+    .field{:style => "float: left; margin-right: 50px"}
       = f.label :tax_exempt
       %br
       = f.check_box :tax_exempt, :tabindex => i+=1, :onclick => "show_sales_tax(this.checked)"
@@ -108,6 +134,11 @@
     $('order_qty_total').value = total_qty
     #{warehouse? ? "$('order_sales_tax').value = salestax" : nil}
     #{warehouse? ? "$('order_total').value = total" : nil}
+    
+    $('qtytotal').innerHTML = total_qty + ' items'
+    $('subtotal').innerHTML = '$' + subtotal
+    #{warehouse? ? "$('salestax').innerHTML = '$' + salestax" : nil}
+    #{warehouse? ? "$('ordertotal').innerHTML = '$' + total" : nil}
   }
   
   function show_sales_tax(value){
@@ -115,10 +146,14 @@
       $('tax_exempt_number').show()
       #{warehouse? ? "$('sales_tax').hide()" : nil}
       #{warehouse? ? "$('total').hide()" : nil}
+      #{warehouse? ? "$('salestax').hide()" : nil}
+      #{warehouse? ? "$('ordertotal').hide()" : nil}
     } else {
       $('tax_exempt_number').hide()
       #{warehouse? ? "$('sales_tax').show()" : nil}
       #{warehouse? ? "$('total').show()" : nil}
+      #{warehouse? ? "$('salestax').show()" : nil}
+      #{warehouse? ? "$('ordertotal').show()" : nil}
     }
   }
   

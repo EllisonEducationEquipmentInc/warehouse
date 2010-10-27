@@ -77,3 +77,18 @@ p#customer_data {
   border:2px solid #009900;
   cursor: pointer; cursor: hand;
 }
+
+#order_totals {
+  float: right;
+  margin-bottom: 10px;
+  font-weight:bold;
+}
+
+#order_totals span {
+  color:green;
+}
+
+#order_totals table td {
+  padding-left: 8px;
+  vertical-align: top;
+}
