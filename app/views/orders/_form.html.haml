@@ -23,6 +23,14 @@
           %br
           %span#ordertotal
             $0.00
+    - if (params[:controller] == 'orders' && params[:action] == 'edit')
+      %tr
+        %td.timestamps{:colspan => "2"}
+          Created on: 
+          = l @order.created_at, :format => :default
+          %br
+          Modified on:
+          = l @order.updated_at, :format => :default
 
 - form_tag({:action => 'add_item', :id => @order}, :remote => true, :id => 'add_item_form') do
   .field
@@ -32,7 +40,7 @@
     = text_field_tag :upc, nil, :tabindex => 1, :onFocus => "this.select()", :maxlength => 12
     %span#warning{ :style => "display:none"}
       PRODUCT NOT FOUND!
-  .actions
+  .actions{:style => "margin-bottom:50px"}
     = submit_tag :add
 :javascript
   Form.Element.focus($('upc'));

@@ -98,3 +98,9 @@ p#customer_data {
   padding-left: 8px;
   vertical-align: top;
 }
+
+#order_totals table td.timestamps {
+  font-weight: normal;
+  font-size: 11px;
+  padding-left: 8px;
+}
