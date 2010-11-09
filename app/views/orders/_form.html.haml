@@ -26,7 +26,7 @@
 
 - form_tag({:action => 'add_item', :id => @order}, :remote => true, :id => 'add_item_form') do
   .field
-    = label_tag :item
+    = label_tag :item, 'Item Number or UPC Scan'
     %span.required *
     %br
     = text_field_tag :upc, nil, :tabindex => 1, :onFocus => "this.select()", :maxlength => 12
@@ -38,8 +38,8 @@
   Form.Element.focus($('upc'));
 = form_for(@order) do |f|
   = f.error_messages
-  %table{:width => "100%", :style => "margin-bottom: 25px"}
-    %tr#products
+  %table#products{:width => "100%", :style => "margin-bottom: 25px"}
+    %tr
       %th{:align => 'left', :width => '85'} Item Number
       %th{:align => 'left'} Description
       - if tradeshow?
@@ -48,14 +48,6 @@
       %th{:align => 'right', :width => '60'} Unit Price
       %th{:align => 'right', :width => '100'} Extended Price
     = render :partial => 'order_item', :collection => @order.order_items
-    %tr
-      %td
-      %td
-      - if tradeshow?
-        %td
-      %td{:align => 'center', :width => '60'}= text_field_tag "order_qty_total", "0", :disabled => true, :size => "2"
-      %td
-      %td
     
   %hr
   %div{:style => "float: right"}
@@ -112,7 +104,8 @@
     %br
     = f.text_area :notes, :tabindex => i+=1, :rows => "10"
   .actions{:style => "float: right"}
-    = f.submit :tabindex => i+=1, :class => "button"
+    = f.submit :tabindex => i+=1, :class => "button", :onclick => "$(this).hide();$('order_loading').show();"
+    #order_loading{:style => 'display:none'}= image_tag('/images/loader-ajax.gif')
   .clearfloat
 :javascript
   function update_totals(){
@@ -131,7 +124,6 @@
       total = subtotal + salestax
     });
     $('order_sub_total').value = subtotal
-    $('order_qty_total').value = total_qty
     #{warehouse? ? "$('order_sales_tax').value = salestax" : nil}
     #{warehouse? ? "$('order_total').value = total" : nil}
     
@@ -139,6 +131,8 @@
     $('subtotal').innerHTML = '$' + subtotal
     #{warehouse? ? "$('salestax').innerHTML = '$' + salestax" : nil}
     #{warehouse? ? "$('ordertotal').innerHTML = '$' + total" : nil}
+    
+    $('upc').focus();
   }
   
   function show_sales_tax(value){

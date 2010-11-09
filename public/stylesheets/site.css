@@ -78,6 +78,12 @@ p#customer_data {
   cursor: pointer; cursor: hand;
 }
 
+#order_loading {
+  margin-top: 40px;
+  width: 175px;
+  text-align: center;
+}
+
 #order_totals {
   float: right;
   margin-bottom: 10px;
