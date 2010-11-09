@@ -15,7 +15,7 @@
       %p
         %strong
           Date:
-          = l @order.created_at, :format => :date_only
+          = l @order.created_at, :format => :default
           - if warehouse?
             %br
             Payment Method:
