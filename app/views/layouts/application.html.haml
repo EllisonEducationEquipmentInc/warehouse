@@ -9,7 +9,7 @@
     = javascript_include_tag :defaults, 'sound'
     = csrf_meta_tag
   
-  %body{:onload => "#{(params[:controlle] == 'orders' && params[:action] == 'show') ? 'window.print()' : nil}"}
+  %body{:onload => "#{(params[:controller] == 'orders' && params[:action] == 'show') ? 'window.print()' : nil}"}
     #container
       -#
         %p.dontprint 
