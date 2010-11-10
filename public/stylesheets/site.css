@@ -104,3 +104,12 @@ p#customer_data {
   font-size: 11px;
   padding-left: 8px;
 }
+.validation-advice {
+  width: 225px;
+  padding:5px;
+  background-color:#c00;
+  color:#fff;
+  font-size:14px;
+  text-transform:uppercase;
+  font-weight:bold;
+}

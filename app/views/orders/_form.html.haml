@@ -32,17 +32,18 @@
           Modified on:
           = l @order.updated_at, :format => :default
 
-- form_tag({:action => 'add_item', :id => @order}, :remote => true, :id => 'add_item_form') do
+- form_tag({:action => 'add_item', :id => @order}, :remote => true, :id => 'add_item_form', :onsubmit => "$('warning').hide();") do
   .field
     = label_tag :item, 'Item Number or UPC Scan'
     %span.required *
     %br
-    = text_field_tag :upc, nil, :tabindex => 1, :onFocus => "this.select()", :maxlength => 12
+    = text_field_tag :upc, nil, :tabindex => 1, :onFocus => "this.select();", :maxlength => 12, :class => 'required'
     %span#warning{ :style => "display:none"}
       PRODUCT NOT FOUND!
   .actions{:style => "margin-bottom:50px"}
     = submit_tag :add
 :javascript
+  new Validation('add_item_form');
   Form.Element.focus($('upc'));
 = form_for(@order) do |f|
   = f.error_messages
@@ -159,8 +160,14 @@
     }
   }
   
-  function product_not_found(){
-    $('warning').show();
-    $('order_notes').value += 'product not found: ' + $('upc').value + '\n';
-    $('order_notes').focus();
+  function product_not_found(value){
+    if (value) {
+      $('warning').innerHTML = 'this field cannot be blank'
+      $('warning').show();
+    } else {
+      $('warning').innerHTML = 'product not found'
+      $('warning').show();
+      $('order_notes').value += 'product not found: ' + $('upc').value + '\n';
+      $('order_notes').focus();    
+    }
   }

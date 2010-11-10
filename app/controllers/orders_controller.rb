@@ -4,7 +4,7 @@ class OrdersController < ApplicationController
   def index
     @search = Search.new(:order, :q => "orders.id LIKE ? OR orders.email LIKE ? OR orders.business LIKE ?" )
     @search.q = '%' + params[:q] + '%' unless params[:q].blank?
-    @orders = @search.search.paginate(:page => params[:page], :per_page => 500)
+    @orders = @search.search.paginate(:page => params[:page], :per_page => 500, :order => "created_at DESC")
 
     respond_to do |format|
       format.html # index.html.erb
@@ -100,7 +100,6 @@ class OrdersController < ApplicationController
 		@editable = true
 		@product = Product.active.find_by_upc(params[:upc]) || Product.active.find_by_item_num(params[:upc])
 		render :update do |page|
-		  page << "$('warning').hide()"
 			if @product
 				if params[:id].blank?
 					@order_item = @product.order_items.build(:price => @product.price, :quantity => tradeshow? ? @product.min_qty : 1)
