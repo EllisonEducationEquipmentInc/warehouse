@@ -128,9 +128,9 @@ class OrdersController < ApplicationController
 	def export_to_csv
     @orders = OrderItem.all(:include => [:order, :product])
     csv_string = CSV.generate do |csv|
-      csv << ["itemid", "configuration", "size", "color", "qty", "unit", "unitprice", "discount", "discount%", "order_id", "order_sub_total", "order_sales_tax", "order_total", "email",  "business", "contact", "phone", "address", "payment_method", "tax_exempt", "tax_exempt_number", "notes", "start_date", "item_total", "created_at", "updated_at"]
+      csv << ["itemid", "qty", "unit", "unitprice", "discount", "discount%", "order_id", "order_sub_total", "order_sales_tax", "order_total", "email",  "business", "contact", "phone", "address", "payment_method", "tax_exempt", "tax_exempt_number", "notes", "start_date", "item_total", "created_at", "updated_at"]
       @orders.each do |o|
-        csv << [o.product.item_num, "", "", "", o.quantity, "EA", o.price, "", "", "#{order_prefix}#{o.order_id}", o.order.sub_total, o.order.sales_tax, o.order.total, o.order.email, o.order.business, o.order.contact, o.order.phone, o.order.address, o.order.payment_method, o.order.tax_exempt, o.order.tax_exempt_number, o.order.notes, o.product.start_date, o.item_total, o.created_at, o.updated_at]
+        csv << [o.product.item_num, o.quantity, "EA", o.price, "", "", "#{order_prefix}#{o.order_id}", o.order.sub_total, o.order.sales_tax, o.order.total, o.order.email, o.order.business, o.order.contact, o.order.phone, o.order.address, o.order.payment_method, o.order.tax_exempt, o.order.tax_exempt_number, o.order.notes, o.product.start_date, o.item_total, o.created_at, o.updated_at]
       end
     end
     send_data csv_string, :type => 'text/csv; charset=iso-8859-1; header=present', :disposition => "attachment; filename=orders.csv"
