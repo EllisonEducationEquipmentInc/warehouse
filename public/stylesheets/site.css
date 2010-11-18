@@ -47,7 +47,7 @@ p#customer_data {
   overflow: visible;
 }
 
-#products th {
+.products th {
   font-size: 10px;
   border-bottom: solid gray 1px;  
 }
