@@ -91,13 +91,14 @@
   .clearfloat
   %div{:style => "float: left; margin-right: 50px"}
     .field
+      = f.label :customer_number
+      %span.required *
+      %br
+      = f.text_field :customer_number, :tabindex => "#{tradeshow? ? i=2 : i+=1}"
+    .field
       = f.label :contact, 'Contact Person'
       %br
-      = f.text_field :contact, :tabindex => "#{tradeshow? ? i=2 : i+=1}"
-    .field
-      = f.label :customer_number
-      %br
-      = f.text_field :customer_number, :tabindex => i+=1
+      = f.text_field :contact, :tabindex => i+=1
     .field
       = f.label :business, 'Business Name'
       %br
