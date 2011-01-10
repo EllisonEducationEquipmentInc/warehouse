@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101007181621) do
+ActiveRecord::Schema.define(:version => 20110110164353) do
 
   create_table "order_items", :force => true do |t|
     t.integer  "order_id"
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(:version => 20101007181621) do
     t.boolean  "tax_exempt",                                       :default => false
     t.string   "tax_exempt_number"
     t.string   "payment_method"
+    t.string   "customer_number"
   end
 
   create_table "products", :force => true do |t|

@@ -95,6 +95,10 @@
       %br
       = f.text_field :contact, :tabindex => "#{tradeshow? ? i=2 : i+=1}"
     .field
+      = f.label :customer_number
+      %br
+      = f.text_field :customer_number, :tabindex => i+=1
+    .field
       = f.label :business, 'Business Name'
       %br
       = f.text_field :business, :tabindex => i+=1
