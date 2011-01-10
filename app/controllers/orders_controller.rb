@@ -105,6 +105,7 @@ class OrdersController < ApplicationController
 					@order_item = @product.order_items.build(:price => @product.price, :quantity => tradeshow? ? @product.min_qty : 1)
 				else
 					@order_item = @product.order_items.find_or_initialize_by_order_id(params[:id])
+					@order_item.quantity = @product.min_qty if tradeshow? && @order_item.new_record?
 					@order_item.update_attributes :price => @product.price
 				end
 				page << "$('add_item_form').reset()"
