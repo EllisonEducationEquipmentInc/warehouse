@@ -30,23 +30,29 @@
     %p#customer_data
       %strong Customer Information:
       %br
-      Contact Person:
-      = @order.contact
-      %br
-      Customer Number:
-      = @order.customer_number
-      %br
-      Business Name:
-      = @order.business
-      %br
-      Address:
-      = @order.address
-      %br
-      Phone Number:
-      = @order.phone
-      %br
-      Email Address:
-      = @order.email
+      - unless @order.customer_number.blank?
+        Customer Number:
+        = @order.customer_number
+        %br
+      - unless @order.contact.blank?
+        Contact Person:
+        = @order.contact
+        %br
+      - unless @order.business.blank?
+        Business Name:
+        = @order.business
+        %br
+      - unless @order.address.blank?
+        Address:
+        = @order.address
+        %br
+      - unless @order.phone.blank?
+        Phone Number:
+        = @order.phone
+        %br
+      -unless @order.email.blank?
+        Email Address:
+        = @order.email
 
 %table#products{:width => "100%"}
   %tr
