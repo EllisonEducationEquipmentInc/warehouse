@@ -32,7 +32,7 @@
           Modified on:
           = l @order.updated_at, :format => :default
 
-- form_tag({:action => 'add_item', :id => @order}, :remote => true, :id => 'add_item_form', :onsubmit => "$('warning').hide();") do
+= form_tag({:action => 'add_item', :id => @order}, :remote => true, :id => 'add_item_form', :onsubmit => "$('warning').hide();") do
   .field
     = label_tag :item, 'Item Number or UPC Scan'
     %span.required *

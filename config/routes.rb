@@ -1,17 +1,17 @@
-Warehouse::Application.routes.draw do |map|
+Warehouse::Application.routes.draw do
   resources :orders do
-		collection do
-			post :add_item
-			get :export_to_csv
-	  end
-	end
+    collection do
+      post :add_item
+      get :export_to_csv
+    end
+  end
 
   resources :products do
-		collection do
-	    get :import
-			post :import
-	  end
-	end
+    collection do
+      get :import
+      post :import
+    end
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -63,8 +63,8 @@ Warehouse::Application.routes.draw do |map|
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
   # root :to => "welcome#index"
-	root :to => "orders#new"
-	
+  root :to => "orders#new"
+  
   # See how all your routes lay out with "rake routes"
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.

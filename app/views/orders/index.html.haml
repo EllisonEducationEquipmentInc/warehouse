@@ -40,7 +40,7 @@
         %td= link_to 'Edit', edit_order_path(order)
         %td= link_to 'Delete', order, :confirm => 'Are you sure?', :method => :delete
 %br
-= will_paginate @orders
+= paginate @orders
 %br
 = link_to 'New order', new_order_path
 %br
