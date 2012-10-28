@@ -11,7 +11,23 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110318210847) do
+ActiveRecord::Schema.define(:version => 20121028175433) do
+
+  create_table "customers", :force => true do |t|
+    t.string   "ax_customer_number"
+    t.string   "company_name"
+    t.string   "full_name"
+    t.string   "customer_class"
+    t.string   "address"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip"
+    t.string   "country"
+    t.string   "phone"
+    t.string   "email"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
 
   create_table "order_items", :force => true do |t|
     t.integer  "order_id"

@@ -13,6 +13,13 @@ Warehouse::Application.routes.draw do
     end
   end
 
+  resources :customers do
+    collection do
+      get :import
+      post :import
+    end
+  end
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

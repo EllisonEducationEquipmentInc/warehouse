@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  ax_customer_number: MyString
+  company_name: MyString
+  full_name: MyString
+  customer_class: MyString
+  address: MyString
+  city: MyString
+  state: MyString
+  zip: MyString
+  country: MyString
+  phone: MyString
+  email: MyString
+
+two:
+  ax_customer_number: MyString
+  company_name: MyString
+  full_name: MyString
+  customer_class: MyString
+  address: MyString
+  city: MyString
+  state: MyString
+  zip: MyString
+  country: MyString
+  phone: MyString
+  email: MyString

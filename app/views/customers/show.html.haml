@@ -1,0 +1,35 @@
+%p
+  %strong ax_customer_number:
+  = @customer.ax_customer_number
+%p
+  %strong company_name
+  = @customer.company_name
+%p
+  %strong full_name
+  = @customer.full_name
+%p
+  %strong customer_class
+  = @customer.customer_class
+%p
+  %strong address
+  = @customer.address
+%p
+  %strong city
+  = @customer.city
+%p
+  %strong state
+  = @customer.state
+%p
+  %strong zip
+  = @customer.zip
+%p
+  %strong country
+  = @customer.country
+%p
+  %strong phone
+  = @customer.phone
+%p
+  %strong email
+  = @customer.email
+
+== #{ link_to 'Edit', edit_customer_path(@customer) } | #{ link_to 'Back', customers_path }

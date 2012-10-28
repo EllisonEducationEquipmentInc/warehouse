@@ -1,0 +1,43 @@
+%h1 Listing customers
+= link_to 'all', customers_path unless params[:q].blank?
+- form_tag(customers_path, :method => :get) do
+  = text_field_tag :q
+  = submit_tag "search"
+%table
+  %thead
+    %tr
+      %th ax_customer_number
+      %th company_name
+      %th full_name
+      %th customer_class
+      %th address
+      %th city
+      %th state
+      %th zip
+      %th country
+      %th phone
+      %th email
+  %tbody
+    - for customer in @customers
+      %tr{ :class => cycle(:odd, :even) }
+        %td= customer.ax_customer_number
+        %td= customer.company_name
+        %td= customer.full_name
+        %td= customer.customer_class
+        %td= customer.address
+        %td= customer.city
+        %td= customer.state
+        %td= customer.zip
+        %td= customer.country
+        %td= customer.phone
+        %td= customer.email
+        %td= link_to 'Show', customer
+        %td= link_to 'Edit', edit_customer_path(customer)
+        %td= link_to 'Destroy', customer, :confirm => 'Are you sure?', :method => :delete
+
+%br
+= paginate @customers
+%br
+= link_to 'New customer', new_customer_path
+%br
+= link_to 'Upload customer csv file', :action => :import
