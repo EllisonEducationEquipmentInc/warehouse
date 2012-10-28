@@ -1,7 +1,7 @@
 %h1 Listing customers
 = link_to 'all', customers_path unless params[:q].blank?
-- form_tag(customers_path, :method => :get) do
-  = text_field_tag :q
+= form_tag(customers_path, :method => :get) do
+  = text_field_tag :q, nil, placeholder: "ax, company, zip"
   = submit_tag "search"
 %table
   %thead

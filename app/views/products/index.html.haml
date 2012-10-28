@@ -1,6 +1,6 @@
 %h1 Listing products
 = link_to 'all', products_path unless params[:q].blank?
-- form_tag(products_path, :method => :get) do
+= form_tag(products_path, :method => :get) do
   = text_field_tag :q
   = submit_tag "search"
 %table
