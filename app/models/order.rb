@@ -4,7 +4,7 @@ class Order < ActiveRecord::Base
   has_many :products, :through => :order_items
   
   validates_presence_of :tax_exempt_number, :if => Proc.new {|o| o.tax_exempt}
-  validates_presence_of :customer_number, :if => Proc.new {|o| TRADESHOW}
+  validates_presence_of :customer_number, :employee_number, :if => Proc.new {|o| TRADESHOW}
 
   # TODO: crm
   SALES_TAX = TRADESHOW ? 0.0 : 8.750/100.0

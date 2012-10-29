@@ -7,6 +7,7 @@
     = stylesheet_link_tag 'print', :media => "print"
     = stylesheet_link_tag 'mobile' if mobile_device?
     = javascript_include_tag 'prototype', 'scriptaculous', 'rails', 'controls', 'dragdrop', 'effects', 'sound', 'validation'
+    = javascript_include_tag 'autocomplete/autocomplete'
     = javascript_include_tag 'application'
     = csrf_meta_tag
   
@@ -23,7 +24,7 @@
       = link_to "Products", products_path, :class => "button dontprint #{'selected' if (params[:controller] == 'products')}"
       = link_to order_name.pluralize, orders_path, :class => "button dontprint #{'selected' if (params[:controller] == 'orders' && params[:action] == 'index')}"
       = link_to "New Sale", new_order_path, :class => "button dontprint #{'selected' if (params[:controller] == 'orders' && params[:action] == 'new')}"
-      - if TRADESHOW
+      - if tradeshow?
         = link_to "customers", customers_path, :class => "button dontprint #{'selected' if (params[:controller] == 'customers')}"
       = link_to "Print", "javascript:window.print()", :class => 'button dontprint selected' if (params[:controller] == 'orders' && params[:action] == 'show')
       .clear

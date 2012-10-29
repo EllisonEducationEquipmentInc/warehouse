@@ -45,3 +45,4 @@ module Warehouse
     end
   end
 end
+ActiveRecord::Base.include_root_in_json = false

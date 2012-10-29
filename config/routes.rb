@@ -16,6 +16,7 @@ Warehouse::Application.routes.draw do
   resources :customers do
     collection do
       get :import
+      get :search
       post :import
     end
   end
