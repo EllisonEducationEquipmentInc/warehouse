@@ -102,7 +102,7 @@ class OrdersController < ApplicationController
     render :update do |page|
       if @product
         if params[:id].blank?
-          @order_item = @product.order_items.build(:price => @product.price, :quantity => tradeshow? ? @product.min_qty : 1)
+          @order_item = @product.order_items.build(:price => @product.price, :quantity => tradeshow? ? @product.min_qty : 1, ship_month: @product.start_date)
         else
           @order_item = @product.order_items.find_or_initialize_by_order_id(params[:id])
           @order_item.quantity = @product.min_qty if tradeshow? && @order_item.new_record?
@@ -110,13 +110,13 @@ class OrdersController < ApplicationController
         end
         page << "$('add_item_form').reset()"
         page << "$('order_sub_total').value = parseFloat($('order_sub_total').value) + #{@product.price}"
-        page << " if ($$('#order_item_#{@order_item.product.id}').length < 1) {"
+        page << " if ($$('#order_item_#{@order_item.product.id_with_start_date}').length < 1) {"
           page.insert_html :top, :products, :partial => 'order_item', :object => @order_item
         page << "} else {"
-          page << "var qty = $('order_item_#{@order_item.product.id}').down('#order_order_item_attributes_#{@order_item.id}_quantity').value * 1"
-          page << "$('order_item_#{@order_item.product.id}').down('#order_order_item_attributes_#{@order_item.id}_quantity').value = qty + 1"
+          page << "var qty = $('order_item_#{@order_item.product.id_with_start_date}').down('#order_order_item_attributes_#{@order_item.product.id_with_start_date}_quantity').value * 1"
+          page << "$('order_item_#{@order_item.product.id_with_start_date}').down('#order_order_item_attributes_#{@order_item.product.id_with_start_date}_quantity').value = qty + 1"
         page << "}"  
-        page.visual_effect :highlight, "order_item_#{@order_item.product.id}"
+        page.visual_effect :highlight, "order_item_#{@order_item.product.id_with_start_date}"
         page << "update_totals()"
       else
         page << "Sound.play('/error.mp3',{replace:false});"

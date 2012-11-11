@@ -10,6 +10,11 @@ class Product < ActiveRecord::Base
   
   scope :active, :conditions => ['deleted = ?', false]
   
+  def id_with_start_date
+    st = start_date.strftime("%Y-%m-%d") rescue ''
+    "#{self.id}-#{st}"
+  end
+  
   
   def destroy
     update_attribute :deleted, true
