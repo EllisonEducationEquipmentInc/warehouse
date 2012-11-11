@@ -122,7 +122,7 @@ class OrdersController < ApplicationController
         page << "Sound.play('/error.mp3',{replace:false});"
         page << "product_not_found()"
       end
-      page << "Form.Element.focus($('upc'));"
+      page << "Form.Element.focus($('upc'));" unless params[:dup].present?
     end
   end
   
