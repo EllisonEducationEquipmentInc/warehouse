@@ -22,6 +22,6 @@
     - unless params[:action] == 'show'
       %td{:width => 20, :align => 'right'}= link_to 'x', '#', :onclick => "this.up('.order_item_row').remove();update_totals();" 
       - if tradeshow?
-        %td{:width => 20, :align => 'right'}= link_to 'dup', '#', id: "aaa", :onclick => "new Ajax.Request('/orders/add_item', {method: 'POST', asynchronous: true, evalScripts: true, parameters:{dup:true,upc:this.up('tr').readAttribute('data-product-upc')}});return false;" 
+        %td{:width => 20, :align => 'right'}= link_to 'dup', '#', :onclick => "new Ajax.Request('/orders/add_item', {method: 'POST', asynchronous: true, evalScripts: true, parameters:{dup:true,upc:this.up('tr').readAttribute('data-product-upc')}});return false;" 
   
     
