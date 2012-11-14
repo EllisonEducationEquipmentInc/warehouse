@@ -34,23 +34,32 @@
         Customer Number:
         = @order.customer_number
         %br
-      - unless @order.contact.blank?
+      - unless @order.full_name.blank?
         Contact Person:
-        = @order.contact
+        = @order.full_name
         %br
       - unless @order.business.blank?
         Business Name:
         = @order.business
         %br
-      - unless @order.address.blank?
+      - unless @order.address.blank? 
         Address:
         = @order.address
         %br
+      - unless @order.city.blank? 
+        = @order.city
+      - unless @order.state.blank? 
+        = @order.state
+      - unless @order.zip_code.blank? 
+        = @order.zip_code
+      - unless @order.country.blank? 
+        = @order.country
       - unless @order.phone.blank?
+        %br  
         Phone Number:
         = @order.phone
         %br
-      -unless @order.email.blank?
+      - unless @order.email.blank?
         Email Address:
         = @order.email
 

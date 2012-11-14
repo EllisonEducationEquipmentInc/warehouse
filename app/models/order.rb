@@ -7,7 +7,7 @@ class Order < ActiveRecord::Base
   validates_presence_of :customer_number, :employee_number, :if => Proc.new {|o| TRADESHOW}
 
   # TODO: crm
-  SALES_TAX = TRADESHOW ? 0.0 : 8.750/100.0
+  SALES_TAX = TRADESHOW ? 0.0 : 7.750/100.0
   
   #after_update :save_order_items
   #validates_associated :order_items
