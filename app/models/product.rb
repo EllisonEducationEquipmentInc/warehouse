@@ -14,6 +14,14 @@ class Product < ActiveRecord::Base
     st = start_date.strftime("%Y-%m-%d") rescue ''
     "#{self.id}-#{st}"
   end
+
+  def start_date_or_today
+    if start_date.blank? || start_date < Time.now.to_date
+      Time.now.to_date
+    else
+      start_date
+    end
+  end
   
   
   def destroy

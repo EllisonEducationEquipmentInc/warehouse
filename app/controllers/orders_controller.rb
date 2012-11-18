@@ -102,7 +102,7 @@ class OrdersController < ApplicationController
     render :update do |page|
       if @product
         if params[:id].blank?
-          @order_item = @product.order_items.build(:price => @product.price, :quantity => tradeshow? ? @product.min_qty : 1, ship_month: @product.start_date)
+          @order_item = @product.order_items.build(:price => @product.price, :quantity => tradeshow? ? @product.min_qty : 1, ship_month: @product.start_date_or_today)
         else
           @order_item = @product.order_items.find_or_initialize_by_order_id(params[:id])
           @order_item.quantity = @product.min_qty if tradeshow? && @order_item.new_record?
