@@ -66,6 +66,8 @@
     .field
       = f.label :sub_total, 'Subtotal', :class => "ordertotals"
       = f.text_field :sub_total, :disabled => true, :size => "8", :class => "ordertotals"
+    - if tradeshow?
+      %ul#by_ship_date
     - if warehouse?
       .field#sales_tax{:style => "display:#{@order.tax_exempt ? 'none' : 'block'}"}
         = f.label :sales_tax, 'Sales Tax', :class => "ordertotals"
@@ -201,11 +203,22 @@
     var salestax = 0
     var total = 0
     var total_qty = 0
+    var total_by_ship_date = {}
+    $('by_ship_date').update('');
     $$('.order_item_row').each(function(row){
       line_qty_total = row.down('.quantity').value * 1
       total_qty = total_qty + line_qty_total
-      
+
       line_total = Math.round((row.down('.quantity').value * row.down('.price').value) * 100) / 100
+
+      ship_date = row.readAttribute('data-ship-date');
+      if ($('li_sd_'+ship_date)) {
+        total_by_ship_date[ship_date]+=line_total;
+        $('total_sd_'+ship_date).update('$'+total_by_ship_date[ship_date]);
+      } else{
+        total_by_ship_date[ship_date]=line_total;
+        $('by_ship_date').insert('<li id="li_sd_'+ship_date+'">'+ship_date+' <span class="ship_date_item" id="total_sd_'+ship_date+'">$'+total_by_ship_date[ship_date]+'</span></li>');
+      };
       row.down('.item_total').innerHTML = '$' + line_total
       subtotal = subtotal + line_total
       salestax = Math.round(subtotal * 8.75) / 100
