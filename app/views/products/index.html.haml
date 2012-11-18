@@ -19,7 +19,7 @@
         %td= product.name
         %td= product.upc
         %td= product.price
-        %td= l product.start_date
+        %td= l product.start_date rescue 'N/A'
         %td{:align => 'center'}= product.min_qty
         %td= link_to 'Show', product
         %td= link_to 'Edit', edit_product_path(product)

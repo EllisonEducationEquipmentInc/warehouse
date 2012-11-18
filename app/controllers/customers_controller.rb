@@ -101,6 +101,6 @@ class CustomersController < ApplicationController
   def search
     field = params[:field].presence || "ax_customer_number"
     @customers = Customer.where(["#{field} LIKE ? ", "%#{params[:query]}%"]).limit(10)
-    render json: {query: params[:query], suggestions: @customers.map {|e| "#{e.ax_customer_number} - #{e.company_name}"}, data: @customers}
+    render json: {query: params[:query], suggestions: @customers.map {|e| "#{e.ax_customer_number} - #{e.company_name} - #{e.zip}"}, data: @customers}
   end
 end
