@@ -8,7 +8,7 @@ class ProductsController < ApplicationController
         q = '%' + params[:q] + '%'
         ["name LIKE ? OR upc LIKE ? OR item_num LIKE ?", q,q,q ]
       end
-    @products = Product.active(:conditions => conditions).page(params[:page]).per(100)
+    @products = Product.active.where(conditions).page(params[:page]).per(100)
 
     respond_to do |format|
       format.html # index.html.erb

@@ -3,7 +3,7 @@
     %td{:width => 85}
       = order_item_fields.hidden_field :product_id, class: :product_id
       = order_item.product.item_num
-    %td= order_item.product.name
+    %td= raw order_item.product.name
     - if tradeshow?
       %td{:width => 150, :align => 'center'}= l order_item.product.start_date, :format => :month_only rescue ''
       %td{:width => 150, :align => 'center'}
