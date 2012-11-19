@@ -78,6 +78,12 @@
   %p
     %strong Subtotal:
     = number_to_currency @order.sub_total
+  - if tradeshow?
+    %ul#by_ship_date
+      - @order.by_ship_date.each do |k,v|
+        %li
+          = k
+          %span.ship_date_item= number_to_currency v
   - if warehouse?
     %p
       %strong Sales Tax:

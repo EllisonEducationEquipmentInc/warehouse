@@ -68,6 +68,10 @@
       = f.text_field :sub_total, :disabled => true, :size => "8", :class => "ordertotals"
     - if tradeshow?
       %ul#by_ship_date
+        - @order.by_ship_date.each do |k,v|
+          %li
+            = k
+            %span.ship_date_item= number_to_currency v
     - if warehouse?
       .field#sales_tax{:style => "display:#{@order.tax_exempt ? 'none' : 'block'}"}
         = f.label :sales_tax, 'Sales Tax', :class => "ordertotals"

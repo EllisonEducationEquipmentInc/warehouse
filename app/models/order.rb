@@ -36,6 +36,19 @@ class Order < ActiveRecord::Base
     end
   end
 
+  def by_ship_date
+    h={}
+    order_items.each do |e|
+      sd = e.ship_month.strftime("%B %Y") rescue ''
+      if h[sd]
+        h[sd]+=e.item_total
+      else
+        h[sd]=e.item_total
+      end
+    end
+    h
+  end
+
   def validate
     #errors[:base] << "add at least one item to the order" if order_items.blank?
     errors.add(:products, "add at least one item to the order" ) if order_items.blank?
