@@ -67,7 +67,8 @@
       = f.label :sub_total, 'Subtotal', :class => "ordertotals"
       = f.text_field :sub_total, :disabled => true, :size => "8", :class => "ordertotals"
     - if tradeshow?
-      %ul#by_ship_date
+      %ul{:style=>"list-style-type:none;"}
+        #by_ship_date
         - @order.by_ship_date.each do |k,v|
           %li
             = k
