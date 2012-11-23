@@ -20,10 +20,10 @@ development:
   reconnect: false
   database: warehouse
   pool: 5
-  username: ruby
+  username: root
   password: ellison123
   #socket: /var/run/mysqld/mysqld.sock
-  host: 192.168.1.127
+  host: 192.168.2.171
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -34,18 +34,18 @@ test:
   reconnect: false
   database: warehouse_test
   pool: 5
-  username: ruby
+  username: root
   password: ellison123
   #socket: /var/run/mysqld/mysqld.sock
-  host: 192.168.1.127
+  host: 192.168.2.171
 
 production:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: warehouse
+  database: warehouse_production
   pool: 5
-  username: ruby
+  username: root
   password: ellison123
   #socket: /var/run/mysqld/mysqld.sock
-  host: 192.168.1.127
+  host: localhost

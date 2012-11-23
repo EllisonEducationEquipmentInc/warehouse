@@ -79,7 +79,8 @@
     %strong Subtotal:
     = number_to_currency @order.sub_total
   - if tradeshow?
-    %ul#by_ship_date
+    %ul{:style=>"list-style-type:none;"}
+      #by_ship_date
       - @order.by_ship_date.each do |k,v|
         %li
           = k
