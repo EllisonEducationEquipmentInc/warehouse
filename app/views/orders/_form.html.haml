@@ -31,6 +31,12 @@
           %br
           Modified on:
           = l @order.updated_at, :format => :default
+  - if tradeshow?
+    %ul#by_ship_date
+      - @order.by_ship_date.each do |k,v|
+        %li
+          = k
+          %span.ship_date_item= number_to_currency v
 
 = form_tag({:action => 'add_item', :id => @order}, :remote => true, :id => 'add_item_form', :onsubmit => "$('warning').hide();") do
   .field
@@ -66,12 +72,6 @@
     .field
       = f.label :sub_total, 'Subtotal', :class => "ordertotals"
       = f.text_field :sub_total, :disabled => true, :size => "8", :class => "ordertotals"
-    - if tradeshow?
-      %ul#by_ship_date
-        - @order.by_ship_date.each do |k,v|
-          %li
-            = k
-            %span.ship_date_item= number_to_currency v
     - if warehouse?
       .field#sales_tax{:style => "display:#{@order.tax_exempt ? 'none' : 'block'}"}
         = f.label :sales_tax, 'Sales Tax', :class => "ordertotals"

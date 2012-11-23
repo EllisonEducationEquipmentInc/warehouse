@@ -38,7 +38,7 @@ class Order < ActiveRecord::Base
 
   def by_ship_date
     h={}
-    order_items.each do |e|
+    order_items.order(:ship_month).each do |e|
       sd = e.ship_month.strftime("%B %Y") rescue ''
       if h[sd]
         h[sd]+=e.item_total
