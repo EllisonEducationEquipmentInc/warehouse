@@ -65,7 +65,7 @@
       %th{:align => 'right', :width => '100'} Extended Price
       %th{:align => 'right', :width => '20', :style => 'border-bottom: none;'}
   %table#products.products{:width => "100%", :style => "margin-bottom: 25px"}
-    = render :partial => 'order_item', :collection => @order.order_items
+    = render :partial => 'order_item', :collection => @order.order_items, locals: {f: f}
     
   %hr
   %div{:style => "float: right"}

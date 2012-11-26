@@ -14,6 +14,15 @@ class OrderItem < ActiveRecord::Base
     read_attribute(:price) * read_attribute(:quantity)
   end
 
+  def product_id_with_start_date
+    if ship_month.blank?
+      product.id_with_start_date
+    else
+      sm = ship_month.beginning_of_month.strftime("%Y-%m-%d")
+      "#{product.id}-#{sm}"
+    end
+  end
+
 private
 
   def calculate_item_total

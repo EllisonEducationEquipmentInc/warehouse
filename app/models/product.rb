@@ -11,7 +11,7 @@ class Product < ActiveRecord::Base
   scope :active, :conditions => ['deleted = ?', false]
   
   def id_with_start_date
-    st = start_date.strftime("%Y-%m-%d") rescue ''
+    st = start_date_or_today.beginning_of_month.strftime("%Y-%m-%d")
     "#{self.id}-#{st}"
   end
 
@@ -20,7 +20,7 @@ class Product < ActiveRecord::Base
       Time.now.to_date
     else
       start_date
-    end
+    end.beginning_of_month
   end
   
   

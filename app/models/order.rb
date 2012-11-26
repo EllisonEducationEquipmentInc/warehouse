@@ -6,6 +6,8 @@ class Order < ActiveRecord::Base
   validates_presence_of :tax_exempt_number, :if => Proc.new {|o| o.tax_exempt}
   validates_presence_of :customer_number, :employee_number, :if => Proc.new {|o| TRADESHOW}
 
+  accepts_nested_attributes_for :order_items, allow_destroy: true
+
   # TODO: crm
   SALES_TAX = TRADESHOW ? 0.0 : 7.750/100.0
   
