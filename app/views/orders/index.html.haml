@@ -19,6 +19,7 @@
     %tr
       %th ID
       %th Email
+      %th Business Name
       %th Subtotal
       %th Sales Tax
       %th Total
@@ -31,6 +32,7 @@
       %tr{ :class => cycle(:odd, :even) }
         %td= order.id
         %td= order.email
+        %td= order.business
         %td= number_to_currency order.sub_total
         %td= number_to_currency order.sales_tax
         %td= number_to_currency order.total
