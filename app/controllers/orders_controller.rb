@@ -103,14 +103,14 @@ class OrdersController < ApplicationController
     render :update do |page|
       if @product
         if true #params[:id].blank?
-          @order_item = @product.order_items.build(:price => @product.price, :quantity => tradeshow? ? @product.min_qty : 1, ship_month: @product.start_date_or_today)
+          @order_item = @product.order_items.build(:price => @product.price(session[:coupon]), :quantity => tradeshow? ? @product.min_qty : 1, ship_month: @product.start_date_or_today)
         else
           @order_item = @product.order_items.find_or_initialize_by_order_id(params[:id])
           @order_item.quantity = @product.min_qty if tradeshow? && @order_item.new_record?
-          @order_item.price = @product.price
+          @order_item.price = @product.price(session[:coupon])
         end
         page << "$('add_item_form').reset()"
-        page << "$('order_sub_total').value = parseFloat($('order_sub_total').value) + #{@product.price}"
+        page << "$('order_sub_total').value = parseFloat($('order_sub_total').value) + #{@product.price(session[:coupon])}"
         page << " if ($$('#order_item_#{@order_item.product_id_with_start_date}').length < 1) {"
           page.insert_html :top, :products, :partial => 'order_item', :object => @order_item
         page << "} else {"

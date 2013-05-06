@@ -27,4 +27,23 @@ class Product < ActiveRecord::Base
   def destroy
     update_attribute :deleted, true
   end
+
+  def price(coupon = nil)
+    if coupon.present? && [self.coupon_1, self.coupon_2, self.coupon_3, self.coupon_4, self.coupon_5].include?(coupon)
+      case coupon
+      when self.coupon_1
+        read_attribute(:coupon_price_1)
+      when self.coupon_2
+        read_attribute(:coupon_price_2)
+      when self.coupon_3
+        read_attribute(:coupon_price_3)
+      when self.coupon_4
+        read_attribute(:coupon_price_4)
+      when self.coupon_5
+        read_attribute(:coupon_price_5)
+      end
+    else
+      read_attribute :price
+    end
+  end
 end
