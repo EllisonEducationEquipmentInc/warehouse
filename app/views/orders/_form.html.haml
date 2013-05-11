@@ -38,6 +38,18 @@
           = k
           %span.ship_date_item= number_to_currency v
 
+#coupon
+  - if session[:coupon].present?
+    Coupon: 
+    = session[:coupon]
+  - else
+    = form_tag({:action => 'add_coupon', :id => @order}, :remote => true, :id => 'add_item_form', :onsubmit => "$('warning').hide();") do
+      .field
+        = label_tag :coupon, 'Coupon'
+        %br
+        = text_field_tag :coupon, nil, :tabindex => 1, :onFocus => "this.select();", :maxlength => 12
+        = submit_tag :add
+ 
 = form_tag({:action => 'add_item', :id => @order}, :remote => true, :id => 'add_item_form', :onsubmit => "$('warning').hide();") do
   .field
     = label_tag :item, 'Item Number or UPC Scan'

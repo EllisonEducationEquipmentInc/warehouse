@@ -29,6 +29,7 @@ class OrdersController < ApplicationController
   # GET /orders/new
   # GET /orders/new.xml
   def new
+    session[:coupon] = nil
     @order = Order.new(:sub_total => 0.0, :payment_method => warehouse? ? "Credit Card" : nil, :sales_tax => warehouse? ? 0.0 : nil, :total => warehouse? ? 0.0 : nil)
     @editable = true
     respond_to do |format|
@@ -52,6 +53,7 @@ class OrdersController < ApplicationController
   # POST /orders.xml
   def create
     @order = Order.new(params[:order])
+    @order.coupon_code = session[:coupon] if session[:coupon].present?
     calculate_total
     respond_to do |format|
       if @order.save
@@ -76,6 +78,7 @@ class OrdersController < ApplicationController
     calculate_total
     respond_to do |format|
       if @order.save
+        session[:coupon] = nil
         format.html { redirect_to(@order, :notice => 'Order was successfully updated.') }
         format.xml  { head :ok }
       else
@@ -124,6 +127,13 @@ class OrdersController < ApplicationController
         page << "product_not_found()"
       end
       page << "Form.Element.focus($('upc'));" unless params[:dup].present?
+    end
+  end
+
+  def add_coupon
+    session[:coupon] = params[:coupon]
+    render :update do |page|
+      page.replace_html 'coupon', session[:coupon]
     end
   end
   
