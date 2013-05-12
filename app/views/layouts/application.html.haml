@@ -26,6 +26,7 @@
       = link_to "New Sale", new_order_path, :class => "button dontprint #{'selected' if (params[:controller] == 'orders' && params[:action] == 'new')}"
       - if tradeshow?
         = link_to "Customers", customers_path, :class => "button dontprint #{'selected' if (params[:controller] == 'customers')}"
+      = link_to "Reports", reports_path, :class => "button dontprint #{'selected' if (params[:controller] == 'reports')}"
       = link_to "Print", "javascript:window.print()", :class => 'button dontprint selected' if (params[:controller] == 'orders' && params[:action] == 'show')
       .clear
       = yield

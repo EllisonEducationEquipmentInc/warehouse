@@ -133,7 +133,11 @@ class OrdersController < ApplicationController
   def add_coupon
     session[:coupon] = params[:coupon]
     render :update do |page|
-      page.replace_html 'coupon', session[:coupon]
+      if Product.where(["coupon_1 = :coupon OR coupon_2 = :coupon OR coupon_3 = :coupon OR coupon_4 = :coupon OR coupon_5 = :coupon", coupon: params[:coupon]]).count < 1
+        page.alert("coupon code does not exist")
+      else
+        page.replace_html 'coupon', session[:coupon]
+      end
     end
   end
   
