@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130506002748) do
+ActiveRecord::Schema.define(:version => 20130515012730) do
 
   create_table "customers", :force => true do |t|
     t.string   "ax_customer_number"
@@ -38,8 +38,8 @@ ActiveRecord::Schema.define(:version => 20130506002748) do
     t.integer  "product_id"
     t.decimal  "price",      :precision => 6,  :scale => 2
     t.integer  "quantity",                                  :default => 1
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                               :null => false
+    t.datetime "updated_at",                                               :null => false
     t.decimal  "item_total", :precision => 10, :scale => 2
     t.date     "ship_month"
   end
@@ -49,8 +49,8 @@ ActiveRecord::Schema.define(:version => 20130506002748) do
     t.decimal  "sub_total",         :precision => 12, :scale => 2
     t.decimal  "sales_tax",         :precision => 6,  :scale => 2
     t.decimal  "total",             :precision => 12, :scale => 2
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                                          :null => false
+    t.datetime "updated_at",                                                          :null => false
     t.string   "business"
     t.string   "contact"
     t.string   "phone"
@@ -75,22 +75,22 @@ ActiveRecord::Schema.define(:version => 20130506002748) do
     t.string   "item_num"
     t.string   "name"
     t.string   "upc"
-    t.decimal  "price",          :precision => 6,  :scale => 2
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.decimal  "price",          :precision => 6, :scale => 2
+    t.datetime "created_at",                                                      :null => false
+    t.datetime "updated_at",                                                      :null => false
     t.date     "start_date"
-    t.integer  "min_qty",                                       :default => 1
-    t.boolean  "deleted",                                       :default => false
+    t.integer  "min_qty",                                      :default => 1
+    t.boolean  "deleted",                                      :default => false
     t.string   "coupon_1"
     t.string   "coupon_2"
-    t.decimal  "coupon_price_1", :precision => 10, :scale => 0
-    t.decimal  "coupon_price_2", :precision => 10, :scale => 0
+    t.decimal  "coupon_price_1", :precision => 6, :scale => 2
+    t.decimal  "coupon_price_2", :precision => 6, :scale => 2
     t.string   "coupon_3"
     t.string   "coupon_4"
     t.string   "coupon_5"
-    t.decimal  "coupon_price_3", :precision => 10, :scale => 0
-    t.decimal  "coupon_price_4", :precision => 10, :scale => 0
-    t.decimal  "coupon_price_5", :precision => 10, :scale => 0
+    t.decimal  "coupon_price_3", :precision => 6, :scale => 2
+    t.decimal  "coupon_price_4", :precision => 6, :scale => 2
+    t.decimal  "coupon_price_5", :precision => 6, :scale => 2
   end
 
   add_index "products", ["item_num"], :name => "index_products_on_item_num"
