@@ -29,7 +29,7 @@ class Product < ActiveRecord::Base
   end
 
   def price(coupon = nil)
-    if coupon.present? && [self.coupon_1, self.coupon_2, self.coupon_3, self.coupon_4, self.coupon_5].include?(coupon)
+    p = if coupon.present? && [self.coupon_1, self.coupon_2, self.coupon_3, self.coupon_4, self.coupon_5].include?(coupon)
       case coupon
       when self.coupon_1
         read_attribute(:coupon_price_1)
@@ -45,5 +45,6 @@ class Product < ActiveRecord::Base
     else
       read_attribute :price
     end
+    p || read_attribute(:price)
   end
 end
