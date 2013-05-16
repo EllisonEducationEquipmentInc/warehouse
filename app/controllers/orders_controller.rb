@@ -5,6 +5,7 @@ class OrdersController < ApplicationController
     @search = Search.new(:order, :q => "orders.id LIKE ? OR orders.email LIKE ? OR orders.business LIKE ?" )
     @search.q = '%' + params[:q] + '%' unless params[:q].blank?
     @orders = @search.search.order(:order => "created_at DESC").page(params[:page]).per(500)
+    session[:coupon] = nil
 
     respond_to do |format|
       format.html # index.html.erb
@@ -42,6 +43,7 @@ class OrdersController < ApplicationController
   # GET /orders/1/edit
   def edit
     @order = Order.find(params[:id])
+    session[:coupon] ||= @order.coupon_code
     @editable = true
     respond_to do |format|
       format.html 
