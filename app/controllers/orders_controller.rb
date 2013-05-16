@@ -104,6 +104,7 @@ class OrdersController < ApplicationController
 
   def add_item
     @editable = true
+    session[:coupon] ||= params[:coupon] if params[:coupon].present?
     @product = Product.active.find_by_upc(params[:upc]) || Product.active.find_by_item_num(params[:upc])
     render :update do |page|
       if @product
