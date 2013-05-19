@@ -56,6 +56,7 @@ class OrdersController < ApplicationController
   def create
     @order = Order.new(params[:order])
     @order.coupon_code = session[:coupon] if session[:coupon].present?
+    process_file if params[:file].present?
     calculate_total
     respond_to do |format|
       if @order.save
@@ -161,5 +162,12 @@ private
     @order.sub_total = @order.order_items.inject(0) {|sum, order_item| sum += order_item.item_total}
     @order.sales_tax = @order.tax_exempt? ? 0.0 : @order.sub_total * Order::SALES_TAX
     @order.total = @order.sales_tax + @order.sub_total
+  end
+
+  def process_file
+    CSV.parse(params[:file].read, :headers => :first_row) do |row|  #:col_sep => "\t"
+      p = Product.find_by_item_num(row["item_num"])
+      @order.order_items.build product: p, quantity: row["qty"], price: p.price(row["coupon_code"]), ship_month: p.start_date_or_today if p
+    end
   end
 end
