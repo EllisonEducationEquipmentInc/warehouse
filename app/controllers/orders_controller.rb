@@ -167,6 +167,7 @@ private
   def process_file
     CSV.parse(params[:file].read, :headers => :first_row) do |row|  #:col_sep => "\t"
       p = Product.find_by_item_num(row["item_num"])
+      session[:coupon] = row["coupon_code"]
       @order.order_items.build product: p, quantity: row["qty"], price: p.price(row["coupon_code"]), ship_month: p.start_date_or_today if p
     end
   end
