@@ -56,7 +56,7 @@
     Coupon: 
     = session[:coupon]
   - else
-    = form_tag({:action => 'add_coupon', :id => @order}, :remote => true, :id => 'add_item_form', :onsubmit => "$('warning').hide();") do
+    = form_tag({:action => 'add_coupon', :id => @order}, :remote => true, :id => 'add_coupon_form', :onsubmit => "$('warning').hide();") do
       .field
         = label_tag :coupon, 'Coupon'
         %br
