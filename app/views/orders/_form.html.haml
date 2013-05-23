@@ -46,14 +46,14 @@
           Select a CSV File :
       %td
         = file_field_tag :file
-    %tr
-      %td{ :colspan => "2" }
         = submit_tag 'Submit'
+        = link_to "click here to see a sample CSV file", "/sample_export_lineitems.csv"
+      
 #error
   = flash[:message]
 #coupon
   - if session[:coupon].present?
-    Coupon: 
+    == Coupon: 
     = session[:coupon]
   - else
     = form_tag({:action => 'add_coupon', :id => @order}, :remote => true, :id => 'add_item_form', :onsubmit => "$('warning').hide();") do
@@ -69,10 +69,10 @@
     %span.required *
     %br
     = text_field_tag :upc, nil, :tabindex => 1, :onFocus => "this.select();", :maxlength => 12, :class => 'required'
+    = submit_tag :add
     %span#warning{ :style => "display:none"}
       PRODUCT NOT FOUND!
-  .actions{:style => "margin-bottom:50px"}
-    = submit_tag :add
+
 :javascript
   new Validation('add_item_form');
   Form.Element.focus($('upc'));
