@@ -44,21 +44,21 @@
       %td
         %label{ :for => "dump_file" }
           Select a CSV File :
-      %td
-        = file_field_tag :file
-        = submit_tag 'Submit'
-        = link_to "click here to see a sample CSV file", "/sample_export_lineitems.csv"
+          %br
+          = file_field_tag :file
+          = submit_tag 'Submit'
+          = link_to "click here to see a sample CSV file", "/sample_export_lineitems.csv"
       
 #error
   = flash[:message]
 #coupon
   - if session[:coupon].present?
-    == Coupon: 
+    Applied Coupon: 
     = session[:coupon]
   - else
     = form_tag({:action => 'add_coupon', :id => @order}, :remote => true, :id => 'add_item_form', :onsubmit => "$('warning').hide();") do
       .field
-        = label_tag :coupon, 'Coupon'
+        = label_tag :coupon, 'Enter Coupon Code:'
         %br
         = text_field_tag :coupon, nil, :tabindex => 1, :onFocus => "this.select();", :maxlength => 12
         = submit_tag :add
