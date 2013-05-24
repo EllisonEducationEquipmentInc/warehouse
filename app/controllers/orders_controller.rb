@@ -140,7 +140,7 @@ class OrdersController < ApplicationController
       if Product.where(["coupon_1 = :coupon OR coupon_2 = :coupon OR coupon_3 = :coupon OR coupon_4 = :coupon OR coupon_5 = :coupon", coupon: params[:coupon]]).count < 1
         page.alert("coupon code does not exist")
       else
-        page.replace_html 'coupon', session[:coupon]
+        page.replace_html 'coupon', "Applied Coupon code #{session[:coupon]}"
       end
     end
   end
