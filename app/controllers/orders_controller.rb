@@ -59,7 +59,7 @@ class OrdersController < ApplicationController
     process_file if params[:file].present?
     calculate_total
     respond_to do |format|
-      if @order.save
+      if params[:file].blank? && @order.save
         format.html { redirect_to(@order, :notice => 'Order was successfully created.') }
         format.xml  { render :xml => @order, :status => :created, :location => @order }
       else
