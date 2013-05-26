@@ -19,7 +19,10 @@
             = link_to "Full Site", :mobile => 0 
           - else  
             = link_to "Mobile Site", :mobile => 1
-      %p.dontprint.notice= notice
+      %p.dontprint.notice= raw notice
+      - if flash[:error]
+        #errorExplanation
+          %p= raw flash[:error]
       %h2.dontprint== App mode: #{app_mode}
       = link_to "Products", products_path, :class => "button dontprint #{'selected' if (params[:controller] == 'products')}"
       = link_to order_name.pluralize, orders_path, :class => "button dontprint #{'selected' if (params[:controller] == 'orders' && params[:action] == 'index')}"
