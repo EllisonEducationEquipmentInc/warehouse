@@ -59,7 +59,7 @@ class OrdersController < ApplicationController
     process_file if params[:file].present?
     calculate_total
     respond_to do |format|
-      if @order.save
+      if params[:file].blank? && @order.save
         format.html { redirect_to(@order, :notice => 'Order was successfully created.') }
         format.xml  { render :xml => @order, :status => :created, :location => @order }
       else
@@ -140,7 +140,7 @@ class OrdersController < ApplicationController
       if Product.where(["coupon_1 = :coupon OR coupon_2 = :coupon OR coupon_3 = :coupon OR coupon_4 = :coupon OR coupon_5 = :coupon", coupon: params[:coupon]]).count < 1
         page.alert("coupon code does not exist")
       else
-        page.replace_html 'coupon', session[:coupon]
+        page.replace_html 'coupon', "Applied Coupon code #{session[:coupon]}"
       end
     end
   end
@@ -165,8 +165,10 @@ private
   end
 
   def process_file
+    flash[:error] = ''
     CSV.parse(params[:file].read, :headers => :first_row) do |row|  #:col_sep => "\t"
       p = Product.find_by_item_num(row["item_num"])
+      flash[:error] += "#{row['item_num']} was not found<br>" unless p
       session[:coupon] = row["coupon_code"]
       @order.order_items.build product: p, quantity: row["qty"], price: p.price(row["coupon_code"]), ship_month: p.start_date_or_today if p
     end
