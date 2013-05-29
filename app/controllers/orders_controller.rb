@@ -76,6 +76,7 @@ class OrdersController < ApplicationController
   def update
     @order = Order.find(params[:id])
     @order.order_items = []
+    @order.coupon_code = session[:coupon] if session[:coupon].present?
     @order.update_attributes params[:order]
     #@order.order_item_ids = params[:order][:order_item_attributes].keys.map {|a| a.to_i}
     calculate_total
@@ -117,6 +118,7 @@ class OrdersController < ApplicationController
           @order_item.price = @product.price(session[:coupon])
         end
         page << "$('add_item_form').reset()"
+        page << "$('order_coupon_code').value='#{session[:coupon]}'"
         page << "$('order_sub_total').value = parseFloat($('order_sub_total').value) + #{@product.price(session[:coupon])}"
         page << " if ($$('#order_item_#{@order_item.product_id_with_start_date}').length < 1) {"
           page.insert_html :top, :products, :partial => 'order_item', :object => @order_item
