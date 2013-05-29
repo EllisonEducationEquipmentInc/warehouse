@@ -20,7 +20,7 @@
           - else  
             = link_to "Mobile Site", :mobile => 1
       %p.dontprint.notice= raw notice
-      - if flash[:error]
+      - if flash[:error].present?
         #errorExplanation
           %p= raw flash[:error]
       %h2.dontprint== App mode: #{app_mode}
