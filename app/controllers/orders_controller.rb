@@ -77,6 +77,7 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id])
     @order.order_items = []
     @order.coupon_code = session[:coupon] if session[:coupon].present?
+    session[:coupon] = @order.coupon_code
     @order.update_attributes params[:order]
     #@order.order_item_ids = params[:order][:order_item_attributes].keys.map {|a| a.to_i}
     calculate_total
