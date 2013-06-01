@@ -43,7 +43,7 @@ class OrdersController < ApplicationController
   # GET /orders/1/edit
   def edit
     @order = Order.find(params[:id])
-    session[:coupon] ||= @order.coupon_code
+    session[:coupon] = @order.coupon_code
     @editable = true
     respond_to do |format|
       format.html 
