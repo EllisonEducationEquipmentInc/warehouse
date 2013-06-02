@@ -43,7 +43,7 @@ class OrdersController < ApplicationController
   # GET /orders/1/edit
   def edit
     @order = Order.find(params[:id])
-    session[:coupon] ||= @order.coupon_code
+    session[:coupon] = @order.coupon_code
     @editable = true
     respond_to do |format|
       format.html 
@@ -107,7 +107,6 @@ class OrdersController < ApplicationController
 
   def add_item
     @editable = true
-    session[:coupon] ||= params[:coupon] if params[:coupon].present?
     @product = Product.active.find_by_upc(params[:upc]) || Product.active.find_by_item_num(params[:upc])
     render :update do |page|
       if @product
