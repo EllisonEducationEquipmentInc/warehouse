@@ -80,14 +80,15 @@
   = f.error_messages
   %table.products{:width => "100%"}
     %tr
-      %th{:align => 'left', :width => '85'} Item Number
-      %th{:align => 'left'} Description
+      %th{:align => 'left', :width => '50'} Item Number
+      %th{:align => 'left', :width => '150'} Description
       - if tradeshow?
-        %th{:align => 'center', :width => '150'} Launch Month
-        %th{:align => 'center', :width => '150'} Ship Month
-      %th{:align => 'center', :width => '60'} Quantity
-      %th{:align => 'right', :width => '60'} Unit Price
-      %th{:align => 'right', :width => '100'} Extended Price
+        %th{:align => 'center', :width => '100'} Launch Month
+        %th{:align => 'center', :width => '100'} Ship Month
+      %th{:align => 'center', :width => '30'} Qty.
+      %th{:align => 'center', :width =>'60'} Wholesale Price
+      %th{:align => 'center', :width => '60'} Your Price
+      %th{:align => 'center', :width => '80'} Extended Price
       %th{:align => 'right', :width => '20', :style => 'border-bottom: none;'}
   %table#products.products{:width => "100%", :style => "margin-bottom: 25px"}
     = render :partial => 'order_item', :collection => @order.order_items, locals: {f: f}

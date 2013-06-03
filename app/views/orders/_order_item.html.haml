@@ -1,24 +1,27 @@
 %tr{:id => "order_item_#{order_item.product_id_with_start_date}", :class => "order_item_row", "data-product-item_num" => order_item.product.item_num, :'data-ship-date' => ((order_item.ship_month || order_item.product.start_date_or_today).strftime("%B %Y") rescue '')}
   = fields_for "order[order_items_attributes][#{order_item.order.blank? ? "#{Time.now.to_i}#{rand(1000)}" : order_item.order.order_items.index(order_item)}]", order_item, :child_index => "new_order_item" do |order_item_fields|
-    %td{:width => 85}
+    %td{:width => 50}
       = order_item_fields.hidden_field :product_id, class: :product_id
       = order_item.product.item_num
-    %td= raw order_item.product.name
+    %td{:width => 150}
+      = raw order_item.product.name
     - if tradeshow?
-      %td{:width => 150, :align => 'center'}= l order_item.product.start_date, :format => :month_only rescue ''
-      %td{:width => 150, :align => 'center'}
+      %td{:width => 100, :align => 'right'}= l order_item.product.start_date, :format => :month_only rescue ''
+      %td{:width => 100, :align => 'right'}
         - if @editable
           = order_item_fields.select :ship_month, ship_date_select(order_item.product.start_date_or_today), {}, onchange: "this.up('tr').id=this.up('tr').id.replace(/(order_item_\\d+-)(.+)$/, \"$1\"+this.value);this.up('tr').writeAttribute('data-ship-date', this.options[this.selectedIndex].text);update_totals();" #, discard_day: true, start_year: Time.now.year
         - else
           = l order_item.ship_month, :format => :month_only rescue ''
-    %td{:width => 60, :align => 'center'}= @editable ? order_item_fields.text_field(:quantity, :size => 2, :id => "order_order_item_attributes_#{order_item.product.id_with_start_date}_quantity", :class => 'quantity', :onchange => "update_totals();$('upc').focus();") : order_item.quantity
+    %td{:width => 30, :align => 'right'}= @editable ? order_item_fields.text_field(:quantity, :size => 2, :id => "order_order_item_attributes_#{order_item.product.id_with_start_date}_quantity", :class => 'quantity', :onchange => "update_totals();$('upc').focus();") : order_item.quantity
+    %td{:width => 60, :align => 'right'}
+      = number_to_currency(order_item.product.price)
     %td{:width => 60, :align => 'right'}
       - if @editable && tradeshow?
         = order_item_fields.text_field(:price, :size => 6, :class => 'price', :onchange => "update_totals();$('upc').focus();")
       - else  
         = order_item_fields.hidden_field :price, :class => 'price' if @editable && warehouse?
         = number_to_currency(order_item.price)
-    %td{:width => 100, :align => 'right', :class => "item_total"}= number_to_currency order_item.item_total
+    %td{:width => 80, :align => 'right', :class => "item_total"}= number_to_currency order_item.item_total
     - unless params[:action] == 'show'
       %td{:width => 20, :align => 'right'}= link_to 'x', '#', :onclick => "this.up('.order_item_row').remove();update_totals();" 
       - if tradeshow?
