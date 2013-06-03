@@ -88,8 +88,8 @@
       %th{:align => 'center', :width => '30'} Qty.
       %th{:align => 'center', :width =>'60'} Wholesale Price
       %th{:align => 'center', :width => '60'} Your Price
-      %th{:align => 'center', :width => '80'} Extended Price
-      %th{:align => 'right', :width => '20', :style => 'border-bottom: none;'}
+      %th{:align => 'center', :width => '60'} Extended Price
+      %th{:align => 'right', :width => '1', :style => 'border-bottom: none;'}
   %table#products.products{:width => "100%", :style => "margin-bottom: 25px"}
     = render :partial => 'order_item', :collection => @order.order_items, locals: {f: f}
     

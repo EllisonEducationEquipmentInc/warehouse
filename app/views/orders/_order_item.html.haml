@@ -21,7 +21,7 @@
       - else  
         = order_item_fields.hidden_field :price, :class => 'price' if @editable && warehouse?
         = number_to_currency(order_item.price)
-    %td{:width => 80, :align => 'right', :class => "item_total"}= number_to_currency order_item.item_total
+    %td{:width => 60, :align => 'right', :class => "item_total"}= number_to_currency order_item.item_total
     - unless params[:action] == 'show'
       %td{:width => 20, :align => 'right'}= link_to 'x', '#', :onclick => "this.up('.order_item_row').remove();update_totals();" 
       - if tradeshow?
