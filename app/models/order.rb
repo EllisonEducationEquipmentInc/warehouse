@@ -9,7 +9,7 @@ class Order < ActiveRecord::Base
   accepts_nested_attributes_for :order_items, allow_destroy: true
 
   # TODO: crm
-  SALES_TAX = TRADESHOW ? 0.0 : 7.750/100.0
+  SALES_TAX = TRADESHOW ? 0.0 : 8.00/100.0
   
   #after_update :save_order_items
   #validates_associated :order_items
