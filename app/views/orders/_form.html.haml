@@ -37,6 +37,8 @@
         %li
           = k
           %span.ship_date_item= number_to_currency v
+  - else
+    #by_ship_date
 
 = form_tag({:action=>'create'}, :multipart => true) do
   %table
@@ -139,6 +141,8 @@
         = f.label :coupon_code
         %br
         = f.text_field :coupon_code, :tabindex => i+=1
+    - else
+      = f.hidden_field :coupon_code, :tabindex => i+=1
     - if tradeshow?
       .field
         = f.label :full_name
