@@ -38,7 +38,7 @@
           = k
           %span.ship_date_item= number_to_currency v
   - else
-    #by_ship_date
+    #by_ship_date{:style => "display:none;"}
 
 = form_tag({:action=>'create'}, :multipart => true) do
   %table
@@ -88,7 +88,8 @@
         %th{:align => 'center', :width => '100'} Launch Month
         %th{:align => 'center', :width => '100'} Ship Month
       %th{:align => 'center', :width => '30'} Qty.
-      %th{:align => 'center', :width =>'60'} Wholesale Price
+      - if tradeshow?
+        %th{:align => 'center', :width =>'60'} Wholesale Price
       %th{:align => 'center', :width => '60'} Your Price
       %th{:align => 'center', :width => '60'} Extended Price
       %th{:align => 'right', :width => '1', :style => 'border-bottom: none;'}

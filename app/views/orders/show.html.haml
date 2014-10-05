@@ -71,7 +71,8 @@
       %th{:align => 'center'} Launch Month
       %th{:align => 'center'} Ship Month
     %th{:align => 'center'} Qty.
-    %th{:align => 'right'} Wholesale Price
+    - if tradeshow?
+      %th{:align => 'right'} Wholesale Price
     %th{:align => 'right'} Your Price
     %th{:align => 'right'} Extended Price
   = render :partial => 'order_item', :collection => @order.order_items    
