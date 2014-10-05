@@ -13,8 +13,9 @@
         - else
           = l order_item.ship_month, :format => :month_only rescue ''
     %td{:width => 30, :align => 'right'}= @editable ? order_item_fields.text_field(:quantity, :size => 2, :id => "order_order_item_attributes_#{order_item.product.id_with_start_date}_quantity", :class => 'quantity', :onchange => "update_totals();$('upc').focus();") : order_item.quantity
-    %td{:width => 60, :align => 'right'}
-      = number_to_currency(order_item.product.price)
+    - if tradeshow?
+      %td{:width => 60, :align => 'right'}
+        = number_to_currency(order_item.product.price)
     %td{:width => 60, :align => 'right'}
       - if @editable && tradeshow?
         = order_item_fields.text_field(:price, :size => 6, :class => 'price', :onchange => "update_totals();$('upc').focus();")
