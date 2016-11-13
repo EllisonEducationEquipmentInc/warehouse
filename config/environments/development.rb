@@ -17,6 +17,8 @@ Warehouse::Application.configure do
 
   # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = false
+
+  config.eager_load = false
 end
 # ./scrip/console logger
 ActiveRecord::Base.logger = Logger.new(STDOUT) if "irb" == $0

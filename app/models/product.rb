@@ -14,7 +14,7 @@ class Product < ActiveRecord::Base
   validates_presence_of :coupon_price_4, :if => Proc.new {|obj| obj.coupon_4.present?}
   validates_presence_of :coupon_price_5, :if => Proc.new {|obj| obj.coupon_5.present?}
   
-  scope :active, :conditions => ['deleted = ?', false]
+  scope :active, -> { where(deleted: false) }
   
   def id_with_start_date
     st = start_date_or_today.beginning_of_month.strftime("%Y-%m-%d")
