@@ -1,9 +1,11 @@
 # Edit this Gemfile to bundle your application's dependencies.
 source 'http://gemcutter.org'
 
+ruby '2.3.1'
+
 require 'csv'
 
-gem "rails", "3.2.8"
+gem "rails", "4.0.4"
 gem 'dotenv-rails'
 
 ## Bundle edge rails:
@@ -22,17 +24,16 @@ gem 'coffee-script'
 gem 'barista'
 gem 'dynamic_form'
 gem 'kaminari'
-gem 'prototype-rails'
 
 gem 'test-unit'
 
 group :assets do
-  gem 'sass-rails', "  ~> 3.2.3"
-  gem 'coffee-rails', "~> 3.2.1"
-  gem 'uglifier', '>= 1.0.3'
+  gem 'sass-rails'
+  gem 'coffee-rails'
+  gem 'uglifier'
   gem 'compass-rails'
   gem 'yui-compressor'
-  gem 'bootstrap-sass', '~> 2.0.4.0'
+  gem 'bootstrap-sass'
   gem 'font-awesome-sass-rails'
 end
 

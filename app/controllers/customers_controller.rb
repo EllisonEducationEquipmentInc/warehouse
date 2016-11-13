@@ -46,7 +46,7 @@ class CustomersController < ApplicationController
   # POST /customers
   # POST /customers.xml
   def create
-    @customer = Customer.new(params[:customer])
+    @customer = Customer.new(params[:customer_params])
 
     respond_to do |format|
       if @customer.save
@@ -65,7 +65,7 @@ class CustomersController < ApplicationController
     @customer = Customer.find(params[:id])
 
     respond_to do |format|
-      if @customer.update_attributes(params[:customer])
+      if @customer.update_attributes(params[:customer_params])
         format.html { redirect_to(@customer, :notice => 'Customer was successfully updated.') }
         format.xml  { head :ok }
       else
@@ -102,5 +102,10 @@ class CustomersController < ApplicationController
     field = params[:field].presence || "ax_customer_number"
     @customers = Customer.where(["#{field} LIKE ? ", "%#{params[:query]}%"]).limit(10)
     render json: {query: params[:query], suggestions: @customers.map {|e| "#{e.ax_customer_number} - #{e.company_name} - #{e.zip}"}, data: @customers}
+  end
+
+private
+  def customer_params
+    params.require(:customer).permit!
   end
 end
