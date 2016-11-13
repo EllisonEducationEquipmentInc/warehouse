@@ -5,7 +5,7 @@ ruby '2.3.1'
 
 require 'csv'
 
-gem "rails", "4.2"
+gem "rails", "4.2.5"
 gem 'dotenv-rails'
 
 ## Bundle edge rails:
