@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(:version => 20130515012730) do
 
+  add_extension "hstore"
+  add_extension "uuid-ossp"
+
   create_table "customers", :force => true do |t|
     t.string   "ax_customer_number"
     t.string   "company_name"
@@ -38,8 +41,8 @@ ActiveRecord::Schema.define(:version => 20130515012730) do
     t.integer  "product_id"
     t.decimal  "price",      :precision => 6,  :scale => 2
     t.integer  "quantity",                                  :default => 1
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                               :null => false
+    t.datetime "updated_at",                                               :null => false
     t.decimal  "item_total", :precision => 10, :scale => 2
     t.date     "ship_month"
   end
@@ -49,8 +52,8 @@ ActiveRecord::Schema.define(:version => 20130515012730) do
     t.decimal  "sub_total",         :precision => 12, :scale => 2
     t.decimal  "sales_tax",         :precision => 6,  :scale => 2
     t.decimal  "total",             :precision => 12, :scale => 2
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                                          :null => false
+    t.datetime "updated_at",                                                          :null => false
     t.string   "business"
     t.string   "contact"
     t.string   "phone"
@@ -76,8 +79,8 @@ ActiveRecord::Schema.define(:version => 20130515012730) do
     t.string   "name"
     t.string   "upc"
     t.decimal  "price",          :precision => 6, :scale => 2
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                                      :null => false
+    t.datetime "updated_at",                                                      :null => false
     t.date     "start_date"
     t.integer  "min_qty",                                      :default => 1
     t.boolean  "deleted",                                      :default => false

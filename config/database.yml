@@ -1,0 +1,31 @@
+defaults: &defaults
+  adapter: <%= ENV.fetch("DATABASE_ADAPTER") %> 
+  encoding: unicode
+  reconnect: false
+  pool: 5
+  username: <%= ENV.fetch("DATABASE_USERNAME") %> 
+  password: <%= ENV.fetch("DATABASE_PASSWORD") %>
+  host: <%= ENV.fetch("DATABASE_HOST") %>
+  port: <%= ENV.fetch("DATABASE_PORT") %>
+  database: <%= ENV.fetch("DATABASE_NAME") %>
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+dev:
+  <<: *defaults
+
+feature:
+  <<: *defaults
+
+staging:
+  <<: *defaults
+
+production:
+  <<: *defaults
+
+
+

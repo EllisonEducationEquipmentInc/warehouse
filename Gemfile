@@ -4,11 +4,14 @@ source 'http://gemcutter.org'
 require 'csv'
 
 gem "rails", "3.2.8"
+gem 'dotenv-rails'
 
 ## Bundle edge rails:
 # gem "rails", :git => "git://github.com/rails/rails.git"
 
-gem "mysql2"
+gem 'pg'
+gem 'postgres_ext'
+
 #gem 'fastercsv'
 
 gem 'therubyracer'
@@ -21,6 +24,8 @@ gem 'dynamic_form'
 gem 'kaminari'
 gem 'prototype-rails'
 
+gem 'test-unit'
+
 group :assets do
   gem 'sass-rails', "  ~> 3.2.3"
   gem 'coffee-rails', "~> 3.2.1"
@@ -32,14 +37,36 @@ group :assets do
 end
 
 group :development do
-  gem 'irbtools-more', :require => false
-  gem 'terminal-notifier'
   gem 'wirble'
   gem "rails3-generators"
   gem 'capistrano'
   gem "capistrano-unicorn"
-  gem 'debugger'
   gem "letter_opener"
+
+  gem 'rmre', git: 'https://github.com/bosko/rmre.git'
+  gem 'hirb'
+  gem "meta_request"
+  gem "better_errors"
+  gem "binding_of_caller"
+  gem 'rbtrace'
+  gem "rack-bug"
+  gem 'irbtools-more', '>= 1.7.2', :require => false
+  gem 'terminal-notifier'
+  gem 'rails-footnotes', '~> 4.0'
+
+  gem 'pry-rescue'
+  gem 'pry-stack_explorer'
+  gem 'pry-byebug'
+  gem 'brakeman', require: false
+  gem 'bullet'
+  gem 'rubocop', require: false
+
+  gem 'annotate', ">=2.5.0"
+  gem "seed_dump", "~> 0.5.3"
+
+  gem 'spring'
+  gem 'spring-commands-rspec'
+
 end
 
 ## Bundle the gems you use:
