@@ -59,7 +59,7 @@ class OrdersController < ApplicationController
   # POST /orders
   # POST /orders.xml
   def create
-    @order = Order.new(params[:order])
+    @order = Order.new(order_params)
     @order.coupon_code = session[:coupon] if session[:coupon].present?
     process_file if params[:file].present?
     calculate_total
@@ -83,7 +83,7 @@ class OrdersController < ApplicationController
     @order.order_items = []
     @order.coupon_code = session[:coupon] if session[:coupon].present?
     session[:coupon] = @order.coupon_code
-    @order.update_attributes params[:order]
+    @order.update_attributes order_params
     #@order.order_item_ids = params[:order][:order_item_attributes].keys.map {|a| a.to_i}
     calculate_total
     respond_to do |format|
@@ -179,5 +179,10 @@ private
       session[:coupon] = row["coupon_code"]
       @order.order_items.build product: p, quantity: row["qty"], price: p.price(row["coupon_code"]), ship_month: p.start_date_or_today if p
     end
+  end
+
+private
+  def order_params
+    params.require(:order).permit!
   end
 end
