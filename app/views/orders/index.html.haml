@@ -1,4 +1,5 @@
-%h1 Listing orders
+.page-header
+  %h1 Listing orders
 %p
   ==No. of orders: #{Order.count}
   %br
@@ -10,11 +11,11 @@
 = form_tag({:action => 'index'}, :method => 'get') do
   Search By quote #, business name or email address
   %br
-  = text_field_tag "q", params[:q]
-  = submit_tag "Search"
+  .form-group= text_field_tag "q", params[:q], class: 'form-control'
+  = submit_tag "Search", :class => 'btn btn-primary'
   %br
   %br
-%table
+%table.table.table-striped.table-responsive
   %thead
     %tr
       %th ID
@@ -38,12 +39,13 @@
         %td= number_to_currency order.total
         %td= order.payment_method
         %td= l order.created_at, :format => :date_only
-        %td= link_to 'Show', order
-        %td= link_to 'Edit', edit_order_path(order)
-        %td= link_to 'Delete', order, :confirm => 'Are you sure?', :method => :delete
+        %td
+          = link_to 'Show', order, :class => 'btn btn-default btn-xs'
+          = link_to 'Edit', edit_order_path(order), :class => 'btn btn-default btn-xs'
+          = link_to 'Delete', order, :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-danger btn-xs'
 %br
 = paginate @orders
 %br
-= link_to 'New order', new_order_path
+= link_to 'New order', new_order_path, :class => 'btn btn-primary'
 %br
 = link_to "export to csv", :action => 'export_to_csv'

@@ -1,74 +1,95 @@
-= form_for(@product) do |f|
-  = f.error_messages
-  
-  .field
-    = f.label :item_num
-    %span.required *
-    %br
-    = f.text_field :item_num, :maxlength => 12, :size => 15
-  .field
-    = f.label :name
-    %br
-    = f.text_field :name
-  .field
-    = f.label :upc
-    %br
-    = f.text_field :upc
-  .field
-    = f.label :price
-    %span.required *
-    %br
-    = f.text_field :price
-  .field
-    = f.label :min_qty
-    %br
-    = f.text_field :min_qty
-  .field
-    = f.label :start_date
-    %br
-    = f.date_select :start_date, :order => [:month, :day, :year]
-  .field
-    = f.label :coupon_1
-    %br
-    = f.text_field :coupon_1
-  .field
-    = f.label :coupon_price_1
-    %br
-    = f.text_field :coupon_price_1
-  .field
-    = f.label :coupon_2
-    %br
-    = f.text_field :coupon_2
-  .field
-    = f.label :coupon_price_2
-    %br
-    = f.text_field :coupon_price_2
-  .field
-    = f.label :coupon_3
-    %br
-    = f.text_field :coupon_3
-  .field
-    = f.label :coupon_price_3
-    %br
-    = f.text_field :coupon_price_3
-  .field
-    = f.label :coupon_4
-    %br
-    = f.text_field :coupon_4
-  .field
-    = f.label :coupon_price_4
-    %br
-    = f.text_field :coupon_price_4
-  .field
-    = f.label :coupon_5
-    %br
-    = f.text_field :coupon_5
-  .field
-    = f.label :coupon_price_5
-    %br
-    = f.text_field :coupon_price_5
+.row
+  .col-md-12
+    .panel.panel-info
+      .panel-heading
+        Product
+      .panel-body
+        .col-sm-12.col-md-12
+          = form_for(@product) do |f|
+            = f.error_messages
+            .form-group
+              .field
+                = f.label :item_num
+                %span.required *
+                %br
+                = f.text_field :item_num, :maxlength => 12, :size => 15, class: 'form-control'
+            .form-group
+              .field
+                = f.label :name
+                %br
+                = f.text_field :name, class: 'form-control'
+            .form-group
+              .field
+                = f.label :upc
+                %br
+                = f.text_field :upc, class: 'form-control'
+            .form-group
+              .field
+                = f.label :price
+                %span.required *
+                %br
+                = f.text_field :price, class: 'form-control'
+            .form-group
+              .field
+                = f.label :min_qty
+                %br
+                = f.text_field :min_qty, class: 'form-control'
+            .form-group
+              .field
+                = f.label :start_date
+                %br
+                = f.date_select :start_date, :order => [:month, :day, :year], class: 'form-control'
+            .form-group
+              .field
+                = f.label :coupon_1
+                %br
+                = f.text_field :coupon_1, class: 'form-control'
+            .form-group
+              .field
+                = f.label :coupon_price_1
+                %br
+                = f.text_field :coupon_price_1, class: 'form-control'
+            .form-group
+              .field
+                = f.label :coupon_2
+                %br
+                = f.text_field :coupon_2, class: 'form-control'
+            .form-group
+              .field
+                = f.label :coupon_price_2
+                %br
+                = f.text_field :coupon_price_2, class: 'form-control'
+            .form-group
+              .field
+                = f.label :coupon_3
+                %br
+                = f.text_field :coupon_3, class: 'form-control'
+            .form-group
+              .field
+                = f.label :coupon_price_3
+                %br
+                = f.text_field :coupon_price_3, class: 'form-control'
+            .form-group
+              .field
+                = f.label :coupon_4
+                %br
+                = f.text_field :coupon_4, class: 'form-control'
+            .form-group
+              .field
+                = f.label :coupon_price_4
+                %br
+                = f.text_field :coupon_price_4, class: 'form-control'
+            .form-group
+              .field
+                = f.label :coupon_5
+                %br
+                = f.text_field :coupon_5, class: 'form-control'
+            .form-group
+              .field
+                = f.label :coupon_price_5
+                %br
+                = f.text_field :coupon_price_5, class: 'form-control'
 
-
-
-  .actions
-    = f.submit
+            .form-group
+              .actions
+                = f.submit :class => 'btn btn-primary'

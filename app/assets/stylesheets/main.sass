@@ -1,0 +1,21 @@
+@import "bootstrap-sprockets"
+
+@font-face
+  font-family: 'Glyphicons Halflings'
+  src: url(asset_path('glyphicons-halflings-regular.eot'))
+  src: url(asset_path('glyphicons-halflings-regular.eot?#iefix')) format('embedded-opentype'), url(asset_path('glyphicons-halflings-regular.woff')) format('woff'), url(asset_path('glyphicons-halflings-regular.ttf')) format('truetype'), url(asset_path('glyphicons-halflings-regular.svg#glyphicons_halflingsregular')) format('svg')
+
+.field_with_errors
+  + br
+    display: none
+
+  input, select
+    border: 1px solid red
+
+  label
+    color: red
+
+.errorExplanation
+  border: red 1px solid
+  background-color: #ffd6d4
+  padding: 20px

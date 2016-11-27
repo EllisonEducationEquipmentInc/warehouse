@@ -1,9 +1,10 @@
-%h1 Listing customers
-= link_to 'all', customers_path unless params[:q].blank?
-= form_tag(customers_path, :method => :get) do
-  = text_field_tag :q, nil, placeholder: "ax, company, zip"
-  = submit_tag "search"
-%table
+.page-header
+  %h1 Listing customers
+  = link_to 'all', customers_path unless params[:q].blank?
+  = form_tag(customers_path, :method => :get) do
+    .form-group= text_field_tag :q, nil, placeholder: "ax, company, zip", class: 'form-control'
+    = submit_tag "search", :class => 'btn btn-primary'
+%table.table.table-striped.table-responsive
   %thead
     %tr
       %th Customer No.
@@ -14,6 +15,7 @@
       %th Country
       %th Phone
       %th Email
+      %th=t '.actions', :default => t("helpers.actions")
   %tbody
     - for customer in @customers
       %tr{ :class => cycle(:odd, :even) }
@@ -25,13 +27,12 @@
         %td= customer.country
         %td= customer.phone
         %td= customer.email
-        %td= link_to 'Show', customer
-        %td= link_to 'Edit', edit_customer_path(customer)
-        %td= link_to 'Destroy', customer, :confirm => 'Are you sure?', :method => :delete
-
-%br
+        %td
+          = link_to 'Show', customer, :class => 'btn btn-default btn-xs'
+          = link_to 'Edit', edit_customer_path(customer), :class => 'btn btn-default btn-xs'
+          = link_to 'Destroy', customer, :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-danger btn-xs'
 = paginate @customers
 %br
-= link_to 'New customer', new_customer_path
+= link_to 'New customer', new_customer_path, :class => 'btn btn-primary'
 %br
 = link_to 'Upload customer csv file', :action => :import

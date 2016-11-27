@@ -1,303 +1,328 @@
-#order_totals
-  %table
-    %tr
-      %td
-        Item Quantity Total:
-        %br
-        Subtotal
-        - if warehouse?
-          %br
-          Sales Tax
-          %br
-          Order Total
-      %td
-        %span#qtytotal
-          0 items
-        %br
-        %span#subtotal
-          $0
-        - if warehouse?
-          %br
-          %span#salestax
-            $0.00
-          %br
-          %span#ordertotal
-            $0.00
-    - if (params[:controller] == 'orders' && params[:action] == 'edit')
-      %tr
-        %td.timestamps{:colspan => "2"}
-          Created on: 
-          = l @order.created_at, :format => :default
-          %br
-          Modified on:
-          = l @order.updated_at, :format => :default
-  - if tradeshow?
-    %ul#by_ship_date
-      - @order.by_ship_date.each do |k,v|
-        %li
-          = k
-          %span.ship_date_item= number_to_currency v
-  - else
-    #by_ship_date{:style => "display:none;"}
+.row
+  .col-md-12
+    .panel.panel-info
+      .panel-heading
+        Order
+      .panel-body
+        .col-sm-12.col-md-12
+          #order_totals
+            %table
+              %tr
+                %td
+                  Item Quantity Total:
+                  %br
+                  Subtotal
+                  - if warehouse?
+                    %br
+                    Sales Tax
+                    %br
+                    Order Total
+                %td
+                  %span#qtytotal
+                    0 items
+                  %br
+                  %span#subtotal
+                    $0
+                  - if warehouse?
+                    %br
+                    %span#salestax
+                      $0.00
+                    %br
+                    %span#ordertotal
+                      $0.00
+              - if (params[:controller] == 'orders' && params[:action] == 'edit')
+                %tr
+                  %td.timestamps{:colspan => "2"}
+                    Created on: 
+                    = l @order.created_at, :format => :default
+                    %br
+                    Modified on:
+                    = l @order.updated_at, :format => :default
+            - if tradeshow?
+              %ul#by_ship_date
+                - @order.by_ship_date.each do |k,v|
+                  %li
+                    = k
+                    %span.ship_date_item= number_to_currency v
+            - else
+              #by_ship_date{:style => "display:none;"}
 
-= form_tag({:action=>'create'}, :multipart => true) do
-  %table
-    %tr
-      %td
-        %label{ :for => "dump_file" }
-          Select a CSV File :
-          %br
-          = file_field_tag :file
-          = submit_tag 'Submit'
+          = form_tag({:action=>'create'}, :multipart => true) do
+            %table
+              %tr
+                %td
+                  %label{ :for => "dump_file" }
+                    Select a CSV File :
+                    %br
+                    = file_field_tag :file
+                    = submit_tag 'Submit', :class => 'btn btn-primary'
           = link_to "click here to see a sample CSV file", "/sample_export_lineitems.csv"
       
-#error
-  = flash[:message]
-#coupon
-  - if session[:coupon].present?
-    Applied Coupon: 
-    = session[:coupon]
-  - else
-    = form_tag({:action => 'add_coupon', :id => @order}, :remote => true, :id => 'add_coupon_form', :onsubmit => "$('warning').hide();") do
-      .field
-        = label_tag :coupon, 'Enter Coupon Code:'
-        %br
-        = text_field_tag :coupon, nil, :tabindex => 1, :onFocus => "this.select();", :maxlength => 12
-        = submit_tag :add
- 
-= form_tag({:action => 'add_item', :id => @order}, :remote => true, :id => 'add_item_form', :onsubmit => "$('warning').hide();") do
-  .field
-    = label_tag :item, 'Item Number or UPC Scan'
-    %span.required *
-    %br
-    = text_field_tag :upc, nil, :tabindex => 1, :onFocus => "this.select();", :maxlength => 12, :class => 'required'
-    = submit_tag :add
-    %span#warning{ :style => "display:none"}
-      PRODUCT NOT FOUND!
+          #error
+            = flash[:message]
+          #coupon
+            - if session[:coupon].present?
+              Applied Coupon: 
+              = session[:coupon]
+            - else
+              = form_tag({:action => 'add_coupon', :id => @order}, :remote => true, :id => 'add_coupon_form', :onsubmit => "$('warning').hide();") do
+                .field
+                  = label_tag :coupon, 'Enter Coupon Code:'
+                  %br
+                  = text_field_tag :coupon, nil, :tabindex => 1, :onFocus => "this.select();", :maxlength => 12
+                  = submit_tag :add, :class => 'btn btn-primary'
+           
+          = form_tag({:action => 'add_item', :id => @order}, :remote => true, :id => 'add_item_form', :onsubmit => "$('warning').hide();") do
+            .field
+              = label_tag :item, 'Item Number or UPC Scan'
+              %span.required *
+              %br
+              = text_field_tag :upc, nil, :tabindex => 1, :onFocus => "this.select();", :maxlength => 12, :class => 'required'
+              = submit_tag :add, :class => 'btn btn-primary'
+              %span#warning{ :style => "display:none"}
+                PRODUCT NOT FOUND!
 
-:javascript
-  new Validation('add_item_form');
-  Form.Element.focus($('upc'));
-= form_for(@order) do |f|
-  = f.error_messages
-  %table.products{:width => "100%"}
-    %tr
-      %th{:align => 'left', :width => '50'} Item Number
-      %th{:align => 'left', :width => '150'} Description
-      - if tradeshow?
-        %th{:align => 'center', :width => '100'} Launch Month
-        %th{:align => 'center', :width => '100'} Ship Month
-      %th{:align => 'center', :width => '30'} Qty.
-      - if tradeshow?
-        %th{:align => 'center', :width =>'60'} Wholesale Price
-      %th{:align => 'center', :width => '60'} Your Price
-      %th{:align => 'center', :width => '60'} Extended Price
-      %th{:align => 'right', :width => '1', :style => 'border-bottom: none;'}
-  %table#products.products{:width => "100%", :style => "margin-bottom: 25px"}
-    = render :partial => 'order_item', :collection => @order.order_items, locals: {f: f}
-    
-  %hr
-  %div{:style => "float: right"}
-    .field
-      = f.label :sub_total, 'Subtotal', :class => "ordertotals"
-      = f.text_field :sub_total, :disabled => true, :size => "8", :class => "ordertotals"
-    - if warehouse?
-      .field#sales_tax{:style => "display:#{@order.tax_exempt ? 'none' : 'block'}"}
-        = f.label :sales_tax, 'Sales Tax', :class => "ordertotals"
-        = f.text_field :sales_tax, :disabled => true, :size => "8", :class => "ordertotals"
-      .field#total{:style => "display:#{@order.tax_exempt ? 'none' : 'block'}"}
-        = f.label :total, 'Order Total', :class => "ordertotals"
-        = f.text_field :total, :disabled => true, :size => "8", :class => "ordertotals"
-  - if warehouse?
-    .field
-      = f.label :payment_method
-      %br
-      = f.radio_button :payment_method, "Credit Card", :tabindex => i=2
-      Credit Card
-      = f.radio_button :payment_method, "Cash", :tabindex => i+=1
-      Cash
-    .field{:style => "float: left; margin-right: 50px"}
-      = f.label :tax_exempt
-      %br
-      = f.check_box :tax_exempt, :tabindex => i+=1, :onclick => "show_sales_tax(this.checked)"
-    .field#tax_exempt_number{:style => "display:#{@order.tax_exempt ? 'block' : 'none'}"}
-      = f.label :tax_exempt_number, "Tax Exempt Number<span class='required'> *</span>".html_safe
-      %br
-      = f.text_field :tax_exempt_number, :tabindex => i+=1
-  .clearfloat
-  %div{:style => "float: left; margin-right: 50px"}
-    - if tradeshow?
-      .field
-        = f.label :employee_number
-        %span.required *
-        %br
-        = f.text_field :employee_number, :tabindex => i=2
-    .field
-      = f.label :customer_number
-      %span.required *
-      %br
-      = f.text_field :customer_number, :tabindex => "#{i+=1}"
-    - if tradeshow?
-      .field
-        = f.label :coupon_code
-        %br
-        = f.text_field :coupon_code, :tabindex => i+=1
-    - else
-      = f.hidden_field :coupon_code, :tabindex => i+=1
-    - if tradeshow?
-      .field
-        = f.label :full_name
-        %br
-        = f.text_field :full_name, :tabindex => i+=1
-    - else
-      .field
-        = f.label :first_name
-        %br
-        = f.text_field :first_name, :tabindex => i+=1
-      .field
-        = f.label :last_name
-        %br
-        = f.text_field :last_name, :tabindex => i+=1
-    .field
-      = f.label :business, 'Business Name'
-      %br
-      = f.text_field :business, :tabindex => i+=1
-    .field
-      = f.label :email, 'Email Address'
-      %br
-      = f.text_field :email, :tabindex => i+=1
-    .field
-      = f.label :phone, 'Phone Number'
-      %br
-      = f.text_field :phone, :tabindex => i+=1
-    .field
-      = f.label :address
-      %br
-      = f.text_field :address, :tabindex => i+=1
-    .field
-      = f.label :city
-      %br
-      = f.text_field :city, :tabindex => i+=1
-    .field
-      = f.label :state
-      %br
-      = f.text_field :state, :tabindex => i+=1
-    .field
-      = f.label :zip_code
-      %br
-      = f.text_field :zip_code, :tabindex => i+=1
-    .field
-      = f.label :country
-      %br
-      = f.select :country, ["United States", "Afghanistan", "Albania", "Algeria", "American Samoa", "Andorra", "Angola", "Anguilla", "Antigua and Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei Darussalam", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Cayman Islands", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Congo, the Democratic Republic of the", "Cook Islands", "Costa Rica", "Cote D'Ivoire", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Falkland Islands (Malvinas)", "Faroe Islands", "Fiji", "Finland", "France", "French Guiana", "French Polynesia", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guadeloupe", "Guam", "Guatemala", "Guernsey", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Holy See (Vatican City State)", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran, Islamic Republic of", "Iraq", "Ireland", "Isle of Man", "Israel", "Italy", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kuwait", "Kyrgyzstan", "Lao People's Democratic Republic", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libyan Arab Jamahiriya", "Liechtenstein", "Lithuania", "Luxembourg", "Macao", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Martinique", "Mauritania", "Mauritius", "Mexico", "Micronesia, Federated States of", "Moldova, Republic of", "Monaco", "Mongolia", "Montserrat", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Niue", "Norfolk Island", "North Korea", "Northern Mariana Islands", "Norway", "Oman", "Pakistan", "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Pitcairn", "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russian Federation", "Rwanda", "Saint Helena", "Saint Kitts and Nevis", "Saint Lucia", "Saint Pierre and Miquelon", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Korea", "Spain", "Sri Lanka", "Sudan", "Suriname", "Svalbard and Jan Mayen", "Swaziland", "Sweden", "Switzerland", "Syrian Arab Republic", "Taiwan", "Tajikistan", "Tanzania, United Republic of", "Thailand", "Togo", "Tokelau", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks and Caicos Islands", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Viet Nam", "Virgin Islands, British", "Virgin Islands, U.S.", "Wallis and Futuna", "Western Sahara", "Yemen", "Zambia", "Zimbabwe", "US"] , :tabindex => i+=1
-    
-  .field{:style => "float: left"}
-    = f.label :notes
-    %br
-    = f.text_area :notes, :tabindex => i+=1, :rows => "10"
-  .actions{:style => "float: right"}
-    = f.submit :tabindex => i+=1, :class => "button", :onclick => "$(this).hide();$('order_loading').show();"
-    #order_loading{:style => 'display:none'}= image_tag('/images/loader-ajax.gif')
-  .clearfloat
+          :javascript
+            new Validation('add_item_form');
+            Form.Element.focus($('upc'));
+          = form_for(@order) do |f|
+            = f.error_messages
+            %table.products{:width => "100%"}
+              %tr
+                %th{:align => 'left', :width => '50'} Item Number
+                %th{:align => 'left', :width => '150'} Description
+                - if tradeshow?
+                  %th{:align => 'center', :width => '100'} Launch Month
+                  %th{:align => 'center', :width => '100'} Ship Month
+                %th{:align => 'center', :width => '30'} Qty.
+                - if tradeshow?
+                  %th{:align => 'center', :width =>'60'} Wholesale Price
+                %th{:align => 'center', :width => '60'} Your Price
+                %th{:align => 'center', :width => '60'} Extended Price
+                %th{:align => 'right', :width => '1', :style => 'border-bottom: none;'}
+            %table#products.products{:width => "100%", :style => "margin-bottom: 25px"}
+              = render :partial => 'order_item', :collection => @order.order_items, locals: {f: f}
+              
+            %hr
+            %div{:style => "float: right"}
+              .field
+                = f.label :sub_total, 'Subtotal', :class => "ordertotals"
+                = f.text_field :sub_total, :disabled => true, :size => "8", :class => "ordertotals"
+              - if warehouse?
+                .field#sales_tax{:style => "display:#{@order.tax_exempt ? 'none' : 'block'}"}
+                  = f.label :sales_tax, 'Sales Tax', :class => "ordertotals"
+                  = f.text_field :sales_tax, :disabled => true, :size => "8", :class => "ordertotals"
+                .field#total{:style => "display:#{@order.tax_exempt ? 'none' : 'block'}"}
+                  = f.label :total, 'Order Total', :class => "ordertotals"
+                  = f.text_field :total, :disabled => true, :size => "8", :class => "ordertotals"
+            - if warehouse?
+              .field
+                = f.label :payment_method
+                %br
+                = f.radio_button :payment_method, "Credit Card", :tabindex => i=2
+                Credit Card
+                = f.radio_button :payment_method, "Cash", :tabindex => i+=1
+                Cash
+              .field{:style => "float: left; margin-right: 50px"}
+                = f.label :tax_exempt
+                %br
+                = f.check_box :tax_exempt, :tabindex => i+=1, :onclick => "show_sales_tax(this.checked)"
+              .field#tax_exempt_number{:style => "display:#{@order.tax_exempt ? 'block' : 'none'}"}
+                = f.label :tax_exempt_number, "Tax Exempt Number<span class='required'> *</span>".html_safe
+                %br
+                = f.text_field :tax_exempt_number, :tabindex => i+=1
+            .row
+              .col-md-12
+                .pull-right= f.submit :class => "btn btn-danger", :onclick => "$(this).hide();$('order_loading').show();"
+            .clearfloat
+            .row
+              .col-md-6.col-sm-12
+                - if tradeshow?
+                  .form-group
+                    .field
+                      = f.label :employee_number
+                      %span.required *
+                      %br
+                      = f.text_field :employee_number, :tabindex => i=2, class: "form-control"
+                  .form-group
+                    .field
+                      = f.label :customer_number
+                      %span.required *
+                      %br
+                      = f.text_field :customer_number, :tabindex => "#{i+=1}", class: 'form-control'
+                  - if tradeshow?
+                    .form-group
+                      .field
+                        = f.label :coupon_code
+                        %br
+                        = f.text_field :coupon_code, :tabindex => i+=1, class: 'form-control'
+                  - else
+                    = f.hidden_field :coupon_code, :tabindex => i+=1
+                  - if tradeshow?
+                    .form-group
+                      .field
+                        = f.label :full_name
+                        %br
+                        = f.text_field :full_name, :tabindex => i+=1, class: 'form-control'
+                  - else
+                    .form-group
+                      .field
+                        = f.label :first_name
+                        %br
+                        = f.text_field :first_name, :tabindex => i+=1
+                    .form-group
+                      .field
+                        = f.label :last_name
+                        %br
+                        = f.text_field :last_name, :tabindex => i+=1, class: 'form-control'
+                  .form-group
+                    .field
+                      = f.label :business, 'Business Name'
+                      %br
+                      = f.text_field :business, :tabindex => i+=1, class: 'form-control'
+                  .form-group
+                    .field
+                      = f.label :email, 'Email Address'
+                      %br
+                      = f.text_field :email, :tabindex => i+=1, class: 'form-control'
+                  .form-group
+                    .field
+                      = f.label :phone, 'Phone Number'
+                      %br
+                      = f.text_field :phone, :tabindex => i+=1, class: 'form-control'
+                  .form-group
+                    .field
+                      = f.label :address
+                      %br
+                      = f.text_field :address, :tabindex => i+=1, class: 'form-control'
+                  .form-group
+                    .field
+                      = f.label :city
+                      %br
+                      = f.text_field :city, :tabindex => i+=1, class: 'form-control'
+                  .form-group
+                    .field
+                      = f.label :state
+                      %br
+                      = f.text_field :state, :tabindex => i+=1, class: 'form-control'
+                  .form-group
+                    .field
+                      = f.label :zip_code
+                      %br
+                      = f.text_field :zip_code, :tabindex => i+=1, class: 'form-control'
+                  .form-group
+                    .field
+                      = f.label :country
+                      %br
+                      = f.select :country, ["United States", "Afghanistan", "Albania", "Algeria", "American Samoa", "Andorra", "Angola", "Anguilla", "Antigua and Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei Darussalam", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Cayman Islands", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Congo, the Democratic Republic of the", "Cook Islands", "Costa Rica", "Cote D'Ivoire", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Falkland Islands (Malvinas)", "Faroe Islands", "Fiji", "Finland", "France", "French Guiana", "French Polynesia", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guadeloupe", "Guam", "Guatemala", "Guernsey", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Holy See (Vatican City State)", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran, Islamic Republic of", "Iraq", "Ireland", "Isle of Man", "Israel", "Italy", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kuwait", "Kyrgyzstan", "Lao People's Democratic Republic", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libyan Arab Jamahiriya", "Liechtenstein", "Lithuania", "Luxembourg", "Macao", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Martinique", "Mauritania", "Mauritius", "Mexico", "Micronesia, Federated States of", "Moldova, Republic of", "Monaco", "Mongolia", "Montserrat", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Niue", "Norfolk Island", "North Korea", "Northern Mariana Islands", "Norway", "Oman", "Pakistan", "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Pitcairn", "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russian Federation", "Rwanda", "Saint Helena", "Saint Kitts and Nevis", "Saint Lucia", "Saint Pierre and Miquelon", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Korea", "Spain", "Sri Lanka", "Sudan", "Suriname", "Svalbard and Jan Mayen", "Swaziland", "Sweden", "Switzerland", "Syrian Arab Republic", "Taiwan", "Tajikistan", "Tanzania, United Republic of", "Thailand", "Togo", "Tokelau", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks and Caicos Islands", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Viet Nam", "Virgin Islands, British", "Virgin Islands, U.S.", "Wallis and Futuna", "Western Sahara", "Yemen", "Zambia", "Zimbabwe", "US"] , :tabindex => i+=1
+                  .form-group
+                    .field{:style => "float: left"}
+                      = f.label :notes
+                      %br
+                      = f.text_area :notes, :tabindex => i+=1, :rows => "10", class: 'form-control'
+                .actions{:style => "float: right"}
+                  = f.submit :tabindex => i+=1, :class => "btn btn-danger", :onclick => "$(this).hide();$('order_loading').show();"
+                  #order_loading{:style => 'display:none'}= image_tag('/images/loader-ajax.gif')
+                .clearfloat
 
-- if tradeshow?
-  :javascript
+            - if tradeshow?
+              :javascript
 
-    var onselect = function(value, data){
-      $('order_customer_number').value=data.ax_customer_number;
-      $('order_business').value=data.company_name;
-      $('order_full_name').value=data.full_name;
-      $('order_email').value=data.email;
-      $('order_address').value=data.address;
-      $('order_phone').value=data.phone;
-      $('order_city').value=data.city;
-      $('order_state').value=data.state;
-      $('order_zip_code').value=data.zip;
-      $('order_country').value=data.country;
-    };
+                var onselect = function(value, data){
+                  $('order_customer_number').value=data.ax_customer_number;
+                  $('order_business').value=data.company_name;
+                  $('order_full_name').value=data.full_name;
+                  $('order_email').value=data.email;
+                  $('order_address').value=data.address;
+                  $('order_phone').value=data.phone;
+                  $('order_city').value=data.city;
+                  $('order_state').value=data.state;
+                  $('order_zip_code').value=data.zip;
+                  $('order_country').value=data.country;
+                };
 
-    new Autocomplete('order_customer_number', {
-      serviceUrl:'/customers/search',
-      minChars:3,
-      maxHeight:400,
-      width:300,
-      deferRequestBy:100,
-      onSelect: onselect
-    });
+                new Autocomplete('order_customer_number', {
+                  serviceUrl:'/customers/search',
+                  minChars:3,
+                  maxHeight:400,
+                  width:300,
+                  deferRequestBy:100,
+                  onSelect: onselect
+                });
 
-    new Autocomplete('order_business', {
-      serviceUrl:'/customers/search?field=company_name',
-      minChars:3,
-      maxHeight:400,
-      width:300,
-      deferRequestBy:100,
-      onSelect: onselect
-    });
+                new Autocomplete('order_business', {
+                  serviceUrl:'/customers/search?field=company_name',
+                  minChars:3,
+                  maxHeight:400,
+                  width:300,
+                  deferRequestBy:100,
+                  onSelect: onselect
+                });
 
-:javascript
-  function update_totals(){
-    var subtotal = 0
-    var salestax = 0
-    var total = 0
-    var total_qty = 0
-    var total_by_ship_date = {}
-    $('by_ship_date').update('');
-    $$('.order_item_row').each(function(row){
-      line_qty_total = row.down('.quantity').value * 1
-      total_qty = total_qty + line_qty_total
+            :javascript
+              function update_totals(){
+                var subtotal = 0
+                var salestax = 0
+                var total = 0
+                var total_qty = 0
+                var total_by_ship_date = {}
+                $('by_ship_date').update('');
+                $$('.order_item_row').each(function(row){
+                  line_qty_total = row.down('.quantity').value * 1
+                  total_qty = total_qty + line_qty_total
 
-      line_total = Math.round((row.down('.quantity').value * row.down('.price').value) * 100) / 100
+                  line_total = Math.round((row.down('.quantity').value * row.down('.price').value) * 100) / 100
 
-      ship_date = row.readAttribute('data-ship-date');
-      if ($('li_sd_'+ship_date)) {
-        total_by_ship_date[ship_date]+=line_total;
-        $('total_sd_'+ship_date).update('$'+total_by_ship_date[ship_date]);
-      } else{
-        total_by_ship_date[ship_date]=line_total;
-        $('by_ship_date').insert('<li id="li_sd_'+ship_date+'">'+ship_date+' <span class="ship_date_item" id="total_sd_'+ship_date+'">$'+total_by_ship_date[ship_date]+'</span></li>');
-      };
-      row.down('.item_total').innerHTML = '$' + line_total
-      subtotal = subtotal + line_total
-      salestax = Math.round(subtotal * 8.75) / 100
-      total = subtotal + salestax
-    });
-    $('order_sub_total').value = subtotal
-    #{warehouse? ? "$('order_sales_tax').value = salestax" : nil}
-    #{warehouse? ? "$('order_total').value = total" : nil}
-    
-    $('qtytotal').innerHTML = total_qty + ' items'
-    $('subtotal').innerHTML = '$' + subtotal
-    #{warehouse? ? "$('salestax').innerHTML = '$' + salestax" : nil}
-    #{warehouse? ? "$('ordertotal').innerHTML = '$' + total" : nil}
-    
-    //$('upc').focus();
-  }
-  
-  function show_sales_tax(value){
-    if (value) {
-      $('tax_exempt_number').show()
-      #{warehouse? ? "$('sales_tax').hide()" : nil}
-      #{warehouse? ? "$('total').hide()" : nil}
-      #{warehouse? ? "$('salestax').hide()" : nil}
-      #{warehouse? ? "$('ordertotal').hide()" : nil}
-    } else {
-      $('tax_exempt_number').hide()
-      #{warehouse? ? "$('sales_tax').show()" : nil}
-      #{warehouse? ? "$('total').show()" : nil}
-      #{warehouse? ? "$('salestax').show()" : nil}
-      #{warehouse? ? "$('ordertotal').show()" : nil}
-    }
-  }
-  
-  function product_not_found(value){
-    if (value) {
-      $('warning').innerHTML = 'this field cannot be blank'
-      $('warning').show();
-    } else {
-      $('warning').innerHTML = 'product not found'
-      $('warning').show();
-      $('order_notes').value += 'product not found: ' + $('upc').value + '\n';
-      $('order_notes').focus();    
-    }
-  }
-  update_totals();
+                  ship_date = row.readAttribute('data-ship-date');
+                  if ($('li_sd_'+ship_date)) {
+                    total_by_ship_date[ship_date]+=line_total;
+                    $('total_sd_'+ship_date).update('$'+total_by_ship_date[ship_date]);
+                  } else{
+                    total_by_ship_date[ship_date]=line_total;
+                    $('by_ship_date').insert('<li id="li_sd_'+ship_date+'">'+ship_date+' <span class="ship_date_item" id="total_sd_'+ship_date+'">$'+total_by_ship_date[ship_date]+'</span></li>');
+                  };
+                  row.down('.item_total').innerHTML = '$' + line_total
+                  subtotal = subtotal + line_total
+                  salestax = Math.round(subtotal * 8.75) / 100
+                  total = subtotal + salestax
+                });
+                $('order_sub_total').value = subtotal
+                #{warehouse? ? "$('order_sales_tax').value = salestax" : nil}
+                #{warehouse? ? "$('order_total').value = total" : nil}
+                
+                $('qtytotal').innerHTML = total_qty + ' items'
+                $('subtotal').innerHTML = '$' + subtotal
+                #{warehouse? ? "$('salestax').innerHTML = '$' + salestax" : nil}
+                #{warehouse? ? "$('ordertotal').innerHTML = '$' + total" : nil}
+                
+                //$('upc').focus();
+              }
+              
+              function show_sales_tax(value){
+                if (value) {
+                  $('tax_exempt_number').show()
+                  #{warehouse? ? "$('sales_tax').hide()" : nil}
+                  #{warehouse? ? "$('total').hide()" : nil}
+                  #{warehouse? ? "$('salestax').hide()" : nil}
+                  #{warehouse? ? "$('ordertotal').hide()" : nil}
+                } else {
+                  $('tax_exempt_number').hide()
+                  #{warehouse? ? "$('sales_tax').show()" : nil}
+                  #{warehouse? ? "$('total').show()" : nil}
+                  #{warehouse? ? "$('salestax').show()" : nil}
+                  #{warehouse? ? "$('ordertotal').show()" : nil}
+                }
+              }
+              
+              function product_not_found(value){
+                if (value) {
+                  $('warning').innerHTML = 'this field cannot be blank'
+                  $('warning').show();
+                } else {
+                  $('warning').innerHTML = 'product not found'
+                  $('warning').show();
+                  $('order_notes').value += 'product not found: ' + $('upc').value + '\n';
+                  $('order_notes').focus();    
+                }
+              }
+              update_totals();

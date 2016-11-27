@@ -1,35 +1,57 @@
-!!!
-%html
+!!! 5
+%html(lang="en")
   %head
-    %title== #{ @title? @title : app_mode}
-    = stylesheet_link_tag 'scaffold', :media => "all"
-    = stylesheet_link_tag 'site', :media => "all"
-    = stylesheet_link_tag 'print', :media => "print"
-    = stylesheet_link_tag 'mobile' if mobile_device?
-    = javascript_include_tag 'prototype', 'scriptaculous', 'rails', 'controls', 'dragdrop', 'effects', 'sound', 'validation'
-    = javascript_include_tag 'autocomplete/autocomplete'
-    = javascript_include_tag 'application'
-    = csrf_meta_tag
-  
+    %meta(charset="utf-8")
+    %meta(http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1")
+    %meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    %title= content_for?(:title) ? yield(:title) : "Ellison"
+    = csrf_meta_tags
+    / Le HTML5 shim, for IE6-8 support of HTML elements
+    /[if lt IE 9]
+      = javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js"
+    = stylesheet_link_tag "application", :media => "all"
+    = favicon_link_tag 'apple-touch-icon-57x57.png', :rel => 'apple-touch-icon', :type => 'image/png', :sizes => '57x57'
+    = favicon_link_tag 'apple-touch-icon-76x76.png', :rel => 'apple-touch-icon', :type => 'image/png', :sizes => '76x76'
+    = favicon_link_tag 'apple-touch-icon-144x144.png', :rel => 'apple-touch-icon', :type => 'image/png', :sizes => '144x144'
+    = favicon_link_tag 'apple-touch-icon-114x114.png', :rel => 'apple-touch-icon', :type => 'image/png', :sizes => '114x114'
+    = favicon_link_tag 'apple-touch-icon-120x120.png', :rel => 'apple-touch-icon', :type => 'image/png', :sizes => '120x120'
+    = favicon_link_tag 'apple-touch-icon-152x152.png', :rel => 'apple-touch-icon', :type => 'image/png', :sizes => '152x152'
+    = favicon_link_tag 'apple-touch-icon-72x72.png', :rel => 'apple-touch-icon', :type => 'image/png', :sizes => '72x72'
+    = favicon_link_tag 'apple-touch-icon.png', :rel => 'apple-touch-icon', :type => 'image/png'
+    = favicon_link_tag 'favicon.ico', :rel => 'shortcut icon'
+    = javascript_include_tag "application"
+    = javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"
+    = javascript_include_tag "//maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"
+    = stylesheet_link_tag "//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css"
+    = stylesheet_link_tag "//fonts.googleapis.com/css?family=Roboto:300,400,500"
+
+
   %body{:onload => "#{(params[:controller] == 'orders' && params[:action] == 'show') ? 'window.print()' : nil}"}
-    #container
-      -#
-        %p.dontprint 
-          - if mobile_device?
-            = link_to "Full Site", :mobile => 0 
-          - else  
-            = link_to "Mobile Site", :mobile => 1
-      %p.dontprint.notice= raw notice
-      - if flash[:error].present?
-        #errorExplanation
-          %p= raw flash[:error]
-      %h2.dontprint== App mode: #{app_mode}
-      = link_to "Products", products_path, :class => "button dontprint #{'selected' if (params[:controller] == 'products')}"
-      = link_to order_name.pluralize, orders_path, :class => "button dontprint #{'selected' if (params[:controller] == 'orders' && params[:action] == 'index')}"
-      = link_to "New Sale", new_order_path, :class => "button dontprint #{'selected' if (params[:controller] == 'orders' && params[:action] == 'new')}"
-      - if tradeshow?
-        = link_to "Customers", customers_path, :class => "button dontprint #{'selected' if (params[:controller] == 'customers')}"
-      = link_to "Reports", reports_path, :class => "button dontprint #{'selected' if (params[:controller] == 'reports')}"
-      = link_to "Print", "javascript:window.print()", :class => 'button dontprint selected' if (params[:controller] == 'orders' && params[:action] == 'show')
-      .clear
-      = yield
+    %nav.navbar.navbar-default
+      .container#container
+        %button.navbar-toggle(type="button" data-toggle="collapse" data-target=".navbar-collapse")
+          %span.icon-bar
+          %span.icon-bar
+          %span.icon-bar
+        .navbar-header
+          %a.navbar-brand Ellison
+        #navbar-main.navbar-collapse.collapse
+          %ul.nav.navbar-nav
+            %li.dropdown= link_to "Products", products_path, :class => "button dontprint #{'active' if (params[:controller] == 'products')}"
+            %li.dropdown= link_to order_name.pluralize, orders_path, :class => "button dontprint #{'active' if (params[:controller] == 'orders' && params[:action] == 'index')}"
+            %li.dropdown= link_to "New Sale", new_order_path, :class => "button dontprint #{'sactive' if (params[:controller] == 'orders' && params[:action] == 'new')}"
+            - if tradeshow?
+              %li.dropdown= link_to "Customers", customers_path, :class => "button dontprint #{'sactive' if (params[:controller] == 'customers')}"
+            %li.dropdown= link_to "Reports", reports_path, :class => "button dontprint #{'active' if (params[:controller] == 'reports')}"
+            %li.dropdown= link_to "Print", "javascript:window.print()", :class => 'button dontprint active' if (params[:controller] == 'orders' && params[:action] == 'show')
+    .master-container.container
+      .row
+        .col-lg-12
+          \&nbsp;
+      .row
+        .col-lg-12
+          .dontprint= bootstrap_flash
+          = yield
+    %footer.footer
+      .container
+        .col-xs-2.col-lg-2
