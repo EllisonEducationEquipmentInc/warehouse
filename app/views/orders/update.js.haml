@@ -10,7 +10,10 @@
   }
   update_totals()
 - else
-  Sound.play('/error.mp3',{replace:false});
+  var sound = new Howl({
+  src: ['/error.mp3']
+  });
+  sound.play();
   product_not_found();
 - unless params[:dup].present?
   $('#upc').focus()

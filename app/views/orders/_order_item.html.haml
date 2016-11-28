@@ -26,4 +26,16 @@
     - unless params[:action] == 'show'
       %td{:width => 20, :align => 'right'}= link_to 'x', '#', :onclick => "$(this).parents('.order_item_row').remove();update_totals();" 
       - if tradeshow?
-        %td{:width => 20, :align => 'right'}= link_to 'dup', '#', :onclick => "new Ajax.Request('/orders/add_item', {method: 'POST', asynchronous: true, evalScripts: true, parameters:{dup:true,authenticity_token:'#{form_authenticity_token}',upc:this.up('tr').readAttribute('data-product-item_num')}});return false;" 
+        %td{:width => 20, :align => 'right'}= link_to 'dup', '#', class: 'dup', data: {'item-num' => order_item.product.item_num}
+
+:coffee
+  $('.dup').on 'click', ->
+    $.ajax(
+      url: '/orders/add_item'
+      method: 'POST'
+      data:
+        dup: true
+        upc: $(@).data('item-num')
+      context: document.body).done ->
+      $(this).addClass 'done'
+    return false
