@@ -19,13 +19,11 @@
     %td{:width => 60, :align => 'right'}
       - if @editable && tradeshow?
         = order_item_fields.text_field(:price, :size => 6, :class => 'price', :onchange => "update_totals();$('upc').focus();")
-      - else  
+      - else
         = order_item_fields.hidden_field :price, :class => 'price' if @editable && warehouse?
         = number_to_currency(order_item.price)
     %td{:width => 60, :align => 'right', :class => "item_total"}= number_to_currency order_item.item_total
     - unless params[:action] == 'show'
-      %td{:width => 20, :align => 'right'}= link_to 'x', '#', :onclick => "this.up('.order_item_row').remove();update_totals();" 
+      %td{:width => 20, :align => 'right'}= link_to 'x', '#', :onclick => "$(this).parents('.order_item_row').remove();update_totals();" 
       - if tradeshow?
         %td{:width => 20, :align => 'right'}= link_to 'dup', '#', :onclick => "new Ajax.Request('/orders/add_item', {method: 'POST', asynchronous: true, evalScripts: true, parameters:{dup:true,authenticity_token:'#{form_authenticity_token}',upc:this.up('tr').readAttribute('data-product-item_num')}});return false;" 
-  
-    

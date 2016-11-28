@@ -229,16 +229,16 @@
               :javascript
 
                 var onselect = function(value, data){
-                  $('order_customer_number').value=data.ax_customer_number;
-                  $('order_business').value=data.company_name;
-                  $('order_full_name').value=data.full_name;
-                  $('order_email').value=data.email;
-                  $('order_address').value=data.address;
-                  $('order_phone').value=data.phone;
-                  $('order_city').value=data.city;
-                  $('order_state').value=data.state;
-                  $('order_zip_code').value=data.zip;
-                  $('order_country').value=data.country;
+                  $('#order_customer_number').val(data.ax_customer_number);
+                  $('#order_business').val(data.company_name);
+                  $('#order_full_name').val(data.full_name);
+                  $('#order_email').val(data.email);
+                  $('#order_address').val(data.address);
+                  $('#order_phone').val(data.phone);
+                  $('#order_city').val(data.city);
+                  $('#order_state').val(data.state);
+                  $('#order_zip_code').val(data.zip);
+                  $('#order_country').val(data.country);
                 };
 
                 new Autocomplete('order_customer_number', {
@@ -266,63 +266,63 @@
                 var total = 0
                 var total_qty = 0
                 var total_by_ship_date = {}
-                $('by_ship_date').update('');
-                $$('.order_item_row').each(function(row){
-                  line_qty_total = row.down('.quantity').value * 1
+                $('#by_ship_date').html('');
+                $('.order_item_row').each(function(index, row){
+                  row = $(row)
+                  line_qty_total = row.find('input.quantity').val() * 1
                   total_qty = total_qty + line_qty_total
 
-                  line_total = Math.round((row.down('.quantity').value * row.down('.price').value) * 100) / 100
+                  line_total = Math.round((row.find('.quantity').val() * row.find('.price').val()) * 100) / 100
 
-                  ship_date = row.readAttribute('data-ship-date');
-                  if ($('li_sd_'+ship_date)) {
+                  ship_date = row.data('ship-date');
+                  if ($('#li_sd_'+ship_date)) {
                     total_by_ship_date[ship_date]+=line_total;
-                    $('total_sd_'+ship_date).update('$'+total_by_ship_date[ship_date]);
+                    $('#total_sd_'+ship_date).html('$'+total_by_ship_date[ship_date]);
                   } else{
                     total_by_ship_date[ship_date]=line_total;
-                    $('by_ship_date').insert('<li id="li_sd_'+ship_date+'">'+ship_date+' <span class="ship_date_item" id="total_sd_'+ship_date+'">$'+total_by_ship_date[ship_date]+'</span></li>');
+                    $('#by_ship_date').append('<li id="li_sd_'+ship_date+'">'+ship_date+' <span class="ship_date_item" id="total_sd_'+ship_date+'">$'+total_by_ship_date[ship_date]+'</span></li>');
                   };
-                  row.down('.item_total').innerHTML = '$' + line_total
+                  row.find('.item_total').html('$' + line_total)
                   subtotal = subtotal + line_total
                   salestax = Math.round(subtotal * 8.75) / 100
                   total = subtotal + salestax
                 });
-                $('order_sub_total').value = subtotal
-                #{warehouse? ? "$('order_sales_tax').value = salestax" : nil}
-                #{warehouse? ? "$('order_total').value = total" : nil}
-                
-                $('qtytotal').innerHTML = total_qty + ' items'
-                $('subtotal').innerHTML = '$' + subtotal
-                #{warehouse? ? "$('salestax').innerHTML = '$' + salestax" : nil}
-                #{warehouse? ? "$('ordertotal').innerHTML = '$' + total" : nil}
-                
+                $('#order_sub_total').val(subtotal)
+                #{warehouse? ? "$('#order_sales_tax').val(salestax)" : nil}
+                #{warehouse? ? "$('#order_total').val(total)" : nil}
+
+                $('#qtytotal').html(total_qty + ' items')
+                $('#subtotal').html('$' + subtotal)
+                #{warehouse? ? "$('#salestax').html('$' + salestax)" : nil}
+                #{warehouse? ? "$('#ordertotal').html('$' + total)" : nil}
+
                 //$('upc').focus();
               }
-              
+
               function show_sales_tax(value){
                 if (value) {
                   $('tax_exempt_number').show()
-                  #{warehouse? ? "$('sales_tax').hide()" : nil}
-                  #{warehouse? ? "$('total').hide()" : nil}
-                  #{warehouse? ? "$('salestax').hide()" : nil}
-                  #{warehouse? ? "$('ordertotal').hide()" : nil}
+                  #{warehouse? ? "$('#sales_tax').hide()" : nil}
+                  #{warehouse? ? "$('#total').hide()" : nil}
+                  #{warehouse? ? "$('#salestax').hide()" : nil}
+                  #{warehouse? ? "$('#ordertotal').hide()" : nil}
                 } else {
                   $('tax_exempt_number').hide()
-                  #{warehouse? ? "$('sales_tax').show()" : nil}
-                  #{warehouse? ? "$('total').show()" : nil}
-                  #{warehouse? ? "$('salestax').show()" : nil}
-                  #{warehouse? ? "$('ordertotal').show()" : nil}
+                  #{warehouse? ? "$('#sales_tax').show()" : nil}
+                  #{warehouse? ? "$('#total').show()" : nil}
+                  #{warehouse? ? "$('#salestax').show()" : nil}
+                  #{warehouse? ? "$('#ordertotal').show()" : nil}
                 }
               }
-              
+
               function product_not_found(value){
                 if (value) {
-                  $('warning').innerHTML = 'this field cannot be blank'
-                  $('warning').show();
+                  $('#warning').html('this field cannot be blank')
+                  $('#warning').show();
                 } else {
-                  $('warning').innerHTML = 'product not found'
-                  $('warning').show();
-                  $('order_notes').value += 'product not found: ' + $('upc').value + '\n';
-                  $('order_notes').focus();    
+                  $('#warning').html('product not found')
+                  $('#warning').show();
+                  $('#order_notes').val('product not found: ' + $('#upc').value + '\n');
+                  $('#order_notes').focus();
                 }
               }
-              update_totals();

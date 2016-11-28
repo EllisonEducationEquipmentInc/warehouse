@@ -113,43 +113,17 @@ class OrdersController < ApplicationController
   def add_item
     @editable = true
     @product = Product.active.find_by_upc(params[:upc]) || Product.active.find_by_item_num(params[:upc])
-    render :update do |page|
-      if @product
-        if true #params[:id].blank?
-          @order_item = @product.order_items.build(:price => @product.price(session[:coupon]), :quantity => tradeshow? ? @product.min_qty : 1, ship_month: @product.start_date_or_today)
-        else
-          @order_item = @product.order_items.find_or_initialize_by_order_id(params[:id])
-          @order_item.quantity = @product.min_qty if tradeshow? && @order_item.new_record?
-          @order_item.price = @product.price(session[:coupon])
-        end
-        page << "$('add_item_form').reset()"
-        page << "$('order_coupon_code').value='#{session[:coupon]}'"
-        page << "$('order_sub_total').value = parseFloat($('order_sub_total').value) + #{@product.price(session[:coupon])}"
-        page << " if ($$('#order_item_#{@order_item.product_id_with_start_date}').length < 1) {"
-          page.insert_html :top, :products, :partial => 'order_item', :object => @order_item
-        page << "} else {"
-          page << "var qty = $('order_item_#{@order_item.product.id_with_start_date}').down('#order_order_item_attributes_#{@order_item.product_id_with_start_date}_quantity').value * 1"
-          page << "$('order_item_#{@order_item.product_id_with_start_date}').down('#order_order_item_attributes_#{@order_item.product_id_with_start_date}_quantity').value = qty + 1"
-        page << "}"  
-        page.visual_effect :highlight, "order_item_#{@order_item.product_id_with_start_date}"
-        page << "update_totals()"
-      else
-        page << "Sound.play('/error.mp3',{replace:false});"
-        page << "product_not_found()"
-      end
-      page << "Form.Element.focus($('upc'));" unless params[:dup].present?
+    if @product
+      @order_item = @product.order_items.build(:price => @product.price(session[:coupon]), :quantity => tradeshow? ? @product.min_qty : 1, ship_month: @product.start_date_or_today)
+      @order_item = @product.order_items.find_or_initialize_by(order_id: params[:id])
+      @order_item.quantity = @product.min_qty if tradeshow? && @order_item.new_record?
+      @order_item.price = @product.price(session[:coupon])
     end
+    render :update
   end
 
   def add_coupon
     session[:coupon] = params[:coupon]
-    render :update do |page|
-      if Product.where(["coupon_1 = :coupon OR coupon_2 = :coupon OR coupon_3 = :coupon OR coupon_4 = :coupon OR coupon_5 = :coupon", coupon: params[:coupon]]).count < 1
-        page.alert("coupon code does not exist")
-      else
-        page.replace_html 'coupon', "Applied Coupon code #{session[:coupon]}"
-      end
-    end
   end
   
   def export_to_csv
