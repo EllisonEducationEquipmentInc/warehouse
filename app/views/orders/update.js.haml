@@ -5,8 +5,8 @@
   if ($('#order_item_#{@order_item.product_id_with_start_date}').length < 1) {
   $('#products').prepend('#{j render :partial => 'order_item', :object => @order_item}')
   } else {
-  var qty = $('order_item_#{@order_item.product.id_with_start_date}').down('#order_order_item_attributes_#{@order_item.product_id_with_start_date}_quantity').val() * 1
-  $('#order_item_#{@order_item.product_id_with_start_date}').down('#order_order_item_attributes_#{@order_item.product_id_with_start_date}_quantity').val() = qty + 1
+  var qty = $('#order_order_item_attributes_#{@order_item.product_id_with_start_date}_quantity').val() * 1
+  $('#order_order_item_attributes_#{@order_item.product_id_with_start_date}_quantity').val(qty + 1)
   }
   update_totals()
 - else
