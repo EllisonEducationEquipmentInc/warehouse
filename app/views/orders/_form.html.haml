@@ -83,8 +83,7 @@
                 PRODUCT NOT FOUND!
 
           :javascript
-            new Validation('add_item_form');
-            Form.Element.focus($('upc'));
+            $('#upc').focus();
           = form_for(@order) do |f|
             = f.error_messages
             %table.products{:width => "100%"}
@@ -260,6 +259,8 @@
                 });
 
             :javascript
+              $('#add_item_form').parsley();
+
               function update_totals(){
                 var subtotal = 0
                 var salestax = 0
