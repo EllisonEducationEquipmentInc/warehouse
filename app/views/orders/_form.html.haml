@@ -149,6 +149,7 @@
                       %span.required *
                       %br
                       = f.text_field :customer_number, :tabindex => "#{i+=1}", class: 'form-control'
+                      %ul#customers_dropdown
                   - if tradeshow?
                     .form-group
                       .field
@@ -225,38 +226,49 @@
                 .clearfloat
 
             - if tradeshow?
-              :javascript
+              :coffeescript
+                $ ->
+                  onselect = (data) ->
+                    $('#order_customer_number').val data.ax_customer_number
+                    $('#order_business').val data.company_name
+                    $('#order_full_name').val data.full_name
+                    $('#order_email').val data.email
+                    $('#order_address').val data.address
+                    $('#order_phone').val data.phone
+                    $('#order_city').val data.city
+                    $('#order_state').val data.state
+                    $('#order_zip_code').val data.zip
+                    $('#order_country').val data.country
+                    return
 
-                var onselect = function(value, data){
-                  $('#order_customer_number').val(data.ax_customer_number);
-                  $('#order_business').val(data.company_name);
-                  $('#order_full_name').val(data.full_name);
-                  $('#order_email').val(data.email);
-                  $('#order_address').val(data.address);
-                  $('#order_phone').val(data.phone);
-                  $('#order_city').val(data.city);
-                  $('#order_state').val(data.state);
-                  $('#order_zip_code').val(data.zip);
-                  $('#order_country').val(data.country);
-                };
+                  $("#order_customer_number, #order_business").on 'keyup', ->
+                    value = $(@).val()
+                    if $(@).attr('id') == 'order_business'
+                      extra_url = '?field=company_name'
+                    else
+                      extra_url = ''
 
-                new Autocomplete('order_customer_number', {
-                  serviceUrl:'/customers/search',
-                  minChars:3,
-                  maxHeight:400,
-                  width:300,
-                  deferRequestBy:100,
-                  onSelect: onselect
-                });
+                    if value.length > 3
+                      $.ajax(
+                        url: '/customers/search'+extra_url
+                        data: {query: value}
+                      ).done (data) ->
+                        console.log data
+                        window.customers_data=data.data
+                        i = 0
+                        options = ''
+                        if data.suggestions.length > 0
+                          while i < data.suggestions.length
+                            options += '<li class="customers_dropdown" data-customer-index=\'' + i + '\'>' + data.suggestions[i] + '</li>'
+                            i++
+                          $("#customers_dropdown").html(options)
+                    else
+                      $("#customers_dropdown").html('')
 
-                new Autocomplete('order_business', {
-                  serviceUrl:'/customers/search?field=company_name',
-                  minChars:3,
-                  maxHeight:400,
-                  width:300,
-                  deferRequestBy:100,
-                  onSelect: onselect
-                });
+                  $("body").on 'click', '.customers_dropdown', ->
+                    onselect window.customers_data[$(@).data('customer-index')]
+                    $("#customers_dropdown").html('')
+
 
             :javascript
               $('#add_item_form').parsley();
