@@ -19,6 +19,8 @@ Warehouse::Application.configure do
   config.action_mailer.raise_delivery_errors = false
 
   config.eager_load = false
+
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 end
 # ./scrip/console logger
 ActiveRecord::Base.logger = Logger.new(STDOUT) if "irb" == $0

@@ -41,6 +41,10 @@ gem 'yui-compressor'
 gem 'bootstrap-sass'
 gem 'font-awesome-sass-rails'
 
+gem 'devise'
+gem 'devise-bootstrap-views'
+gem 'simple_form'
+
 group :development do
   gem 'wirble'
   gem "rails3-generators"

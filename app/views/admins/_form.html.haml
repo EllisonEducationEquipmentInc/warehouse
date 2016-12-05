@@ -1,0 +1,17 @@
+.row
+  .col-md-12
+    .panel.panel-info
+      .panel-heading
+        User
+      .panel-body
+        .col-sm-12.col-md-12
+          = simple_form_for @user, url: @user.new_record? ? admins_path : admin_path(@user), :html => { multipart: true, :class => 'form-horizontal' } do |f|
+            = f.input :email, label_html: { class: 'col-sm-2' }, wrapper_html: { class: 'form-group' }, input_html: {class: "form-control"}
+            = f.input :name, label_html: { class: 'col-sm-2' }, wrapper_html: { class: 'form-group' }, input_html: {class: "form-control"}
+            = f.input :password, label_html: { class: 'col-sm-2' }, wrapper_html: { class: 'form-group' }, input_html: {class: "form-control"}
+            = f.input :password_confirmation, label_html: { class: 'col-sm-2' }, wrapper_html: { class: 'form-group' }, input_html: {class: "form-control"}
+            = f.input :role, collection: User::ROLES, allow_bank: true, label_html: { class: 'col-sm-2' }, wrapper_html: { class: 'form-group' }, input_html: {class: "form-control"}
+            .col-sm-offset-1.col-sm-12
+              = f.button :submit, :class => 'btn btn-primary'
+              = link_to t('.cancel', :default => t("helpers.links.cancel")), admins_path, :class => 'btn btn-default'
+

@@ -1,4 +1,6 @@
 Warehouse::Application.routes.draw do
+  devise_for :users
+  resources :admins
   resources :orders do
     collection do
       post :add_item
