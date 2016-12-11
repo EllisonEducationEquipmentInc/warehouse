@@ -24,7 +24,7 @@
         = number_to_currency(order_item.price)
     %td{:width => 60, :align => 'right', :class => "item_total"}= number_to_currency order_item.item_total
     - unless params[:action] == 'show'
-      %td{:width => 20, :align => 'right'}= link_to 'x', '#', :onclick => "$(this).parents('.order_item_row').remove();update_totals();" 
+      %td{:width => 20, :align => 'right'}= link_to 'x', '#', :onclick => "$(this).parents('.order_item_row').remove();update_totals();return false" 
       - if tradeshow?
         %td{:width => 20, :align => 'right'}= link_to 'dup', '#', class: 'dup', data: {'item-num' => order_item.product.item_num}
 

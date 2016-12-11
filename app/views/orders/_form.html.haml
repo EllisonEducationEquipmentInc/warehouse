@@ -86,22 +86,21 @@
             $('#upc').focus();
           = form_for(@order) do |f|
             = f.error_messages
-            %table.products{:width => "100%"}
-              %tr
-                %th{:align => 'left', :width => '50'} Item Number
-                %th{:align => 'left', :width => '150'} Description
-                - if tradeshow?
-                  %th{:align => 'center', :width => '100'} Launch Month
-                  %th{:align => 'center', :width => '100'} Ship Month
-                %th{:align => 'center', :width => '30'} Qty.
-                - if tradeshow?
-                  %th{:align => 'center', :width =>'60'} Wholesale Price
-                %th{:align => 'center', :width => '60'} Your Price
-                %th{:align => 'center', :width => '60'} Extended Price
-                %th{:align => 'right', :width => '1', :style => 'border-bottom: none;'}
-            %table#products.products{:width => "100%", :style => "margin-bottom: 25px"}
-              = render :partial => 'order_item', :collection => @order.order_items, locals: {f: f}
-              
+            .table-responsive
+              %table.table.products#products
+                %tr
+                  %th Item Number
+                  %th Description
+                  - if tradeshow?
+                    %th Launch Month
+                    %th Ship Month
+                  %th{:align => 'center', :width => '30'} Qty.
+                  - if tradeshow?
+                    %th Wholesale Price
+                  %th Your Price
+                  %th Extended Price
+                  %th
+                = render :partial => 'order_item', :collection => @order.order_items, locals: {f: f}
             %hr
             %div{:style => "float: right"}
               .field

@@ -3,7 +3,7 @@
   $('#order_coupon_code').val('#{session[:coupon]}')
   $('#order_sub_total').val(parseFloat($('#order_sub_total').val()) + #{@product.price(session[:coupon])})
   if ($('#order_item_#{@order_item.product_id_with_start_date}').length < 1) {
-  $('#products').prepend('#{j render :partial => 'order_item', :object => @order_item}')
+  $('#products').append('#{j render :partial => 'order_item', :object => @order_item}')
   } else {
   var qty = $('#order_order_item_attributes_#{@order_item.product_id_with_start_date}_quantity').val() * 1
   $('#order_order_item_attributes_#{@order_item.product_id_with_start_date}_quantity').val(qty + 1)
