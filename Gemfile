@@ -44,12 +44,10 @@ gem 'font-awesome-sass-rails'
 gem 'devise'
 gem 'devise-bootstrap-views'
 gem 'simple_form'
+gem 'puma'
 
 group :development do
   gem 'wirble'
-  gem "rails3-generators"
-  gem 'capistrano'
-  gem "capistrano-unicorn"
   gem "letter_opener"
 
   gem 'rmre', git: 'https://github.com/bosko/rmre.git'
@@ -75,6 +73,13 @@ group :development do
 
   gem 'spring'
   gem 'spring-commands-rspec'
+
+  gem 'capistrano', '~> 3.6'
+  gem 'capistrano-rails', '~> 1.1'
+  gem 'capistrano-rbenv', '~> 2.0'
+  gem 'capistrano3-puma'
+  gem 'capistrano3-nginx'
+  gem 'capistrano-upload-config'
 
 end
 
