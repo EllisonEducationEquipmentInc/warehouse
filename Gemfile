@@ -1,7 +1,7 @@
 # Edit this Gemfile to bundle your application's dependencies.
 source 'http://gemcutter.org'
 
-ruby '2.3.1'
+ruby '2.3.3'
 
 require 'csv'
 
