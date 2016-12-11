@@ -1,4 +1,6 @@
 class Order < ActiveRecord::Base
+  attr_accessor :file
+
   validates_presence_of :sub_total, :total, :sales_tax
   has_many :order_items, :dependent => :destroy, :autosave => true
   has_many :products, :through => :order_items

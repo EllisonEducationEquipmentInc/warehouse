@@ -61,10 +61,10 @@ class OrdersController < ApplicationController
   def create
     @order = Order.new(order_params)
     @order.coupon_code = session[:coupon] if session[:coupon].present?
-    process_file if params[:file].present?
+    process_file if params[:order][:file].present?
     calculate_total
     respond_to do |format|
-      if params[:file].blank? && @order.save
+      if params[:order][:file].blank? && @order.save
         format.html { redirect_to(@order, :notice => 'Order was successfully created.') }
         format.xml  { render :xml => @order, :status => :created, :location => @order }
       else
@@ -147,7 +147,7 @@ private
 
   def process_file
     flash[:error] = ''
-    CSV.parse(params[:file].read, :headers => :first_row) do |row|  #:col_sep => "\t"
+    CSV.parse(params[:order][:file].read, :headers => :first_row) do |row|  #:col_sep => "\t"
       p = Product.find_by_item_num(row["item_num"])
       flash[:error] += "#{row['item_num']} was not found<br>" unless p
       session[:coupon] = row["coupon_code"]

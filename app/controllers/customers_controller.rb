@@ -91,7 +91,7 @@ class CustomersController < ApplicationController
     if request.post?
       n=0
       CSV.parse(params[:import][:file].read, :headers => :first_row) do |row|  #:col_sep => "\t"
-        @customer = Customer.find_or_initialize_by_ax_customer_number row['ax_customer_number']
+        @customer = Customer.find_or_initialize_by(ax_customer_number: row['ax_customer_number'])
         n=n+1 if @customer.update_attributes ax_customer_number: row['ax_customer_number'], company_name: row['company_name'], full_name: row['full_name'], customer_class: row['customer_class'], address: row['address'], city: row['city'], state: row['state'], zip: row['zip'], country: row['country'], phone: row['phone'], email: row['email']
       end
       flash[:notice]="CSV Import Successful,  #{n} records have been updated in the database."
