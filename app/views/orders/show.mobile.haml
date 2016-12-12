@@ -1,7 +1,7 @@
 - content_for :title, "Order WHUS#{@order.id}"
 %ul.rounded
   %li
-    %table#products{:width => "100%"}
+    %table.table#products{:width => "100%"}
       = render :partial => 'order_item.mobile.haml', :collection => @order.order_items  
   %li
     Subtotal:

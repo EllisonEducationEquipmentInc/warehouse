@@ -4,9 +4,9 @@
       .panel-heading
         Order
       .panel-body
-        .col-sm-12.col-md-12
+        .col-sm-12.col-md-3
           #order_totals
-            %table
+            %table.table
               %tr
                 %td
                   Item Quantity Total:
@@ -48,7 +48,7 @@
               #by_ship_date{:style => "display:none;"}
 
           = form_tag({:action=>'create'}, :multipart => true) do
-            %table
+            %table.table
               %tr
                 %td
                   %label{ :for => "dump_file" }
@@ -84,6 +84,7 @@
 
           :javascript
             $('#upc').focus();
+        .col-sm-12.col-md-12
           = form_for(@order) do |f|
             = f.error_messages
             .table-responsive
