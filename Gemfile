@@ -46,6 +46,7 @@ gem 'devise-bootstrap-views'
 gem 'simple_form'
 gem 'puma'
 gem 'awesome_print', :require => 'ap'
+gem 'bootswatch-rails'
 
 group :development do
   gem 'wirble'
