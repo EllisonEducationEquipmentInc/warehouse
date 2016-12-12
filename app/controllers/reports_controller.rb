@@ -9,7 +9,7 @@ class ReportsController < ApplicationController
   end
 
   def pre_order_report
-    @orders = OrderItem.includes(:product).select("*, SUM(price * quantity) as sum, SUM(quantity) as total_quantity").group(:product_id)
+    @orders = OrderItem.includes(:product).select("product_id, SUM(price * quantity) as sum, SUM(quantity) as total_quantity").group(:product_id)
     csv_string = CSV.generate do |csv|
       csv << ["itemid", "name", "item launch month", "total qty", "total sales"]
       @orders.each do |o|
