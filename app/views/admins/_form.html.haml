@@ -6,6 +6,7 @@
       .panel-body
         .col-sm-12.col-md-12
           = simple_form_for @user, url: @user.new_record? ? admins_path : admin_path(@user), :html => { multipart: true, :class => 'form-horizontal' } do |f|
+            = f.input :employee_number, label_html: { class: 'col-sm-2' }, wrapper_html: { class: 'form-group' }, input_html: {class: "form-control"}
             = f.input :email, label_html: { class: 'col-sm-2' }, wrapper_html: { class: 'form-group' }, input_html: {class: "form-control"}
             = f.input :name, label_html: { class: 'col-sm-2' }, wrapper_html: { class: 'form-group' }, input_html: {class: "form-control"}
             = f.input :password, label_html: { class: 'col-sm-2' }, wrapper_html: { class: 'form-group' }, input_html: {class: "form-control"}

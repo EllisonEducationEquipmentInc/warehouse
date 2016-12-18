@@ -33,7 +33,7 @@
               - if (params[:controller] == 'orders' && params[:action] == 'edit')
                 %tr
                   %td.timestamps{:colspan => "2"}
-                    Created on: 
+                    Created on:
                     = l @order.created_at, :format => :default
                     %br
                     Modified on:
@@ -57,12 +57,11 @@
                     = file_field_tag 'order[file]'
                     = submit_tag 'Submit', :class => 'btn btn-primary'
           = link_to "click here to see a sample CSV file", "/sample_export_lineitems.csv"
-      
           #error
             = flash[:message]
           #coupon
             - if session[:coupon].present?
-              Applied Coupon: 
+              Applied Coupon:
               = session[:coupon]
             - else
               = form_tag({:action => 'add_coupon', :id => @order}, :remote => true, :id => 'add_coupon_form', :onsubmit => "$('warning').hide();") do
@@ -71,7 +70,6 @@
                   %br
                   = text_field_tag :coupon, nil, :tabindex => 1, :onFocus => "this.select();", :maxlength => 12
                   = submit_tag :add, :class => 'btn btn-primary'
-           
           = form_tag({:action => 'add_item', :id => @order}, :remote => true, :id => 'add_item_form', :onsubmit => "$('warning').hide();") do
             .field
               = label_tag :item, 'Item Number or UPC Scan'

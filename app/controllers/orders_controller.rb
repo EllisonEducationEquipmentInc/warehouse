@@ -34,7 +34,7 @@ class OrdersController < ApplicationController
   # GET /orders/new.xml
   def new
     session[:coupon] = nil
-    @order = Order.new(:sub_total => 0.0, :payment_method => warehouse? ? "Credit Card" : nil, :sales_tax => warehouse? ? 0.0 : nil, :total => warehouse? ? 0.0 : nil)
+    @order = Order.new(:sub_total => 0.0, :payment_method => warehouse? ? "Credit Card" : nil, employee_number: current_user.employee_number, :sales_tax => warehouse? ? 0.0 : nil, :total => warehouse? ? 0.0 : nil)
     @editable = true
     respond_to do |format|
       format.html # new.html.erb
@@ -48,7 +48,7 @@ class OrdersController < ApplicationController
     session[:coupon] = @order.coupon_code
     @editable = true
     respond_to do |format|
-      format.html 
+      format.html
     end
   end
 
@@ -120,7 +120,7 @@ class OrdersController < ApplicationController
   def add_coupon
     session[:coupon] = params[:coupon]
   end
-  
+
   def export_to_csv
     @orders = OrderItem.includes([:order, :product])
     csv_string = CSV.generate do |csv|
@@ -133,7 +133,7 @@ class OrdersController < ApplicationController
   end
 
 private
-  
+
   def calculate_total
     @order.sub_total = @order.order_items.inject(0) {|sum, order_item| sum += order_item.item_total}
     @order.sales_tax = @order.tax_exempt? ? 0.0 : @order.sub_total * Order::SALES_TAX
