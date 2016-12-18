@@ -14,7 +14,6 @@ class OrdersController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.mobile 
       format.xml  { render :xml => @orders }
     end
   end
@@ -27,7 +26,6 @@ class OrdersController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.mobile 
       format.xml  { render :xml => @order }
     end
   end
@@ -40,7 +38,6 @@ class OrdersController < ApplicationController
     @editable = true
     respond_to do |format|
       format.html # new.html.erb
-      format.mobile 
       format.xml  { render :xml => @order }
     end
   end
@@ -52,7 +49,6 @@ class OrdersController < ApplicationController
     @editable = true
     respond_to do |format|
       format.html 
-      format.mobile 
     end
   end
 
@@ -70,7 +66,6 @@ class OrdersController < ApplicationController
       else
         @editable = true
         format.html { render :action => "new" }
-        format.mobile {@order.save(false); redirect_to(@order)}
         format.xml  { render :xml => @order.errors, :status => :unprocessable_entity }
       end
     end

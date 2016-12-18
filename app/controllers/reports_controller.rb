@@ -4,7 +4,6 @@ class ReportsController < ApplicationController
   def index
     respond_to do |format|
       format.html # index.html.erb
-      format.mobile 
     end
   end
 
