@@ -25,7 +25,7 @@ private
   end
 
   def tradeshow?
-    TRADESHOW
+    true #TRADESHOW
   end
 
   def warehouse?

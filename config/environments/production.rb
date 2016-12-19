@@ -29,8 +29,17 @@ Warehouse::Application.configure do
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
-  config.action_mailer.default_url_options = { host: 'warehouse.ellison.com' }
+  config.action_mailer.default_url_options = { host: 'pos.ellison.com' }
+  config.action_mailer.delivery_method = :smtp
 
   # Enable threaded mode
   # config.threadsafe!
+  #
+  config.action_mailer.smtp_settings = {
+     :address              => "smtp.sendgrid.net",
+     :port                 => 587,
+     :user_name            => 'ey_service_19384@engineyard.com',
+     :password             => 'cpjmgrdk3031',
+     :enable_starttls_auto => true
+    }
 end
