@@ -141,10 +141,10 @@ private
   end
 
   def process_file
-    flash[:error] = ''
+    flash[:error] = ''.html_safe
     CSV.parse(params[:order][:file].read, :headers => :first_row) do |row|  #:col_sep => "\t"
       p = Product.find_by_item_num(row["item_num"])
-      flash[:error] += "#{row['item_num']} was not found<br>" unless p
+      flash[:error] += "#{row['item_num']} was not found<br>".html_safe unless p
       session[:coupon] = row["coupon_code"]
       @order.order_items.build product: p, quantity: row["qty"], price: p.price(row["coupon_code"]), ship_month: p.start_date_or_today if p
     end
