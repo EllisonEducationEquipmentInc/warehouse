@@ -76,8 +76,8 @@
     %th{:align => 'right'} Your Price
     %th{:align => 'right'} Extended Price
   = render :partial => 'order_item', :collection => @order.order_items    
-.right
-  %p
+.pull-right
+  %p.pull-right
     %strong Subtotal:
     = number_to_currency @order.sub_total
   - if tradeshow?
@@ -99,9 +99,9 @@
   %h1 TERMS AND CONDITIONS OF SALE
   %p
     - if tradeshow?
-      == This order is subject to the Ellison Reseller Terms and Conditions of Sale Agreement located at #{link_to "www.ellison.com/reseller_terms", "http://www.ellison.com/reseller_terms", :target => "_blank"}
+      == This order is subject to the Ellison Reseller Terms and Conditions of Sale Agreement located at #{link_to "www.ellisonretailers.com/reseller_terms", "http://www.ellisonretailers.com/reseller_terms", :target => "_blank"}
     - else
       All sales are final. Goods are sold "as is". No Returns.
-  
+
 %p.dontprint
   == #{ link_to 'Edit', edit_order_path(@order) } | #{ link_to 'Back', orders_path }

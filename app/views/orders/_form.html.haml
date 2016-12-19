@@ -101,7 +101,7 @@
                   %th
                 = render :partial => 'order_item', :collection => @order.order_items, locals: {f: f}
             %hr
-            %div{:style => "float: right"}
+            .pull-right
               .field
                 = f.label :sub_total, 'Subtotal', :class => "ordertotals"
                 = f.text_field :sub_total, :disabled => true, :size => "8", :class => "ordertotals"
