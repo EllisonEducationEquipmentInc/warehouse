@@ -12,7 +12,7 @@
           = order_item_fields.select :ship_month, ship_date_select(order_item.product.start_date_or_today), {}, class: 'ship-date', data: { order_item_id: order_item.product.id }
         - else
           = l order_item.ship_month, :format => :month_only rescue ''
-    %td{:align => 'right'}= @editable ? order_item_fields.text_field(:quantity, :size => 2, :id => "order_order_item_attributes_#{order_item.product.id_with_start_date}_quantity", :class => 'quantity', :onchange => "update_totals();$('#upc').focus();") : order_item.quantity
+    %td{:align => 'right'}= @editable ? order_item_fields.number_field(:quantity, min: 0, :size => 2, :id => "order_order_item_attributes_#{order_item.product.id_with_start_date}_quantity", :class => 'quantity', :onchange => "update_totals();$('#upc').focus();") : order_item.quantity
     - if tradeshow?
       %td{:align => 'right'}
         = number_to_currency(order_item.product.price)
@@ -24,9 +24,9 @@
         = number_to_currency(order_item.price)
     %td{:align => 'right', :class => "item_total"}= number_to_currency order_item.item_total
     - unless params[:action] == 'show'
-      %td{ :align => 'right'}= link_to 'x', '#', :onclick => "$(this).parents('.order_item_row').remove();update_totals();return false" 
+      %td{ :align => 'right'}= link_to 'x', '#', class: 'btn btn-default btn-sm', :onclick => "$(this).parents('.order_item_row').remove();update_totals();return false" 
       - if tradeshow?
-        %td{:align => 'right'}= link_to 'dup', '#', class: 'dup', data: {'item-num' => order_item.product.item_num}
+        %td{:align => 'right'}= link_to 'dup', '#', class: 'dup btn btn-default btn-sm', data: {'item-num' => order_item.product.item_num}
 
 :coffee
   $('.dup').on 'click', ->

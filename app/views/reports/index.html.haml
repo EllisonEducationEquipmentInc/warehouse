@@ -1,7 +1,61 @@
-%h1 Reports
+%h1 Product Pre-order Summary Report
 %p
 = form_tag({:action => 'pre_order_report'},  :method => 'post') do
   %br
   = submit_tag "product pre-order report"
   %br
   %br
+.row
+  .col-md-4
+    %table.table.responsive
+      %tr
+        %th
+          Total Orders
+        %td
+          = Order.count
+      %tr
+        %th
+          Subtotal
+        %td
+          = number_to_currency Order.sum(:sub_total)
+      %tr
+        %th
+          Tax
+        %td
+          = number_to_currency Order.sum(:sales_tax)
+      %tr
+        %th
+          Shipping
+        %td
+          = number_to_currency 0
+      %tr
+        %th
+          Grand Total
+        %td
+          = number_to_currency Order.sum(:total)
+
+.row
+  .col-sm-12
+    %table.table.responsive
+      %tr
+        %th
+          Date
+        %th
+          Count
+        %th
+          Subtotal
+        %th
+          Tax
+        %th
+          Shipping
+        %th
+          Total
+      - Order.select("sum(total) as total, count(id) as count, sum(sub_total) as sub_total, sum(sales_tax) as sales_tax, CAST(created_at AS DATE)").group('CAST(created_at AS DATE)').order("created_at").each do |row|
+        %tr
+          %td= l row.created_at.to_date
+          %td= row.count
+          %td= number_to_currency row.sub_total
+          %td= number_to_currency row.sales_tax
+          %td= number_to_currency 0
+          %td= number_to_currency row.total
+

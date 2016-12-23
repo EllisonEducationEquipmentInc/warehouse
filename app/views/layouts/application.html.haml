@@ -38,14 +38,14 @@
           %span.icon-bar
           %span.icon-bar
         .navbar-header
-          %a.navbar-brand Ellison
+          %a.navbar-brand= image_tag('ellison_logo_red.png')
         #navbar-main.navbar-collapse.collapse
           %ul.nav.navbar-nav
             - if user_signed_in?
               %li.dropdown= link_to "Admins", admins_path, :class => "button dontprint #{'active' if (params[:controller] == 'products')}"
               %li.dropdown= link_to "Products", products_path, :class => "button dontprint #{'active' if (params[:controller] == 'products')}"
-              %li.dropdown= link_to order_name.pluralize, orders_path, :class => "button dontprint #{'active' if (params[:controller] == 'orders' && params[:action] == 'index')}"
-              %li.dropdown= link_to "New Sale", new_order_path, :class => "button dontprint #{'sactive' if (params[:controller] == 'orders' && params[:action] == 'new')}"
+              %li.dropdown= link_to 'Pre-orders', orders_path, :class => "button dontprint #{'active' if (params[:controller] == 'orders' && params[:action] == 'index')}"
+              %li.dropdown= link_to "New Pre-order", new_order_path, :class => "button dontprint #{'active' if (params[:controller] == 'orders' && params[:action] == 'new')}"
               - if tradeshow?
                 %li.dropdown= link_to "Customers", customers_path, :class => "button dontprint #{'sactive' if (params[:controller] == 'customers')}"
               %li.dropdown= link_to "Reports", reports_path, :class => "button dontprint #{'active' if (params[:controller] == 'reports')}"
