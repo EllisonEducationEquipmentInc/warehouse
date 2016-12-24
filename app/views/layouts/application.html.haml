@@ -30,7 +30,7 @@
     = stylesheet_link_tag "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/css/bootstrap-select.min.css"
 
 
-  %body{:onload => "#{(params[:controller] == 'orders' && params[:action] == 'show') ? 'window.print()' : nil}"}
+  %body
     %nav.navbar.navbar-default
       .container#container
         %button.navbar-toggle(type="button" data-toggle="collapse" data-target=".navbar-collapse")
@@ -42,18 +42,18 @@
         #navbar-main.navbar-collapse.collapse
           %ul.nav.navbar-nav
             - if user_signed_in?
-              %li.dropdown= link_to "Admins", admins_path, :class => "button dontprint #{'active' if (params[:controller] == 'products')}"
+              %li.dropdown= link_to "Admins", admins_path, :class => "button dontprint #{'active' if (params[:controller] == 'admins')}"
               %li.dropdown= link_to "Products", products_path, :class => "button dontprint #{'active' if (params[:controller] == 'products')}"
-              %li.dropdown= link_to 'Pre-orders', orders_path, :class => "button dontprint #{'active' if (params[:controller] == 'orders' && params[:action] == 'index')}"
+              %li.dropdown= link_to 'Pre-orders', orders_path, :class => "button dontprint #{'active' if (params[:controller] == 'orders' && params[:action] != 'new')}"
               %li.dropdown= link_to "New Pre-order", new_order_path, :class => "button dontprint #{'active' if (params[:controller] == 'orders' && params[:action] == 'new')}"
               - if tradeshow?
-                %li.dropdown= link_to "Customers", customers_path, :class => "button dontprint #{'sactive' if (params[:controller] == 'customers')}"
+                %li.dropdown= link_to "Customers", customers_path, :class => "button dontprint #{'active' if (params[:controller] == 'customers')}"
               %li.dropdown= link_to "Reports", reports_path, :class => "button dontprint #{'active' if (params[:controller] == 'reports')}"
               %li.dropdown= link_to "Print", "javascript:window.print()", :class => 'button dontprint active' if (params[:controller] == 'orders' && params[:action] == 'show')
           %ul.nav.navbar-nav.navbar-right
             - if user_signed_in?
               %li
-                = link_to edit_user_registration_path do
+                = link_to edit_user_registration_path, class: params[:controller] == 'devise/registrations' ? 'active' : '' do
                   My Account
               %li= link_to 'Log Out', destroy_user_session_path, method: :delete
             - else

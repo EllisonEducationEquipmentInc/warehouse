@@ -1,3 +1,6 @@
+.pull-right
+  %button.btn.btn-primary.btn-lg#email_order
+    Email
 #masthead
   = image_tag('logo_ellison_warehouse.png', class: 'branding', :alt => "Ellison Educational Equipment, Inc.")
   %p
@@ -24,7 +27,7 @@
               %br
               Tax Exempt Number:
               = @order.tax_exempt_number
-            
+
   - if tradeshow?
     .clearfloat
     %p#customer_data
@@ -105,3 +108,9 @@
 
 %p.dontprint
   == #{ link_to 'Edit', edit_order_path(@order) } | #{ link_to 'Back', orders_path }
+
+:coffee
+  $ ->
+    $('#email_order').on 'click', ->
+      window.location.href="mailto:?to=#{@order.email}&subject="+document.title+"&body="+escape(window.location.href)
+

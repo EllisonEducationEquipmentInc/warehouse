@@ -4,8 +4,8 @@
       .panel-heading
         Order
       .panel-body
-        .col-sm-12.col-md-3
-          #order_totals
+        .col-sm-6.col-md-3.pull-right
+          #order_totals.pull-right
             %table.table
               %tr
                 %td
@@ -47,6 +47,7 @@
             - else
               #by_ship_date{:style => "display:none;"}
 
+        .col-sm-12
           = form_tag({:action=>'create'}, :multipart => true) do
             %table.table
               %tr
@@ -57,28 +58,31 @@
                     = file_field_tag 'order[file]'
                     = submit_tag 'Submit', :class => 'btn btn-primary'
           = link_to "click here to see a sample CSV file", "/sample_export_lineitems.csv"
-          #error
-            = flash[:message]
+          - if flash[:message].present?
+            %span#error.label.label-warning
+              = flash[:message]
+        .col-sm-6.col-md-12
           #coupon
             - if session[:coupon].present?
               Applied Coupon:
               = session[:coupon]
             - else
-              = form_tag({:action => 'add_coupon', :id => @order}, :remote => true, :id => 'add_coupon_form', :onsubmit => "$('warning').hide();") do
-                .field
+              = form_tag({:action => 'add_coupon', :id => @order}, :remote => true, class: 'form-inline', :id => 'add_coupon_form', :onsubmit => "$('#warning').addClass('hide');") do
+                .form-group
                   = label_tag :coupon, 'Enter Coupon Code:'
                   %br
-                  = text_field_tag :coupon, nil, :tabindex => 1, :onFocus => "this.select();", :maxlength => 12
-                  = submit_tag :add, :class => 'btn btn-primary'
-          = form_tag({:action => 'add_item', :id => @order}, :remote => true, :id => 'add_item_form', :onsubmit => "$('warning').hide();") do
-            .field
+                  = text_field_tag :coupon, nil, class: 'form-control', :tabindex => 1, :onFocus => "this.select();", :maxlength => 12
+                = submit_tag :add, :class => 'btn btn-primary'
+        .col-sm-6.col-md-12
+          = form_tag({:action => 'add_item', :id => @order}, :remote => true, class: 'form-inline', :id => 'add_item_form', :onsubmit => "$('#warning').addClass('hide');") do
+            .form-group
               = label_tag :item, 'Item Number or UPC Scan'
               %span.required *
               %br
-              = text_field_tag :upc, nil, :tabindex => 1, :onFocus => "this.select();", :maxlength => 12, :class => 'required'
-              = submit_tag :add, :class => 'btn btn-primary'
-              %span#warning{ :style => "display:none"}
-                PRODUCT NOT FOUND!
+              = text_field_tag :upc, nil, :tabindex => 1, :onFocus => "this.select();", :maxlength => 12, :class => 'form-control required'
+            = submit_tag :add, :class => 'btn btn-primary'
+            %span#warning.hide.label.label-warning
+              PRODUCT NOT FOUND!
 
           :javascript
             $('#upc').focus();
@@ -128,100 +132,83 @@
                 = f.label :tax_exempt_number, "Tax Exempt Number<span class='required'> *</span>".html_safe
                 %br
                 = f.text_field :tax_exempt_number, :tabindex => i+=1
-            .row
-              .col-md-12
-                .pull-right= f.submit :class => "btn btn-danger", :onclick => "$(this).hide();$('order_loading').show();"
             .clearfloat
             .row
-              .col-md-6.col-sm-12
-                - if tradeshow?
-                  .form-group
+              .col-md-9.col-sm-12
+                .row
+                  .form-group.col-sm-3
                     .field
                       = f.label :employee_number
                       %span.required *
                       %br
                       = f.text_field :employee_number, :tabindex => i=2, class: "form-control"
-                  .form-group
+                  .form-group.col-sm-3
                     .field
                       = f.label :customer_number
                       %span.required *
                       %br
                       = f.text_field :customer_number, :tabindex => "#{i+=1}", class: 'form-control'
                       %ul#customers_dropdown
-                  - if tradeshow?
-                    .form-group
-                      .field
-                        = f.label :coupon_code
-                        %br
-                        = f.text_field :coupon_code, :tabindex => i+=1, class: 'form-control'
-                  - else
-                    = f.hidden_field :coupon_code, :tabindex => i+=1
-                  - if tradeshow?
-                    .form-group
-                      .field
-                        = f.label :full_name
-                        %br
-                        = f.text_field :full_name, :tabindex => i+=1, class: 'form-control'
-                  - else
-                    .form-group
-                      .field
-                        = f.label :first_name
-                        %br
-                        = f.text_field :first_name, :tabindex => i+=1
-                    .form-group
-                      .field
-                        = f.label :last_name
-                        %br
-                        = f.text_field :last_name, :tabindex => i+=1, class: 'form-control'
-                  .form-group
+                  .form-group.col-sm-3
+                    .field
+                      = f.label :coupon_code
+                      %br
+                      = f.text_field :coupon_code, :tabindex => i+=1, class: 'form-control'
+                  .form-group.col-sm-3
+                    .field
+                      = f.label :full_name
+                      %br
+                      = f.text_field :full_name, :tabindex => i+=1, class: 'form-control'
+                .row
+                  .form-group.col-sm-3
                     .field
                       = f.label :business, 'Business Name'
                       %br
                       = f.text_field :business, :tabindex => i+=1, class: 'form-control'
-                  .form-group
+                  .form-group.col-sm-3
                     .field
                       = f.label :email, 'Email Address'
                       %br
                       = f.text_field :email, :tabindex => i+=1, class: 'form-control'
-                  .form-group
+                  .form-group.col-sm-3
                     .field
                       = f.label :phone, 'Phone Number'
                       %br
                       = f.text_field :phone, :tabindex => i+=1, class: 'form-control'
-                  .form-group
+                  .form-group.col-sm-3
                     .field
                       = f.label :address
                       %br
                       = f.text_field :address, :tabindex => i+=1, class: 'form-control'
-                  .form-group
+                .row
+                  .form-group.col-sm-3
                     .field
                       = f.label :city
                       %br
                       = f.text_field :city, :tabindex => i+=1, class: 'form-control'
-                  .form-group
+                  .form-group.col-sm-3
                     .field
                       = f.label :state
                       %br
                       = f.text_field :state, :tabindex => i+=1, class: 'form-control'
-                  .form-group
+                  .form-group.col-sm-3
                     .field
                       = f.label :zip_code
                       %br
                       = f.text_field :zip_code, :tabindex => i+=1, class: 'form-control'
-                  .form-group
+                  .form-group.col-sm-3
                     .field
                       = f.label :country
                       %br
                       = f.select :country, ["United States", "Afghanistan", "Albania", "Algeria", "American Samoa", "Andorra", "Angola", "Anguilla", "Antigua and Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei Darussalam", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Cayman Islands", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Congo, the Democratic Republic of the", "Cook Islands", "Costa Rica", "Cote D'Ivoire", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Falkland Islands (Malvinas)", "Faroe Islands", "Fiji", "Finland", "France", "French Guiana", "French Polynesia", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guadeloupe", "Guam", "Guatemala", "Guernsey", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Holy See (Vatican City State)", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran, Islamic Republic of", "Iraq", "Ireland", "Isle of Man", "Israel", "Italy", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kuwait", "Kyrgyzstan", "Lao People's Democratic Republic", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libyan Arab Jamahiriya", "Liechtenstein", "Lithuania", "Luxembourg", "Macao", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Martinique", "Mauritania", "Mauritius", "Mexico", "Micronesia, Federated States of", "Moldova, Republic of", "Monaco", "Mongolia", "Montserrat", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Niue", "Norfolk Island", "North Korea", "Northern Mariana Islands", "Norway", "Oman", "Pakistan", "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Pitcairn", "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russian Federation", "Rwanda", "Saint Helena", "Saint Kitts and Nevis", "Saint Lucia", "Saint Pierre and Miquelon", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Korea", "Spain", "Sri Lanka", "Sudan", "Suriname", "Svalbard and Jan Mayen", "Swaziland", "Sweden", "Switzerland", "Syrian Arab Republic", "Taiwan", "Tajikistan", "Tanzania, United Republic of", "Thailand", "Togo", "Tokelau", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks and Caicos Islands", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Viet Nam", "Virgin Islands, British", "Virgin Islands, U.S.", "Wallis and Futuna", "Western Sahara", "Yemen", "Zambia", "Zimbabwe", "US"] , :tabindex => i+=1
-                  .form-group
-                    .field{:style => "float: left"}
-                      = f.label :notes
-                      %br
-                      = f.text_area :notes, :tabindex => i+=1, :rows => "10", class: 'form-control'
-                .actions{:style => "float: right"}
-                  = f.submit :tabindex => i+=1, :class => "btn btn-danger", :onclick => "$(this).hide();$('order_loading').show();"
-                  #order_loading{:style => 'display:none'}= image_tag('/images/loader-ajax.gif')
-                .clearfloat
+              .form-group.col-sm-2.pull-right
+                .field
+                  = f.label :notes
+                  %br
+                  = f.text_area :notes, :tabindex => i+=1, :rows => "10", class: 'form-control'
+              = f.submit :tabindex => i+=1, :class => "btn btn-danger", :onclick => "$(this).hide();$('order_loading').show();"
+              #order_loading{:style => 'display:none'}= image_tag('/images/loader-ajax.gif')
+              .clearfloat
 
             - if tradeshow?
               :coffeescript
@@ -329,10 +316,10 @@
               function product_not_found(value){
                 if (value) {
                   $('#warning').html('this field cannot be blank')
-                  $('#warning').show();
+                  $('#warning').removeClass('hide');
                 } else {
                   $('#warning').html('product not found')
-                  $('#warning').show();
+                  $('#warning').removeClass('hide');
                   $('#order_notes').val('product not found: ' + $('#upc').value + '\n');
                   $('#order_notes').focus();
                 }
