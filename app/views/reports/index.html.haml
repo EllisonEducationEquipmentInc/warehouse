@@ -1,10 +1,6 @@
-%h1 Product Pre-order Summary Report
-%p
-= form_tag({:action => 'pre_order_report'},  :method => 'post') do
-  %br
-  = submit_tag "product pre-order report"
-  %br
-  %br
+%h1
+  Product Pre-order Summary Report
+  = link_to 'click here', pre_order_report_reports_path, method: :post
 .row
   .col-md-4
     %table.table.responsive
