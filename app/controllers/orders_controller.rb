@@ -34,7 +34,7 @@ class OrdersController < ApplicationController
   # GET /orders/new.xml
   def new
     session[:coupon] = nil
-    @order = Order.new(:sub_total => 0.0, :payment_method => warehouse? ? "Credit Card" : nil, employee_number: current_user.employee_number, :sales_tax => warehouse? ? 0.0 : nil, :total => warehouse? ? 0.0 : nil)
+    @order = Order.new(:sub_total => 0.0, :payment_method => nil, employee_number: current_user.employee_number, :sales_tax => nil, :total => nil)
     @editable = true
     respond_to do |format|
       format.html # new.html.erb
@@ -71,6 +71,11 @@ class OrdersController < ApplicationController
     end
   end
 
+  def email
+    @order = Order.find(params[:id])
+    UserMailer.order_confirmation(@order).deliver
+    redirect_to(@order, :notice => 'Order was emailed.')
+  end
   # PUT /orders/1
   # PUT /orders/1.xml
   def update
@@ -109,9 +114,9 @@ class OrdersController < ApplicationController
     @editable = true
     @product = Product.active.find_by_upc(params[:upc]) || Product.active.find_by_item_num(params[:upc])
     if @product
-      @order_item = @product.order_items.build(:price => @product.price(session[:coupon]), :quantity => tradeshow? ? @product.min_qty : 1, ship_month: @product.start_date_or_today)
+      @order_item = @product.order_items.build(:price => @product.price(session[:coupon]), :quantity => @product.min_qty, ship_month: @product.start_date_or_today)
       @order_item = @product.order_items.find_or_initialize_by(order_id: params[:id])
-      @order_item.quantity = @product.min_qty if tradeshow? && @order_item.new_record?
+      @order_item.quantity = @product.min_qty if @order_item.new_record?
       @order_item.price = @product.price(session[:coupon])
     end
     render :update

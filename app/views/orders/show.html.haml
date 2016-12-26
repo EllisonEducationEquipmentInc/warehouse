@@ -1,6 +1,7 @@
-.pull-right
-  %button.btn.btn-primary.btn-lg#email_order
-    Email
+.pull-right.dontprint
+  = link_to email_order_path(@order), method: :post do
+    %button.btn.btn-primary.btn-lg#email_order
+      Email
 #masthead
   = image_tag('logo_ellison_warehouse.png', class: 'branding', :alt => "Ellison Educational Equipment, Inc.")
   %p
@@ -9,102 +10,78 @@
     Telephone: (800) 253-2238
     %br
     Shop Online:
-    == #{warehouse? ? "http://www.ellison.com" : "http://www.ellisonretailers.com"}
+    http://www.ellisonretailers.com
   #order_info
     %p#order_data
       %h1
-        == #{order_name}
-        == ##{order_prefix}#{@order.id}
+        Quote
+        == CHA#{@order.id}
       %p
         %strong
           Date:
           = l @order.updated_at, :format => :default
-          - if warehouse?
-            %br
-            Payment Method:
-            = @order.payment_method
-            - if @order.tax_exempt
-              %br
-              Tax Exempt Number:
-              = @order.tax_exempt_number
-
-  - if tradeshow?
-    .clearfloat
-    %p#customer_data
-      %strong Customer Information:
+  .clearfloat
+  %p#customer_data
+    %strong Customer Information:
+    %br
+    - unless @order.customer_number.blank?
+      Customer Number:
+      = @order.customer_number
       %br
-      - unless @order.customer_number.blank?
-        Customer Number:
-        = @order.customer_number
-        %br
-      - unless @order.full_name.blank?
-        Contact Person:
-        = @order.full_name
-        %br
-      - unless @order.business.blank?
-        Business Name:
-        = @order.business
-        %br
-      - unless @order.address.blank? 
-        Address:
-        = @order.address
-        %br
-      - unless @order.city.blank? 
-        = @order.city
-      - unless @order.state.blank? 
-        = @order.state
-      - unless @order.zip_code.blank? 
-        = @order.zip_code
-      - unless @order.country.blank? 
-        = @order.country
-      - unless @order.phone.blank?
-        %br  
-        Phone Number:
-        = @order.phone
-        %br
-      - unless @order.email.blank?
-        Email Address:
-        = @order.email
+    - unless @order.full_name.blank?
+      Contact Person:
+      = @order.full_name
+      %br
+    - unless @order.business.blank?
+      Business Name:
+      = @order.business
+      %br
+    - unless @order.address.blank?
+      Address:
+      = @order.address
+      %br
+    - unless @order.city.blank?
+      = @order.city
+    - unless @order.state.blank?
+      = @order.state
+    - unless @order.zip_code.blank?
+      = @order.zip_code
+    - unless @order.country.blank?
+      = @order.country
+    - unless @order.phone.blank?
+      %br
+      Phone Number:
+      = @order.phone
+      %br
+    - unless @order.email.blank?
+      Email Address:
+      = @order.email
 
 %table.table#products{:width => "100%"}
   %tr
     %th{:align => 'left'} Item Number
     %th{:align => 'left'} Description
-    - if tradeshow?
-      %th{:align => 'right'} Launch Month
-      %th{:align => 'right'} Ship Month
+    %th{:align => 'right'} Launch Month
+    %th{:align => 'right'} Ship Month
     %th{:align => 'right'} Qty.
-    - if tradeshow?
-      %th{:align => 'right'} Wholesale Price
+    %th{:align => 'right'} Wholesale Price
     %th{:align => 'right'} Your Price
     %th{:align => 'right'} Extended Price
-  = render :partial => 'order_item', :collection => @order.order_items    
+  = render :partial => 'orders/order_item', :collection => @order.order_items
 .pull-right
   %p.pull-right
     %strong Subtotal:
     = number_to_currency @order.sub_total
-  - if tradeshow?
-    %ul{:style=>"list-style-type:none;"}
-      #by_ship_date
-      - @order.by_ship_date.each do |k,v|
-        %li
-          = k
-          %span.ship_date_item= number_to_currency v
-  - if warehouse?
-    %p
-      %strong Sales Tax:
-      = number_to_currency @order.sales_tax
-    %p
-      %strong
-        Total:
-        = number_to_currency @order.total
+  %ul{:style=>"list-style-type:none;"}
+    #by_ship_date
+    - @order.by_ship_date.each do |k,v|
+      %li
+        = k
+        %span.ship_date_item= number_to_currency v
 #footer
   %h1 TERMS AND CONDITIONS OF SALE
   %p
-    - if tradeshow?
-      == This order is subject to the Ellison Reseller Terms and Conditions of Sale Agreement located at #{link_to "www.ellisonretailers.com/reseller_terms", "http://www.ellisonretailers.com/reseller_terms", :target => "_blank"}
-    - else
-      All sales are final. Goods are sold "as is". No Returns.
+    == This order is subject to the Ellison Reseller Terms and Conditions of Sale Agreement located at #{link_to "www.ellisonretailers.com/reseller_terms", "http://www.ellisonretailers.com/reseller_terms", :target => "_blank"}
 
 %p.dontprint
   == #{ link_to 'Edit', edit_order_path(@order) } | #{ link_to 'Back', orders_path }

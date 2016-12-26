@@ -46,8 +46,7 @@
               %li.dropdown= link_to "Products", products_path, :class => "button dontprint #{'active' if (params[:controller] == 'products')}"
               %li.dropdown= link_to 'Pre-orders', orders_path, :class => "button dontprint #{'active' if (params[:controller] == 'orders' && params[:action] != 'new')}"
               %li.dropdown= link_to "New Pre-order", new_order_path, :class => "button dontprint #{'active' if (params[:controller] == 'orders' && params[:action] == 'new')}"
-              - if tradeshow?
-                %li.dropdown= link_to "Customers", customers_path, :class => "button dontprint #{'active' if (params[:controller] == 'customers')}"
+              %li.dropdown= link_to "Customers", customers_path, :class => "button dontprint #{'active' if (params[:controller] == 'customers')}"
               %li.dropdown= link_to "Reports", reports_path, :class => "button dontprint #{'active' if (params[:controller] == 'reports')}"
               %li.dropdown= link_to "Print", "javascript:window.print()", :class => 'button dontprint active' if (params[:controller] == 'orders' && params[:action] == 'show')
           %ul.nav.navbar-nav.navbar-right

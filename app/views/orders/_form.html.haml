@@ -12,24 +12,12 @@
                   Item Quantity Total:
                   %br
                   Subtotal
-                  - if warehouse?
-                    %br
-                    Sales Tax
-                    %br
-                    Order Total
                 %td
                   %span#qtytotal
                     0 items
                   %br
                   %span#subtotal
                     $0
-                  - if warehouse?
-                    %br
-                    %span#salestax
-                      $0.00
-                    %br
-                    %span#ordertotal
-                      $0.00
               - if (params[:controller] == 'orders' && params[:action] == 'edit')
                 %tr
                   %td.timestamps{:colspan => "2"}
@@ -38,15 +26,11 @@
                     %br
                     Modified on:
                     = l @order.updated_at, :format => :default
-            - if tradeshow?
-              %ul#by_ship_date
-                - @order.by_ship_date.each do |k,v|
-                  %li
-                    = k
-                    %span.ship_date_item= number_to_currency v
-            - else
-              #by_ship_date{:style => "display:none;"}
-
+            %ul#by_ship_date
+              - @order.by_ship_date.each do |k,v|
+                %li
+                  = k
+                  %span.ship_date_item= number_to_currency v
         .col-sm-12
           = form_tag({:action=>'create'}, :multipart => true) do
             %table.table
@@ -94,12 +78,10 @@
                 %tr
                   %th Item Number
                   %th Description
-                  - if tradeshow?
-                    %th Launch Month
-                    %th Ship Month
+                  %th Launch Month
+                  %th Ship Month
                   %th{:align => 'center', :width => '30'} Qty.
-                  - if tradeshow?
-                    %th Wholesale Price
+                  %th Wholesale Price
                   %th Your Price
                   %th Extended Price
                   %th
@@ -109,29 +91,6 @@
               .field
                 = f.label :sub_total, 'Subtotal', :class => "ordertotals"
                 = f.text_field :sub_total, :disabled => true, :size => "8", :class => "ordertotals"
-              - if warehouse?
-                .field#sales_tax{:style => "display:#{@order.tax_exempt ? 'none' : 'block'}"}
-                  = f.label :sales_tax, 'Sales Tax', :class => "ordertotals"
-                  = f.text_field :sales_tax, :disabled => true, :size => "8", :class => "ordertotals"
-                .field#total{:style => "display:#{@order.tax_exempt ? 'none' : 'block'}"}
-                  = f.label :total, 'Order Total', :class => "ordertotals"
-                  = f.text_field :total, :disabled => true, :size => "8", :class => "ordertotals"
-            - if warehouse?
-              .field
-                = f.label :payment_method
-                %br
-                = f.radio_button :payment_method, "Credit Card", :tabindex => i=2
-                Credit Card
-                = f.radio_button :payment_method, "Cash", :tabindex => i+=1
-                Cash
-              .field{:style => "float: left; margin-right: 50px"}
-                = f.label :tax_exempt
-                %br
-                = f.check_box :tax_exempt, :tabindex => i+=1, :onclick => "show_sales_tax(this.checked)"
-              .field#tax_exempt_number{:style => "display:#{@order.tax_exempt ? 'block' : 'none'}"}
-                = f.label :tax_exempt_number, "Tax Exempt Number<span class='required'> *</span>".html_safe
-                %br
-                = f.text_field :tax_exempt_number, :tabindex => i+=1
             .clearfloat
             .row
               .col-md-9.col-sm-12
@@ -210,49 +169,49 @@
               #order_loading{:style => 'display:none'}= image_tag('/images/loader-ajax.gif')
               .clearfloat
 
-            - if tradeshow?
-              :coffeescript
-                $ ->
-                  onselect = (data) ->
-                    $('#order_customer_number').val data.ax_customer_number
-                    $('#order_business').val data.company_name
-                    $('#order_full_name').val data.full_name
-                    $('#order_email').val data.email
-                    $('#order_address').val data.address
-                    $('#order_phone').val data.phone
-                    $('#order_city').val data.city
-                    $('#order_state').val data.state
-                    $('#order_zip_code').val data.zip
-                    $('#order_country').val data.country
-                    return
+            :coffeescript
+              $ ->
+                onselect = (data) ->
+                  $('#order_customer_number').val data.ax_customer_number
+                  $('#order_business').val data.company_name
+                  $('#order_full_name').val data.full_name
+                  $('#order_email').val data.email
+                  $('#order_address').val data.address
+                  $('#order_phone').val data.phone
+                  $('#order_city').val data.city
+                  $('#order_state').val data.state
+                  $('#order_zip_code').val data.zip
+                  $('#order_country').val data.country
+                  return
 
-                  $("#order_customer_number, #order_business").on 'keyup', ->
-                    value = $(@).val()
-                    if $(@).attr('id') == 'order_business'
-                      extra_url = '?field=company_name'
-                    else
-                      extra_url = ''
+                $("#order_customer_number, #order_business").on 'keyup', ->
+                  value = $(@).val()
+                  if $(@).attr('id') == 'order_business'
+                    extra_url = '?field=company_name'
+                  else
+                    extra_url = ''
 
-                    if value.length > 3
-                      $.ajax(
-                        url: '/customers/search'+extra_url
-                        data: {query: value}
-                      ).done (data) ->
-                        console.log data
-                        window.customers_data=data.data
-                        i = 0
-                        options = ''
-                        if data.suggestions.length > 0
-                          while i < data.suggestions.length
-                            options += '<li class="customers_dropdown list-group-item" data-customer-index=\'' + i + '\'><a href="#">' + data.suggestions[i] + '</a></li>'
-                            i++
-                          $("#customers_dropdown").html(options)
-                    else
-                      $("#customers_dropdown").html('')
-
-                  $("body").on 'click', '.customers_dropdown', ->
-                    onselect window.customers_data[$(@).data('customer-index')]
+                  if value.length > 3
+                    $.ajax(
+                      url: '/customers/search'+extra_url
+                      data: {query: value}
+                    ).done (data) ->
+                      console.log data
+                      window.customers_data=data.data
+                      i = 0
+                      options = ''
+                      if data.suggestions.length > 0
+                        while i < data.suggestions.length
+                          options += '<li class="customers_dropdown list-group-item" data-customer-index=\'' + i + '\'><a href="#" class="autocomplete-link" data-customer-index=\'' + i + '\'>' + data.suggestions[i] + '</a></li>'
+                          i++
+                        $("#customers_dropdown").html(options)
+                  else
                     $("#customers_dropdown").html('')
+
+                $("body").on 'click', '.customers_dropdown ,.autocomplete-link', ->
+                  onselect window.customers_data[$(@).data('customer-index')]
+                  $("#customers_dropdown").html('')
+                  false
 
 
             :javascript
@@ -286,13 +245,9 @@
                   total = subtotal + salestax
                 });
                 $('#order_sub_total').val(subtotal)
-                #{warehouse? ? "$('#order_sales_tax').val(salestax)" : nil}
-                #{warehouse? ? "$('#order_total').val(total)" : nil}
 
                 $('#qtytotal').html(total_qty + ' items')
                 $('#subtotal').html('$' + subtotal)
-                #{warehouse? ? "$('#salestax').html('$' + salestax)" : nil}
-                #{warehouse? ? "$('#ordertotal').html('$' + total)" : nil}
 
                 //$('upc').focus();
               }

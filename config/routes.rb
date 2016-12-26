@@ -2,6 +2,9 @@ Warehouse::Application.routes.draw do
   devise_for :users
   resources :admins
   resources :orders do
+    member do
+      post :email
+    end
     collection do
       post :add_item
       post :add_coupon

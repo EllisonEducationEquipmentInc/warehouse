@@ -33,10 +33,10 @@ private
   end
 
   def order_name
-    tradeshow? ? 'Quote' : 'Order'
+    'Quote'
   end
 
   def order_prefix
-    warehouse? ? "WHS" : "CHA"
+    "CHA"
   end
 end
