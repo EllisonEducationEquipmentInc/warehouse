@@ -244,7 +244,7 @@
                         options = ''
                         if data.suggestions.length > 0
                           while i < data.suggestions.length
-                            options += '<li class="customers_dropdown list-group-item" data-customer-index=\'' + i + '\'>' + data.suggestions[i] + '</li>'
+                            options += '<li class="customers_dropdown list-group-item" data-customer-index=\'' + i + '\'><a href="#">' + data.suggestions[i] + '</a></li>'
                             i++
                           $("#customers_dropdown").html(options)
                     else
