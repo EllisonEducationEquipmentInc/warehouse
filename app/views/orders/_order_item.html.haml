@@ -11,12 +11,12 @@
         = order_item_fields.select :ship_month, ship_date_select(order_item.product.start_date_or_today), {}, class: 'ship-date', data: { order_item_id: order_item.product.id }
       - else
         = l order_item.ship_month, :format => :month_only rescue ''
-    %td{:align => 'right'}= @editable ? order_item_fields.number_field(:quantity, min: 0, max: 9999, maxlength: 4, :size => 2, :id => "order_order_item_attributes_#{order_item.product.id_with_start_date}_quantity", :class => 'quantity', :onchange => "update_totals();$('#upc').focus();") : order_item.quantity
+    %td{:align => 'right'}= @editable ? order_item_fields.number_field(:quantity, min: 0, max: 9999, maxlength: 4, :size => 2, :id => "order_order_item_attributes_#{order_item.product.id_with_start_date}_quantity", :class => 'quantity noenter', :onchange => "update_totals();$('#upc').focus();") : order_item.quantity
     %td{:align => 'right'}
       = number_to_currency(order_item.product.price)
     %td{:align => 'right'}
       - if @editable
-        = order_item_fields.text_field(:price, :size => 6, :class => 'price', maxlength: 8, :onchange => "update_totals();$('#upc').focus();")
+        = order_item_fields.text_field(:price, :size => 6, :class => 'price noenter', maxlength: 8, :onchange => "update_totals();$('#upc').focus();")
       - else
         = number_to_currency(order_item.price)
     %td{:align => 'right', :class => "item_total"}= number_to_currency order_item.item_total

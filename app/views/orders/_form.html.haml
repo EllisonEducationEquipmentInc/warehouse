@@ -100,13 +100,13 @@
                       = f.label :employee_number
                       %span.required *
                       %br
-                      = f.text_field :employee_number, :tabindex => i=2, class: "form-control"
+                      = f.text_field :employee_number, :tabindex => i=2, class: "form-control noenter"
                   .form-group.col-sm-3
                     .field
                       = f.label :customer_number
                       %span.required *
                       %br
-                      = f.text_field :customer_number, :tabindex => "#{i+=1}", class: 'form-control'
+                      = f.text_field :customer_number, :tabindex => "#{i+=1}", class: 'form-control noenter'
                       %ul#customers_dropdown.list-group
                   .form-group.col-sm-3
                     .field
@@ -117,44 +117,44 @@
                     .field
                       = f.label :full_name
                       %br
-                      = f.text_field :full_name, :tabindex => i+=1, class: 'form-control'
+                      = f.text_field :full_name, :tabindex => i+=1, class: 'form-control noenter'
                 .row
                   .form-group.col-sm-3
                     .field
                       = f.label :business, 'Business Name'
                       %br
-                      = f.text_field :business, :tabindex => i+=1, class: 'form-control'
+                      = f.text_field :business, :tabindex => i+=1, class: 'form-control noenter'
                   .form-group.col-sm-3
                     .field
                       = f.label :email, 'Email Address'
                       %br
-                      = f.text_field :email, :tabindex => i+=1, class: 'form-control'
+                      = f.text_field :email, :tabindex => i+=1, class: 'form-control noenter'
                   .form-group.col-sm-3
                     .field
                       = f.label :phone, 'Phone Number'
                       %br
-                      = f.text_field :phone, :tabindex => i+=1, class: 'form-control'
+                      = f.text_field :phone, :tabindex => i+=1, class: 'form-control noenter'
                   .form-group.col-sm-3
                     .field
                       = f.label :address
                       %br
-                      = f.text_field :address, :tabindex => i+=1, class: 'form-control'
+                      = f.text_field :address, :tabindex => i+=1, class: 'form-control noenter'
                 .row
                   .form-group.col-sm-3
                     .field
                       = f.label :city
                       %br
-                      = f.text_field :city, :tabindex => i+=1, class: 'form-control'
+                      = f.text_field :city, :tabindex => i+=1, class: 'form-control noenter'
                   .form-group.col-sm-3
                     .field
                       = f.label :state
                       %br
-                      = f.text_field :state, :tabindex => i+=1, class: 'form-control'
+                      = f.text_field :state, :tabindex => i+=1, class: 'form-control noenter'
                   .form-group.col-sm-3
                     .field
                       = f.label :zip_code
                       %br
-                      = f.text_field :zip_code, :tabindex => i+=1, class: 'form-control'
+                      = f.text_field :zip_code, :tabindex => i+=1, class: 'form-control noenter'
                   .form-group.col-sm-3
                     .field
                       = f.label :country
@@ -171,6 +171,18 @@
 
             :coffeescript
               $ ->
+                keyStop =
+                    8: ':not(input:text, textarea, input:file, input:password)'
+                    13: '.noenter'
+                    end: null
+                $('.noenter').bind 'keydown', (event) ->
+                  selector = keyStop[event.which]
+                  if selector != undefined and $(event.target).is(selector)
+                    console.log 'preventing...'
+                    event.preventDefault()
+                    #stop event
+                  true
+
                 onselect = (data) ->
                   $('#order_customer_number').val data.ax_customer_number
                   $('#order_business').val data.company_name
