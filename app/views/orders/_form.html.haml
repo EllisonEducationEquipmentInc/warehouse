@@ -148,7 +148,7 @@
                       %span.required *
                       %br
                       = f.text_field :customer_number, :tabindex => "#{i+=1}", class: 'form-control'
-                      %ul#customers_dropdown
+                      %ul#customers_dropdown.list-group
                   .form-group.col-sm-3
                     .field
                       = f.label :coupon_code
@@ -244,7 +244,7 @@
                         options = ''
                         if data.suggestions.length > 0
                           while i < data.suggestions.length
-                            options += '<li class="customers_dropdown" data-customer-index=\'' + i + '\'>' + data.suggestions[i] + '</li>'
+                            options += '<li class="customers_dropdown list-group-item" data-customer-index=\'' + i + '\'>' + data.suggestions[i] + '</li>'
                             i++
                           $("#customers_dropdown").html(options)
                     else
@@ -320,7 +320,7 @@
                 } else {
                   $('#warning').html('product not found')
                   $('#warning').removeClass('hide');
-                  $('#order_notes').val('product not found: ' + $('#upc').value + '\n');
+                  $('#order_notes').val('product not found: ' + $('#upc').val() + '\n');
                   $('#order_notes').focus();
                 }
               }
