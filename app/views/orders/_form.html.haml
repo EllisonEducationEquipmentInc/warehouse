@@ -26,11 +26,11 @@
                     %br
                     Modified on:
                     = l @order.updated_at, :format => :default
-            %ul#by_ship_date
+            %ul#by_ship_date.list-group
               - @order.by_ship_date.each do |k,v|
-                %li
+                %li.list-group-item
                   = k
-                  %span.ship_date_item= number_to_currency v
+                  %span.pull-right.ship_date_item= number_to_currency v
         .col-sm-12
           = form_tag({:action=>'create'}, :multipart => true) do
             %table.table
@@ -178,7 +178,6 @@
                 $('.noenter').bind 'keydown', (event) ->
                   selector = keyStop[event.which]
                   if selector != undefined and $(event.target).is(selector)
-                    console.log 'preventing...'
                     event.preventDefault()
                     #stop event
                   true
@@ -249,7 +248,7 @@
                     $('#total_sd_'+ship_date).html('$'+total_by_ship_date[ship_date]);
                   } else{
                     total_by_ship_date[ship_date]=line_total;
-                    $('#by_ship_date').append('<li id="li_sd_'+ship_date+'">'+ship_date+' <span class="ship_date_item" id="total_sd_'+ship_date+'">$'+total_by_ship_date[ship_date]+'</span></li>');
+                    $('#by_ship_date').append('<li class="list-group-item" id="li_sd_'+ship_date+'">'+ship_date+' <span class="pull-right ship_date_item" id="total_sd_'+ship_date+'">$'+total_by_ship_date[ship_date]+'</span></li>');
                   };
                   row.find('.item_total').html('$' + line_total)
                   subtotal = subtotal + line_total
