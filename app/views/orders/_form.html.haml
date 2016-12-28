@@ -175,7 +175,7 @@
                     8: ':not(input:text, textarea, input:file, input:password)'
                     13: '.noenter'
                     end: null
-                $('.noenter').bind 'keydown', (event) ->
+                $(document).on 'keydown', '.noenter', (event) ->
                   selector = keyStop[event.which]
                   if selector != undefined and $(event.target).is(selector)
                     event.preventDefault()
