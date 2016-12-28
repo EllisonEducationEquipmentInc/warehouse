@@ -4,7 +4,19 @@
       .panel-heading
         Order
       .panel-body
-        .col-sm-6.col-md-3.pull-right
+        .col-sm-12.col-md-6
+          = form_tag({:action=>'create'}, :multipart => true) do
+            %table.table
+              %tr
+                %td
+                  = link_to "click here to see a sample CSV file", "/sample_export_lineitems.csv"
+                  %br
+                  %label{ :for => "dump_file" }
+                    Select a CSV File :
+                  %br
+                  = file_field_tag 'order[file]'
+                  = submit_tag 'Submit', :class => 'btn btn-primary'
+        .col-sm-12.col-md-3.pull-right
           #order_totals.pull-right
             %table.table
               %tr
@@ -31,17 +43,6 @@
                 %li.list-group-item
                   = k
                   %span.pull-right.ship_date_item= number_to_currency v
-        .col-sm-12
-          = form_tag({:action=>'create'}, :multipart => true) do
-            %table.table
-              %tr
-                %td
-                  %label{ :for => "dump_file" }
-                    Select a CSV File :
-                    %br
-                    = file_field_tag 'order[file]'
-                    = submit_tag 'Submit', :class => 'btn btn-primary'
-          = link_to "click here to see a sample CSV file", "/sample_export_lineitems.csv"
           - if flash[:message].present?
             %span#error.label.label-warning
               = flash[:message]
@@ -75,17 +76,19 @@
             = f.error_messages
             .table-responsive
               %table.table.products#products
-                %tr
-                  %th Item Number
-                  %th Description
-                  %th Launch Month
-                  %th Ship Month
-                  %th{:align => 'center', :width => '30'} Qty.
-                  %th Wholesale Price
-                  %th Your Price
-                  %th Extended Price
-                  %th
-                = render :partial => 'order_item', :collection => @order.order_items, locals: {f: f}
+                %thead
+                  %tr
+                    %th Item Number
+                    %th Description
+                    %th Launch Month
+                    %th Ship Month
+                    %th{:align => 'center', :width => '30'} Qty.
+                    %th Wholesale Price
+                    %th Your Price
+                    %th Extended Price
+                    %th
+                %tbody#products_body
+                  = render :partial => 'order_item', :collection => @order.order_items, locals: {f: f}
             %hr
             .pull-right
               .field
@@ -165,8 +168,7 @@
                   = f.label :notes
                   %br
                   = f.text_area :notes, :tabindex => i+=1, :rows => "10", class: 'form-control'
-              = f.submit :tabindex => i+=1, :class => "btn btn-danger", :onclick => "$(this).hide();$('order_loading').show();"
-              #order_loading{:style => 'display:none'}= image_tag('/images/loader-ajax.gif')
+              .col-sm-10.text-center= f.submit :tabindex => i+=1, :class => "btn btn-danger"
               .clearfloat
 
             :coffeescript

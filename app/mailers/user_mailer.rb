@@ -3,7 +3,7 @@ class UserMailer < ApplicationMailer
 
   def order_confirmation(order)
     @order = order
-    mail(to: @order.email, subject: 'Pre-order confirmation')
+    mail(to: @order.email, subject: "Pre-order CHA#{@order.id} Receipt")
   end
 
   def params
