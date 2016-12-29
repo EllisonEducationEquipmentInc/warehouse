@@ -20,7 +20,7 @@
       - else
         = number_to_currency(order_item.price)
     %td{:align => 'right', :class => "item_total"}= number_to_currency order_item.item_total
-    - unless params[:action] == 'show'
+    - unless params[:action] == 'show' || params[:action] == 'email'
       %td.dontprint{ :align => 'right'}= link_to 'x', '#', class: 'btn btn-default btn-sm', :onclick => "$(this).parents('.order_item_row').remove();update_totals();return false" 
       %td.dontprint{:align => 'right'}= link_to 'dup', '#', class: 'dup btn btn-default btn-sm', data: {'item-num' => order_item.product.item_num}
 

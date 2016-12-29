@@ -1,7 +1,8 @@
-.pull-right.dontprint
-  = link_to email_order_path(@order), method: :post do
-    %button.btn.btn-primary.btn-lg#email_order
-      Email
+- unless params[:action] == 'email'
+  .pull-right.dontprint
+    = link_to email_order_path(@order), method: :post do
+      %button.btn.btn-primary.btn-lg#email_order
+        Email
 #masthead
   = image_tag('https://s3.amazonaws.com/ellison-pos/logo_ellison.png', class: 'branding', :alt => "Ellison Educational Equipment, Inc.")
   %p
@@ -83,8 +84,9 @@
   %p
     == This order is subject to the Ellison Reseller Terms and Conditions of Sale Agreement located at #{link_to "www.ellisonretailers.com/reseller_terms", "http://www.ellisonretailers.com/reseller_terms", :target => "_blank"}
 
-%p.dontprint
-  == #{ link_to 'Edit', edit_order_path(@order) } | #{ link_to 'Back', orders_path }
+- unless params[:action] == 'email'
+  %p.dontprint
+    == #{ link_to 'Edit', edit_order_path(@order) } | #{ link_to 'Back', orders_path }
 
 :coffee
   $ ->
