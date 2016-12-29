@@ -4,15 +4,16 @@ class Order < ActiveRecord::Base
   validates_presence_of :sub_total, :total, :sales_tax
   has_many :order_items, :dependent => :destroy, :autosave => true
   has_many :products, :through => :order_items
-  
+
   validates_presence_of :tax_exempt_number, :if => Proc.new {|o| o.tax_exempt}
   validates_presence_of :customer_number, :employee_number, :if => Proc.new {|o| TRADESHOW}
+  validate :validate_order_item
 
   accepts_nested_attributes_for :order_items, allow_destroy: true
 
   # TODO: crm
   SALES_TAX = TRADESHOW ? 0.0 : 8.00/100.0
-  
+
   #after_update :save_order_items
   #validates_associated :order_items
 
@@ -53,7 +54,7 @@ class Order < ActiveRecord::Base
     h
   end
 
-  def validate
+  def validate_order_item
     #errors[:base] << "add at least one item to the order" if order_items.blank?
     errors.add(:products, "add at least one item to the order" ) if order_items.blank?
   end

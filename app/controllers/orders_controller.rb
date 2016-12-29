@@ -57,6 +57,7 @@ class OrdersController < ApplicationController
   def create
     @order = Order.new(order_params)
     @order.coupon_code = session[:coupon] if session[:coupon].present?
+    @order.employee_number ||= current_user.employee_number
     process_file if params[:order][:file].present?
     calculate_total
     respond_to do |format|
