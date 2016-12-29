@@ -1,5 +1,5 @@
+$('#upc').val('');
 - if @product
-  $('#upc').val('');
   $('#order_coupon_code').val('#{session[:coupon]}')
   $('#order_sub_total').val(parseFloat($('#order_sub_total').val()) + #{@product.price(session[:coupon])})
   if ($('#order_item_#{@order_item.product_id_with_start_date}').length < 1) {
@@ -14,6 +14,6 @@
   src: ['/error.mp3']
   });
   sound.play();
-  product_not_found();
+  product_not_found('#{params[:upc]}');
 - unless params[:dup].present?
   $('#upc').focus()
