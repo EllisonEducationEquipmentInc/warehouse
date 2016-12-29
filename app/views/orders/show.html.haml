@@ -1,8 +1,13 @@
 - unless params[:action] == 'email'
-  .pull-right.dontprint
+  .col-sm-2.pull-right.dontprint
     = link_to email_order_path(@order), method: :post do
       %button.btn.btn-primary.btn-lg#email_order
         Email
+  .col-sm-2.pull-right.dontprint
+    = link_to 'javascript:window.print()' do
+      %button.btn.btn-default.btn-lg
+        Print
+#masthead
 #masthead
   = image_tag('https://s3.amazonaws.com/ellison-pos/logo_ellison.png', class: 'branding', :alt => "Ellison Educational Equipment, Inc.")
   %p
