@@ -74,8 +74,13 @@ class OrdersController < ApplicationController
 
   def email
     @order = Order.find(params[:id])
-    UserMailer.order_confirmation(@order).deliver
-    redirect_to(@order, :notice => 'Order was emailed.')
+    if @order.email.present?
+      UserMailer.order_confirmation(@order).deliver
+      redirect_to(@order, :notice => 'Order was emailed.')
+    else
+      flash[:error] = 'order has no email.'
+      redirect_to(edit_order_path(@order), :error => 'Order was emailed.')
+    end
   end
   # PUT /orders/1
   # PUT /orders/1.xml

@@ -72,12 +72,12 @@
   %p.pull-right
     %strong Subtotal:
     = number_to_currency @order.sub_total
-  %ul{:style=>"list-style-type:none;"}
+  %ul.list-group{:style=>"list-style-type:none;"}
     #by_ship_date
     - @order.by_ship_date.each do |k,v|
-      %li
+      %li.list-group-item
         = k
-        %span.ship_date_item= number_to_currency v
+        %span.pull-right.ship_date_item= number_to_currency v
 #footer
   %h1 TERMS AND CONDITIONS OF SALE
   %p
