@@ -5,7 +5,7 @@
         Email
   .col-sm-2.pull-right.dontprint
     = link_to 'javascript:window.print()' do
-      %button.btn.btn-default.btn-lg
+      %button.btn.btn-primary.btn-lg
         Print
 #masthead
 #masthead
@@ -20,8 +20,8 @@
   #order_info
     %p#order_data
       %h1
-        Quote
-        == CHA#{@order.id}
+        Pre Order |
+        \#CHA#{@order.id}
       %p
         %strong
           Date:
@@ -63,28 +63,28 @@
       Email Address:
       = @order.email
 
-%table.table#products{:width => "100%"}
-  %tr
-    %th{:align => 'left'} Item Number
-    %th{:align => 'left'} Description
-    %th{:align => 'right'} Launch Month
-    %th{:align => 'right'} Ship Month
-    %th{:align => 'right'} Qty.
-    %th{:align => 'right'} Wholesale Price
-    %th{:align => 'right'} Your Price
-    %th{:align => 'right'} Extended Price
-  = render :partial => 'orders/order_item', :collection => @order.order_items
-.pull-right
-  %p.pull-right
-    %strong Subtotal:
-    = number_to_currency @order.sub_total
-  %ul.list-group{:style=>"list-style-type:none;"}
-    #by_ship_date
+.col-sm-12
+  %table.table#products{:width => "100%"}
+    %tr
+      %th{:align => 'left'} Item Number
+      %th{:align => 'left'} Description
+      %th{:align => 'right'} Launch Month
+      %th{:align => 'right'} Ship Month
+      %th{:align => 'right'} Qty.
+      %th{:align => 'right'} Wholesale Price
+      %th{:align => 'right'} Your Price
+      %th{:align => 'right'} Extended Price
+    = render :partial => 'orders/order_item', :collection => @order.order_items
+.col-sm-12.col-md-3.pull-right
+  %ul#by_ship_date.list-group{:style=>"list-style-type:none;"}
+    %li.list-group-item
+      %strong Subtotal:
+      %span.pull-right= number_to_currency @order.sub_total
     - @order.by_ship_date.each do |k,v|
       %li.list-group-item
         = k
         %span.pull-right.ship_date_item= number_to_currency v
-#footer
+#footer.col-sm-12.col-md-9
   %h1 TERMS AND CONDITIONS OF SALE
   %p
     == This order is subject to the Ellison Reseller Terms and Conditions of Sale Agreement located at #{link_to "www.ellisonretailers.com/reseller_terms", "http://www.ellisonretailers.com/reseller_terms", :target => "_blank"}

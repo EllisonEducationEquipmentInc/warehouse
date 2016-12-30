@@ -12,7 +12,7 @@
   %tbody
     - @users.each do |user|
       %tr
-        %td= link_to user.id, admin_path(user)
+        %td= link_to user.id, edit_admin_path(user)
         %td= user.email
         %td= user.name
         %td= user.role
