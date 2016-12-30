@@ -8,7 +8,6 @@
       %button.btn.btn-primary.btn-lg
         Print
 #masthead
-#masthead
   = image_tag('https://s3.amazonaws.com/ellison-pos/logo_ellison.png', class: 'branding', :alt => "Ellison Educational Equipment, Inc.")
   %p
     25862 Commercentre Drive, Lake Forest, CA 92630
@@ -87,7 +86,7 @@
 #footer.col-sm-12.col-md-9
   %h1 TERMS AND CONDITIONS OF SALE
   %p
-    == This order is subject to the Ellison Reseller Terms and Conditions of Sale Agreement located at #{link_to "www.ellisonretailers.com/reseller_terms", "http://www.ellisonretailers.com/reseller_terms", :target => "_blank"}
+    This order is subject to the Ellison Reseller Terms and Conditions of Sale Agreement located at http://www.ellisonretailers.com/reseller_terms
 
 - unless params[:action] == 'email'
   %p.dontprint

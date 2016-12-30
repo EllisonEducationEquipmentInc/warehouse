@@ -233,15 +233,15 @@
                 $('#by_ship_date').html('');
                 $('.order_item_row').each(function(index, row){
                   row = $(row)
-                  line_qty_total = row.find('input.quantity').val() * 1
-                  total_qty = total_qty + line_qty_total
+                  line_qty_total = row.find('input.quantity').val() * 1;
+                  total_qty = total_qty + line_qty_total;
 
                   line_total = Math.round((row.find('.quantity').val() * row.find('.price').val()) * 100) / 100;
 
                   ship_date = row.data('ship-date');
                   ship_date_id = ship_date.replace(' ', '_')
                   if ($('#li_sd_'+ship_date_id).size() > 0) {
-                    total_by_ship_date[ship_date_id]+=line_total;
+                    total_by_ship_date[ship_date_id] = Math.round((total_by_ship_date[ship_date_id] + line_total) * 100) / 100;
                     console.log(total_by_ship_date);
                     $('#total_sd_'+ship_date_id).html('$'+total_by_ship_date[ship_date_id]);
                   } else{
@@ -249,9 +249,9 @@
                     $('#by_ship_date').append('<li class="list-group-item" id="li_sd_'+ship_date_id+'">'+ship_date+' <span class="pull-right ship_date_item" id="total_sd_'+ship_date_id+'">$'+total_by_ship_date[ship_date_id]+'</span></li>');
                   };
                   row.find('.item_total').html('$' + line_total)
-                  subtotal = subtotal + line_total
+                  subtotal = Math.round((subtotal + line_total) * 100 ) / 100
                   salestax = Math.round(subtotal * 8.75) / 100
-                  total = subtotal + salestax
+                  total = Math.round((subtotal + salestax) * 100 ) / 100
                 });
                 $('#order_sub_total').val(subtotal)
 
