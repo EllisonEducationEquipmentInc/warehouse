@@ -239,12 +239,14 @@
                   line_total = Math.round((row.find('.quantity').val() * row.find('.price').val()) * 100) / 100;
 
                   ship_date = row.data('ship-date');
-                  if ($('#li_sd_'+ship_date).size > 0) {
-                    total_by_ship_date[ship_date]+=line_total;
-                    $('#total_sd_'+ship_date).html('$'+total_by_ship_date[ship_date]);
+                  ship_date_id = ship_date.replace(' ', '_')
+                  if ($('#li_sd_'+ship_date_id).size() > 0) {
+                    total_by_ship_date[ship_date_id]+=line_total;
+                    console.log(total_by_ship_date);
+                    $('#total_sd_'+ship_date_id).html('$'+total_by_ship_date[ship_date_id]);
                   } else{
-                    total_by_ship_date[ship_date]=line_total;
-                    $('#by_ship_date').append('<li class="list-group-item" id="li_sd_'+ship_date+'">'+ship_date+' <span class="pull-right ship_date_item" id="total_sd_'+ship_date+'">$'+total_by_ship_date[ship_date]+'</span></li>');
+                    total_by_ship_date[ship_date_id]=line_total;
+                    $('#by_ship_date').append('<li class="list-group-item" id="li_sd_'+ship_date_id+'">'+ship_date+' <span class="pull-right ship_date_item" id="total_sd_'+ship_date_id+'">$'+total_by_ship_date[ship_date_id]+'</span></li>');
                   };
                   row.find('.item_total').html('$' + line_total)
                   subtotal = subtotal + line_total
