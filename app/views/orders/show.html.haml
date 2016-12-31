@@ -1,4 +1,4 @@
-- unless params[:action] == 'email'
+- if params[:action] == 'show'
   .col-sm-2.pull-right.dontprint
     = link_to email_order_path(@order), method: :post do
       %button.btn.btn-primary.btn-lg#email_order
@@ -88,7 +88,7 @@
   %p
     This order is subject to the Ellison Reseller Terms and Conditions of Sale Agreement located at http://www.ellisonretailers.com/reseller_terms
 
-- unless params[:action] == 'email'
+- if params[:action] == 'show'
   %p.dontprint
     == #{ link_to 'Edit', edit_order_path(@order) } | #{ link_to 'Back', orders_path }
 
