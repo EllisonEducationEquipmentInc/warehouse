@@ -7,6 +7,6 @@ class UserMailer < ApplicationMailer
   end
 
   def params
-    { action: 'email' }
+    HashWithIndifferentAccess.new(action: 'email')
   end
 end
