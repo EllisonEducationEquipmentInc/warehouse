@@ -5,24 +5,24 @@
       = order_item.product.item_num
     %td
       = raw order_item.product.name
-    %td{ :align => 'right'}= l order_item.product.start_date, :format => :month_only rescue ''
-    %td{:align => 'right'}
+    %td.text-right= l order_item.product.start_date, :format => :month_only rescue ''
+    %td.text-right
       - if @editable
         = order_item_fields.select :ship_month, ship_date_select(order_item.product.start_date_or_today), {}, class: 'ship-date', data: { order_item_id: order_item.product.id }
       - else
         = l order_item.ship_month, :format => :month_only rescue ''
-    %td{:align => 'right'}= @editable ? order_item_fields.number_field(:quantity, min: 0, max: 9999, maxlength: 4, :size => 2, :id => "order_order_item_attributes_#{order_item.product.id_with_start_date}_quantity", :class => 'quantity noenter', :onchange => "update_totals();$('#upc').focus();") : order_item.quantity
-    %td{:align => 'right'}
+    %td.text-right= @editable ? order_item_fields.number_field(:quantity, min: 0, max: 9999, :size => 2, :id => "order_order_item_attributes_#{order_item.product.id_with_start_date}_quantity", :class => 'quantity noenter', :onchange => "update_totals();$('#upc').focus();") : order_item.quantity
+    %td.text-right
       = number_to_currency(order_item.product.price)
-    %td{:align => 'right'}
+    %td.text-right
       - if @editable
         = order_item_fields.text_field(:price, :size => 6, :class => 'price noenter', maxlength: 8, :onchange => "update_totals();$('#upc').focus();")
       - else
         = number_to_currency(order_item.price)
-    %td{:align => 'right', :class => "item_total"}= number_to_currency order_item.item_total
+    %td.text-right.item_total= number_to_currency order_item.item_total
     - unless params[:action] == 'show' || params[:action] == 'email'
-      %td.dontprint{ :align => 'right'}= link_to 'x', '#', class: 'btn btn-default btn-sm', :onclick => "$(this).parents('.order_item_row').remove();update_totals();return false" 
-      %td.dontprint{:align => 'right'}= link_to 'dup', '#', class: 'dup btn btn-default btn-sm', data: {'item-num' => order_item.product.item_num}
+      %td.dontprint.text-right= link_to 'x', '#', class: 'btn btn-default btn-sm', :onclick => "$(this).parents('.order_item_row').remove();update_totals();return false" 
+      %td.dontprint.text-right= link_to 'dup', '#', class: 'dup btn btn-default btn-sm', data: {'item-num' => order_item.product.item_num}
 
 :coffee
   $('.dup').on 'click', ->
