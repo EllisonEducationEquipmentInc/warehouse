@@ -116,6 +116,11 @@ class OrdersController < ApplicationController
   end
 
   def add_item
+    @order = if params[:id].present?
+      Order.find(params[:id])
+    else
+      Order.new
+    end
     @editable = true
     @product = Product.active.find_by_upc(params[:upc]) || Product.active.find_by_item_num(params[:upc])
     if @product
@@ -123,6 +128,7 @@ class OrdersController < ApplicationController
       @order_item = @product.order_items.find_or_initialize_by(order_id: params[:id])
       @order_item.quantity = @product.min_qty if @order_item.new_record?
       @order_item.price = @product.price(session[:coupon])
+      @order_item.order_id = @order.id
     end
     render :update
   end
