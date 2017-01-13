@@ -3,7 +3,7 @@ lock "3.7.0"
 
 set :application, "pos"
 set :repo_url, "git@github.com:EllisonEducationEquipmentInc/warehouse.git"
-set :branch, 'rails_upgrade'
+set :branch, 'master'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
