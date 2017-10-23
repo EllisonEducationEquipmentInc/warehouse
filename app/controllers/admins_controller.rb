@@ -34,11 +34,11 @@ class AdminsController < ApplicationController
     end
   end
 
-  #def destroy
-    #@user = User.find params[:id]
-    #@user.destroy
-    #redirect_to users_path, alert: 'User has been destroyed'
-  #end
+  def destroy
+    @user = User.find params[:id]
+    @user.destroy
+    redirect_to admins_path, alert: 'User has been destroyed'
+  end
 
 
 
