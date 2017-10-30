@@ -83,6 +83,11 @@
       %li.list-group-item
         = k
         %span.pull-right.ship_date_item= number_to_currency v
+  %ul#by_designer.list-group
+    - @order.products.select("designer, sum(order_items.item_total)").group(:designer).each do |e|
+      %li.list-group-item
+        = e.designer
+        %span.pull-right.designer_item= number_to_currency e.sum
 #footer.col-sm-12.col-md-9
   %h1 TERMS AND CONDITIONS OF SALE
   %p

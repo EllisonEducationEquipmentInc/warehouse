@@ -41,6 +41,11 @@
                 = f.date_select :start_date, :order => [:month, :day, :year], class: 'form-control'
             .form-group
               .field
+                = f.label :designer
+                %br
+                = f.text_field :designer, class: 'form-control'
+            .form-group
+              .field
                 = f.label :coupon_1
                 %br
                 = f.text_field :coupon_1, class: 'form-control'

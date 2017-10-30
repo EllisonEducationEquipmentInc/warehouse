@@ -41,6 +41,11 @@
                 %li.list-group-item
                   = k
                   %span.pull-right.ship_date_item= number_to_currency v
+            %ul#by_designer.list-group
+              - @order.products.select("designer, sum(order_items.item_total)").group(:designer).each do |e|
+                %li.list-group-item
+                  = e.designer
+                  %span.pull-right.designer_item= number_to_currency e.sum
           - if flash[:message].present?
             %span#error.label.label-warning
               = flash[:message]
@@ -230,7 +235,9 @@
                 var total = 0
                 var total_qty = 0
                 var total_by_ship_date = {}
+                var total_by_designer = {}
                 $('#by_ship_date').html('');
+                $('#by_designer').html('');
                 $('.order_item_row').each(function(index, row){
                   row = $(row)
                   line_qty_total = row.find('input.quantity').val() * 1;
@@ -242,12 +249,23 @@
                   ship_date_id = ship_date.replace(' ', '_')
                   if ($('#li_sd_'+ship_date_id).size() > 0) {
                     total_by_ship_date[ship_date_id] = Math.round((total_by_ship_date[ship_date_id] + line_total) * 100) / 100;
-                    console.log(total_by_ship_date);
                     $('#total_sd_'+ship_date_id).html('$'+total_by_ship_date[ship_date_id]);
                   } else{
                     total_by_ship_date[ship_date_id]=line_total;
                     $('#by_ship_date').append('<li class="list-group-item" id="li_sd_'+ship_date_id+'">'+ship_date+' <span class="pull-right ship_date_item" id="total_sd_'+ship_date_id+'">$'+total_by_ship_date[ship_date_id]+'</span></li>');
                   };
+
+                  designer = row.data('designer')
+                  designer_id = row.data('designer-id')
+                  if ($('#li_d_'+designer_id).size() > 0) {
+                    total_by_designer[designer_id] = Math.round((total_by_designer[designer_id] + line_total) * 100) / 100;
+                    $('#total_d_'+designer_id).html('$'+total_by_designer[designer_id]);
+                  } else{
+                    total_by_designer[designer_id]=line_total;
+                    $('#by_designer').append('<li class="list-group-item" id="li_d_'+designer_id+'">'+designer+' <span class="pull-right designer_item" id="total_d_'+designer_id+'">$'+total_by_designer[designer_id]+'</span></li>');
+                  };
+
+
                   row.find('.item_total').html('$' + line_total)
                   subtotal = Math.round((subtotal + line_total) * 100 ) / 100
                   salestax = Math.round(subtotal * 8.75) / 100
