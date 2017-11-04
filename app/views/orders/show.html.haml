@@ -67,24 +67,29 @@
     %tr
       %th{:align => 'left'} Item Number
       %th{:align => 'left'} Description
-      %th{:align => 'right'} Launch Month
-      %th{:align => 'right'} Ship Month
-      %th{:align => 'right'} Qty.
-      %th{:align => 'right'} Wholesale Price
-      %th{:align => 'right'} Your Price
-      %th{:align => 'right'} Extended Price
+      %th.text-right{:align => 'right'} Launch Month
+      %th.text-right{:align => 'right'} Ship Month
+      %th.text-right{:align => 'right'} Qty.
+      %th.text-right{:align => 'right'} Wholesale Price
+      %th.text-right{:align => 'right'} Your Price
+      %th.text-right{:align => 'right'} Extended Price
     = render :partial => 'orders/order_item', :collection => @order.order_items
 .col-sm-12.col-md-3.pull-right
   %ul#by_ship_date.list-group{:style=>"list-style-type:none;"}
-    %li.list-group-item
-      %strong Subtotal:
+    %li.list-group-item(align="right")
+      %strong Subtotal:&nbsp;
       %span.pull-right= number_to_currency @order.sub_total
     - @order.by_ship_date.each do |k,v|
-      %li.list-group-item
+      %li.list-group-item(align="right")
         = k
+        \&nbsp;
         %span.pull-right.ship_date_item= number_to_currency v
+  - if !@order.discount_amount.zero?
+    %p
+      An additional discount of #{number_to_currency @order.discount_amount} will be deducted from your first shipped order from this pre-order
+
 #footer.col-sm-12.col-md-9
-  %h1 TERMS AND CONDITIONS OF SALE
+  %h2 TERMS AND CONDITIONS OF SALE
   %p
     This order is subject to the Ellison Reseller Terms and Conditions of Sale Agreement located at http://www.ellisonretailers.com/reseller_terms
 
