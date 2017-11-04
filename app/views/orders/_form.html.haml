@@ -44,7 +44,7 @@
             %ul#by_designer.list-group
               - @order.products.select("designer, sum(order_items.item_total)").group(:designer).each do |e|
                 %li.list-group-item
-                  = e.designer
+                  = e.designer_name
                   %span.pull-right.designer_item= number_to_currency e.sum
           - if flash[:message].present?
             %span#error.label.label-warning
