@@ -9,6 +9,7 @@ Warehouse::Application.routes.draw do
       post :add_item
       post :add_coupon
       get :export_to_csv
+      delete :delete_all
     end
   end
 
@@ -16,6 +17,7 @@ Warehouse::Application.routes.draw do
     collection do
       get :import
       post :import
+      delete :delete_all
     end
   end
 

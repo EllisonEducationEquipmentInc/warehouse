@@ -105,6 +105,12 @@ class ProductsController < ApplicationController
     end
   end
 
+  def delete_all
+    redirect_to(products_path, notice: "Delete all orders first.") and return if OrderItem.exists?
+    Product.destroy_all
+    redirect_to products_path, notice: "All products have been deleted."
+  end
+
 
 private
   def product_params

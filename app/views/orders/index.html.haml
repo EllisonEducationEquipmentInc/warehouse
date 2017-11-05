@@ -45,5 +45,6 @@
 = paginate @orders
 %br
 = link_to 'New order', new_order_path, :class => 'btn btn-primary'
+.pull-right= link_to 'Delete all orders', delete_all_orders_path, method: :delete, data: { confirm: "Are you sure you want to delete all orders?" }, :class => 'btn btn-danger'
 %br
 = link_to "export to csv", :action => 'export_to_csv'
