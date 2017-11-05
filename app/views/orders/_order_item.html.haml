@@ -1,5 +1,5 @@
 = fields_for "order[order_items_attributes][#{order_item.new_record? ? "#{Time.now.to_i}#{rand(1000)}" : order_item.order.order_items.index(order_item)}]", order_item, :child_index => "new_order_item" do |order_item_fields|
-  %tr{:id => "order_item_#{order_item.product_id_with_start_date}", :class => "order_item_row order_item_#{order_item.product_id_with_start_date}", "data-product-item_num" => order_item.product.item_num, :'data-ship-date' => ((order_item.ship_month || order_item.product.start_date_or_today).strftime("%B %Y") rescue '')}
+  %tr{:id => "order_item_#{order_item.product_id_with_start_date}", :class => "order_item_row order_item_#{order_item.product_id_with_start_date}", "data-product-item_num" => order_item.product.item_num, data: { designer: order_item.product.designer_name, designer_id: order_item.product.designer_name.parameterize}, :'data-ship-date' => ((order_item.ship_month || order_item.product.start_date_or_today).strftime("%B %Y") rescue '')}
     %td
       = order_item_fields.hidden_field :product_id, class: :product_id
       = order_item.product.item_num

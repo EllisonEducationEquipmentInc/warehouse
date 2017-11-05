@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161218231434) do
+ActiveRecord::Schema.define(version: 20171029232327) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,6 +94,7 @@ ActiveRecord::Schema.define(version: 20161218231434) do
     t.decimal  "coupon_price_3", precision: 6, scale: 2
     t.decimal  "coupon_price_4", precision: 6, scale: 2
     t.decimal  "coupon_price_5", precision: 6, scale: 2
+    t.text     "designer"
   end
 
   add_index "products", ["item_num"], name: "index_products_on_item_num", using: :btree

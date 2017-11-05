@@ -52,4 +52,8 @@ class Product < ActiveRecord::Base
       read_attribute :price
     end
   end
+
+  def designer_name
+    designer.present? ? designer : "none"
+  end
 end
