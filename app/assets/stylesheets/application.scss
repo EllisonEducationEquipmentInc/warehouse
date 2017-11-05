@@ -11,5 +11,7 @@ $brand-info: #154467;
 // And finally bootswatch style itself
 @import "bootswatch/cosmo/bootswatch";
 
+@import 'font-awesome';
+
 // Whatever application styles you have go last
 @import "main"

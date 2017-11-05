@@ -9,7 +9,7 @@
   %br
   == Total: #{number_to_currency(Order.sum('total'))}
 = form_tag({:action => 'index'}, :method => 'get') do
-  Search By quote #, business name or email address
+  Search By quote #, customer number, business name or email address
   %br
   .form-group= text_field_tag "q", params[:q], class: 'form-control'
   = submit_tag "Search", :class => 'btn btn-primary'
@@ -19,6 +19,9 @@
   %thead
     %tr
       %th ID
+      %th
+        Customer Number
+        = sort_icon
       %th Email
       %th Business Name
       %th Subtotal
@@ -31,6 +34,7 @@
     - for order in @orders
       %tr{ :class => cycle(:odd, :even) }
         %td= order.id
+        %td= order.customer_number
         %td= order.email
         %td= order.business
         %td= number_to_currency order.sub_total

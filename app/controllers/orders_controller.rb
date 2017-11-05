@@ -6,9 +6,13 @@ class OrdersController < ApplicationController
     #@search.q = '%' + params[:q] + '%' unless params[:q].blank?
     #@orders = @search.search.order(:order => "created_at DESC").page(params[:page]).per(500)
     if params[:q].present?
-      @orders = Order.where(["orders.email LIKE ? OR orders.business LIKE ?",  '%' + params[:q]+ '%', '%' + params[:q] + '%']).page(params[:page]).per(500)
+      @orders = Order.where(["orders.email LIKE ? OR orders.business LIKE ? OR orders.customer_number LIKE ?",  '%' + params[:q]+ '%', '%' + params[:q] + '%', '%' + params[:q] + '%']).page(params[:page]).per(500)
     else
       @orders = Order.order("created_at desc").page(params[:page]).per(500)
+    end
+
+    if ['asc', 'desc'].include? params[:sort]
+      @orders = @orders.reorder("customer_number #{params[:sort]}")
     end
     session[:coupon] = nil
 
