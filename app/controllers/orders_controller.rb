@@ -6,7 +6,11 @@ class OrdersController < ApplicationController
     #@search.q = '%' + params[:q] + '%' unless params[:q].blank?
     #@orders = @search.search.order(:order => "created_at DESC").page(params[:page]).per(500)
     if params[:q].present?
-      @orders = Order.where(["orders.email LIKE ? OR orders.business LIKE ? OR orders.customer_number LIKE ?",  '%' + params[:q]+ '%', '%' + params[:q] + '%', '%' + params[:q] + '%']).page(params[:page]).per(500)
+      if params[:q] =~ /^(\d+)$/
+        @orders = Order.where(id: [$1.to_i]).page(params[:page]).per(500)
+      else
+        @orders = Order.where(["orders.email iLIKE ? OR orders.business iLIKE ? OR orders.customer_number iLIKE ?", '%' + params[:q]+ '%', '%' + params[:q] + '%', '%' + params[:q] + '%']).page(params[:page]).per(500)
+      end
     else
       @orders = Order.order("created_at desc").page(params[:page]).per(500)
     end
