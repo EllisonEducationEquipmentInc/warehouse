@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   helper_method :app_mode, :tradeshow?, :warehouse?, :order_name, :order_prefix
 
   before_action :authenticate_user!
-  before_action :authenticate_admin!
+  before_action :authenticate_sales_rep!
 
 protected
 
@@ -18,6 +18,10 @@ private
 
   def authenticate_admin!
     redirect_to new_user_session_path, alert: "Unathorized!", status: 403 and return false unless devise_controller? || current_user.is_admin?
+  end
+
+  def authenticate_sales_rep!
+    redirect_to new_user_session_path, alert: "Unathorized!", status: 403 and return false unless devise_controller? || current_user.is_sales_rep? || current_user.is_admin?
   end
 
   def app_mode
