@@ -39,7 +39,7 @@ gem 'uglifier'
 gem 'compass-rails'
 gem 'yui-compressor'
 gem 'bootstrap-sass'
-gem 'font-awesome-sass-rails'
+gem 'font-awesome-sass', '~> 4.7.0'
 
 gem 'devise'
 gem 'devise-bootstrap-views'
