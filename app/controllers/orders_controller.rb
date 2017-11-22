@@ -156,6 +156,11 @@ class OrdersController < ApplicationController
     send_data csv_string, :type => 'text/csv; charset=iso-8859-1; header=present', :disposition => "attachment; filename=orders.csv"
   end
 
+  def delete_all
+    Order.destroy_all
+    redirect_to orders_path, notice: "All orders have been deleted."
+  end
+
 private
 
   def calculate_total
