@@ -1,6 +1,9 @@
 class OrdersController < ApplicationController
   # GET /orders
   # GET /orders.xml
+
+  before_action :authenticate_admin!, only: [:delete_all]
+
   def index
     #@search = Search.new(:order, :q => "orders.id LIKE ? OR orders.email LIKE ? OR orders.business LIKE ?" )
     #@search.q = '%' + params[:q] + '%' unless params[:q].blank?

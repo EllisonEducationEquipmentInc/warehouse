@@ -1,6 +1,9 @@
 class ProductsController < ApplicationController
   # GET /products
   # GET /products.xml
+
+  before_action :authenticate_admin!, only: [:delete_all]
+
   def index
     conditions = if params[:q].blank?
         "id > 0"

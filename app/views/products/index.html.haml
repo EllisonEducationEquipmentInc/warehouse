@@ -31,6 +31,7 @@
 = paginate @products
 %br
 = link_to 'New product', new_product_path, :class => 'btn btn-default'
-.pull-right= link_to 'Delete all products', delete_all_products_path, method: :delete, data: { confirm: "Are you sure you want to delete all products?" }, :class => 'btn btn-danger'
+- if current_user.is_admin?
+  .pull-right= link_to 'Delete all products', delete_all_products_path, method: :delete, data: { confirm: "Are you sure you want to delete all products?" }, :class => 'btn btn-danger'
 %br
 = link_to 'Upload product csv file', :action => :import
