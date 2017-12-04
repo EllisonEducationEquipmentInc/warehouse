@@ -47,6 +47,7 @@ gem 'simple_form'
 gem 'puma'
 gem 'awesome_print', :require => 'ap'
 gem 'bootswatch-rails'
+gem 'bootstrap-datepicker-rails'
 
 group :development do
   gem 'wirble'

@@ -17,4 +17,5 @@
 //= require twitter/bootstrap
 //= require parsley.min
 //= require bootstrap-sprockets
+//= require bootstrap-datepicker
 //= require_tree .
