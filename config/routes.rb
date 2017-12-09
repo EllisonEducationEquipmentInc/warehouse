@@ -18,6 +18,7 @@ Warehouse::Application.routes.draw do
       get :import
       post :import
       delete :delete_all
+      get :export_to_csv
     end
   end
 
