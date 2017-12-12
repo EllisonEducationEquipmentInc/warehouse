@@ -114,6 +114,15 @@ class ProductsController < ApplicationController
     redirect_to products_path, notice: "All products have been deleted."
   end
 
+  def export_to_csv
+    csv_string = CSV.generate do |csv|
+      csv << ["id", "item_num", "name", "upc", "price", "created_at", "updated_at", "start_date", "min_qty", "deleted", "coupon_1", "coupon_2", "coupon_price_1", "coupon_price_2", "coupon_3", "coupon_4", "coupon_5", "coupon_price_3", "coupon_price_4", "coupon_price_5", "designer"]
+      Product.find_each do |p|
+        csv << [p.id,  p.item_num,  p.name,  p.upc,  p.price,  p.created_at,  p.updated_at,  p.start_date,  p.min_qty,  p.deleted,  p.coupon_1,  p.coupon_2,  p.coupon_price_1,  p.coupon_price_2,  p.coupon_3,  p.coupon_4,  p.coupon_5,  p.coupon_price_3,  p.coupon_price_4,  p.coupon_price_5,  p.designer]
+      end
+    end
+    send_data csv_string, :type => 'text/csv; charset=iso-8859-1; header=present', :disposition => "attachment; filename=products.csv"
+  end
 
 private
   def product_params
