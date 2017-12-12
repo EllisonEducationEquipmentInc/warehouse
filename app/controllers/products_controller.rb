@@ -110,7 +110,7 @@ class ProductsController < ApplicationController
 
   def delete_all
     redirect_to(products_path, notice: "Delete all orders first.") and return if OrderItem.exists?
-    Product.destroy_all
+    Product.delete_all
     redirect_to products_path, notice: "All products have been deleted."
   end
 
