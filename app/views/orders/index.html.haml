@@ -57,17 +57,15 @@
     = form_tag({:action=>'export_to_csv'}, class: 'form-inline') do
       .form-group
         %label.sr-only Export to CSV
-        %p.form-control-static
-          = link_to "click here to see a sample CSV file", "/sample_export_lineitems.csv"
       .form-group
         %label.sr-only From Date
         %p.form-control-static
           From date
-        = text_field :from_date, params[:from_date], data: { provide: 'datepicker' }
+        = text_field :from_date, params[:from_date], data: { provide: 'datepicker', "date-format" => "yyyy-mm-dd" }
       .form-group
         %label.sr-only To Date
         %p.form-control-static
           To date
-        = text_field :to_date, params[:to_date], data: { provide: 'datepicker' }
+        = text_field :to_date, params[:to_date], data: { provide: 'datepicker', "date-format" => "yyyy-mm-dd" }
         %br
       = submit_tag 'export to csv', :class => 'btn btn-danger'
