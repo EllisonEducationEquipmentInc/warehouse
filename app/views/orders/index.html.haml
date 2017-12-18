@@ -52,4 +52,20 @@
 - if current_user.is_admin?
   .pull-right= link_to 'Delete all orders', delete_all_orders_path, method: :delete, data: { confirm: "Are you sure you want to delete all orders?" }, :class => 'btn btn-danger'
 %br
-= link_to "export to csv", :action => 'export_to_csv'
+.row
+  .col-sm-12
+    = form_tag({:action=>'export_to_csv'}, class: 'form-inline') do
+      .form-group
+        %label.sr-only Export to CSV
+      .form-group
+        %label.sr-only From Date
+        %p.form-control-static
+          From date
+        = text_field :from_date, params[:from_date], data: { provide: 'datepicker', "date-format" => "yyyy-mm-dd" }
+      .form-group
+        %label.sr-only To Date
+        %p.form-control-static
+          To date
+        = text_field :to_date, params[:to_date], data: { provide: 'datepicker', "date-format" => "yyyy-mm-dd" }
+        %br
+      = submit_tag 'export to csv', :class => 'btn btn-danger'

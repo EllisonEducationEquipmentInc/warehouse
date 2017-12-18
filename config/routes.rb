@@ -8,7 +8,7 @@ Warehouse::Application.routes.draw do
     collection do
       post :add_item
       post :add_coupon
-      get :export_to_csv
+      post :export_to_csv
       delete :delete_all
     end
   end

@@ -150,6 +150,12 @@ class OrdersController < ApplicationController
 
   def export_to_csv
     @orders = OrderItem.includes([:order, :product])
+    if params[:from_date].none? &:blank?
+      @orders = @orders.where("created_at >= ?", Date.parse(params[:from_date].first).beginning_of_day)
+    end
+    if params[:to_date].none? &:blank?
+      @orders = @orders.where("created_at <= ?", Date.parse(params[:to_date].first).end_of_day)
+    end
     csv_string = CSV.generate do |csv|
       csv << ["itemid", "qty", "unit", "unitprice", "discount", "discount%", "item_total", "order_sub_total", "order_total", "order_sales_tax", "customer_number", "order_id", "ship_date", "employee_number", "source_code", "sales_origin", "notes", "email",  "business", "contact", "phone", "address", "city", "state", "zip", "country", "payment_method", "tax_exempt", "tax_exempt_number",  "start_date",  "created_at", "updated_at",  "start_date_month", "start_date_year",  "full_name", "ship_date_month", "ship_date_year", "discount_amount"]
       @orders.each do |o|
