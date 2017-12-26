@@ -25,6 +25,7 @@
         %strong
           Date:
           = l @order.updated_at, :format => :default
+          = l @order.created_at, :format => :default
   .clearfloat
   %p#customer_data
     %strong Customer Information:
@@ -84,6 +85,12 @@
         = k
         \&nbsp;
         %span.pull-right.ship_date_item= number_to_currency v
+  %ul#by_designer.list-group		
+      @order.products.select("designer, sum(order_items.item_total)").group(:designer).each do |e|		
+      %li.list-group-item		
+         = e.designer_name		
+         %span.pull-right.designer_item= number_to_currency e.sum
+  
   - if !@order.discount_amount.zero?
     %p
       An additional discount of #{number_to_currency @order.discount_amount} will be deducted from your first shipped order from this pre-order
