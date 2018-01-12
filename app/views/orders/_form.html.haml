@@ -59,7 +59,7 @@
                 .form-group
                   = label_tag :coupon, 'Enter Coupon Code:'
                   %br
-                  = text_field_tag :coupon, nil, class: 'form-control', id: :coupon_input, :tabindex => 1, :onFocus => "this.select();", :maxlength => 12
+                  = text_field_tag :coupon, nil, class: 'form-control', id: :coupon_input, :tabindex => 1, :onFocus => "this.select();", :maxlength => 15
                   = submit_tag :add, :class => 'btn btn-primary'
         .col-sm-6.col-md-12
           = form_tag({:action => 'add_item', :id => @order}, :remote => true, class: 'form-inline', :id => 'add_item_form', :onsubmit => "$('#warning').addClass('hide');") do
