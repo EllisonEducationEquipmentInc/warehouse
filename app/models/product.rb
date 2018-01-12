@@ -26,7 +26,7 @@ class Product < ActiveRecord::Base
       Time.now.to_date
     else
       start_date
-    end.beginning_of_month
+    end.end_of_month
   end
   
   
