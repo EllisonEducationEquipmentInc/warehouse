@@ -18,7 +18,7 @@ class OrderItem < ActiveRecord::Base
     if ship_month.blank?
       product.id_with_start_date
     else
-      sm = ship_month.beginning_of_month.strftime("%Y-%m-%d")
+      sm = ship_month.end_of_month.strftime("%Y-%m-%d")
       "#{product.id}-#{sm}"
     end
   end
