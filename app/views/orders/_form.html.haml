@@ -303,6 +303,7 @@
               function product_not_found(value){
                 $('#warning').html('product not found: '+value)
                 $('#warning').removeClass('hide');
-                $('#order_notes').val('product not found: ' + value + '\n');
+                var notes = $('#order_notes').val();
+                $('#order_notes').val(notes + 'product not found: ' + value + '\n');
                 $('#order_notes').focus();
               }
