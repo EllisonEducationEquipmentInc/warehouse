@@ -99,7 +99,7 @@ class ProductsController < ApplicationController
           designer: row["designer"],
           upc: row["upc"], :price => row["price"],
           :min_qty => row["min_qty"] || 1,
-          :start_date => row['start_date'].blank? ? Time.now : row['start_date'],
+          :start_date => row['start_date'].blank? ? Time.now : Date.strptime(row['start_date'], "%m/%d/%Y"),
           coupon_1: row['coupon_1'], coupon_2: row['coupon_2'], coupon_3: row['coupon_3'], coupon_4: row['coupon_4'], coupon_5: row['coupon_5'],
           coupon_price_1: row['coupon_price_1'], coupon_price_2: row['coupon_price_2'], coupon_price_3: row['coupon_price_3'], coupon_price_4: row['coupon_price_4'],
           coupon_price_5: row['coupon_price_5'])
